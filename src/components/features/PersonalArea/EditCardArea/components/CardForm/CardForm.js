@@ -12,6 +12,7 @@ import {
   ConnectLinkedInIcon,
 } from '../../../../../../assets/icons';
 import Icon from 'react-native-vector-icons/Ionicons';
+import LinearGradient from 'react-native-linear-gradient';
 
 const projectFormSchema = yup.object().shape({
   name: yup.string().required('*Required'),
@@ -68,19 +69,20 @@ const CardForm = ({onClickToSave, redirectSubmittedData}) => {
   }, [onClickToSave]);
   return (
     <View style={Styles.outsideContainer}>
-      <View style={{marginBottom: 15, width: '80%'}}>
+      <View style={{marginBottom: 25, width: '100%'}}>
         <Text style={Styles.titleEntries}>Profile Photo</Text>
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
+            top: 10,
           }}>
           {image ? (
             <Image
               style={{
-                width: 100,
-                height: 100,
+                width: 90,
+                height: 90,
                 resizeMode: 'contain',
                 borderRadius: 100 / 2,
               }}
@@ -92,22 +94,43 @@ const CardForm = ({onClickToSave, redirectSubmittedData}) => {
           <TouchableOpacity
             style={{
               height: 40,
-              width: 100,
-              backgroundColor: 'grey',
-              alignItems: 'center',
-              justifyContent: 'center',
+              width: 120,
             }}
-            onPress={() => pickSingle(true, true)}>
-            <Text style={{color: 'white'}}>Choose image</Text>
+            onPress={() => {
+              pickSingle(true, true);
+            }}>
+            <LinearGradient
+              style={{
+                height: '100%',
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 20,
+              }}
+              colors={['#A9E2FD', '#8AB1F2']}>
+              <Text style={{color: 'white'}}>Choose image</Text>
+            </LinearGradient>
           </TouchableOpacity>
           {image ? (
             <TouchableOpacity
               style={{
-                alignItems: 'center',
-                justifyContent: 'center',
+                height: 40,
+                width: 70,
               }}
-              onPress={() => setImage(null)}>
-              <Icon name="close" size={30} color="blue" />
+              onPress={() => {
+                setImage(null);
+              }}>
+              <LinearGradient
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 20,
+                }}
+                colors={['#A9E2FD', '#8AB1F2']}>
+                <Text style={{color: 'white'}}>Delete</Text>
+              </LinearGradient>
             </TouchableOpacity>
           ) : (
             <></>
