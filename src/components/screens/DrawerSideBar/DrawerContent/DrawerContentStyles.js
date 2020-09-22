@@ -55,15 +55,14 @@ export default Styles = StyleSheet.create({
     marginBottom: Platform.OS == 'android' ? 20 : 25,
   },
   backgroundContainer: {
-    top: 28,
-    width: '110%',
+    width: '98%',
     height: '100%',
   },
   userProfileContainer: {
     position: 'absolute',
     top: '8.5%',
     alignItems: 'center',
-    width: '118%',
+    width: '105%',
   },
   userImageContainer: {
     height: windowHeight <= 550 ? 80 : 130,
