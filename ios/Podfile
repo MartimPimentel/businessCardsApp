@@ -31,3 +31,5 @@ target 'businessCardApp-tvOS' do
     # Pods for testing
   end
 end
+
+pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'

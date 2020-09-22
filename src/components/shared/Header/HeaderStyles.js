@@ -1,31 +1,37 @@
-import { Platform, StyleSheet } from "react-native";
+import {Platform, StyleSheet} from 'react-native';
 
 export default Styles = StyleSheet.create({
   header: {
-    height: 123,
+    height: '15%',
     borderBottomLeftRadius: 29,
     borderBottomRightRadius: 29,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   background: {
     flex: 1,
-    resizeMode: "cover",
-    alignSelf: "stretch",
-    width: "auto",
-    height: Platform.OS == "android" ? "104%" : "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    width: '100%',
+    height: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+
+    borderBottomLeftRadius: 29,
+    borderBottomRightRadius: 29,
+  },
+  iconsView: {
+    height: 50,
+    width: 50,
+    justifyContent: 'center',
   },
   icons: {
     top: 30,
-    width: "100%",
-    height: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    width: '100%',
+    height: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   leftIcon: {
     marginLeft: 30,
@@ -34,11 +40,11 @@ export default Styles = StyleSheet.create({
     marginRight: 30,
   },
   searchBarView: {
-    width: "100%",
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    height: "80%",
+    width: '100%',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    height: '80%',
     marginTop: 35,
   },
 });

@@ -5,24 +5,18 @@ import {LeftArrowIcon, SaveIcon, CardsIcon} from '../../../assets/icons';
 import {DrawerActions, useNavigation} from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {HeaderBackground} from '../../../assets/backgrounds';
+import LinearGradient from 'react-native-linear-gradient';
 
 const HeaderEdit = ({onClickToSaveData}) => {
   const navigation = useNavigation();
   return (
     <View style={Styles.header}>
-      <ImageBackground source={HeaderBackground} style={Styles.background}>
+      <LinearGradient style={Styles.background} colors={['#A9E2FD', '#8AB1F2']}>
         <View style={Styles.icons}>
           <TouchableOpacity
             style={Styles.leftIcon}
             onPress={() => navigation.goBack()}>
-            <View
-              style={{
-                height: 50,
-                width: 50,
-                justifyContent: 'center',
-              }}>
-              <LeftArrowIcon />
-            </View>
+            <LeftArrowIcon />
           </TouchableOpacity>
           <CardsIcon />
           <TouchableOpacity
@@ -42,7 +36,7 @@ const HeaderEdit = ({onClickToSaveData}) => {
             </Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
+      </LinearGradient>
     </View>
   );
 };
