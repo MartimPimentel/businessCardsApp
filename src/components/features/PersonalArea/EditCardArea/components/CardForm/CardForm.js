@@ -11,7 +11,6 @@ import {
   ConnectInstagramIcon,
   ConnectLinkedInIcon,
 } from '../../../../../../assets/icons';
-import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 
 const projectFormSchema = yup.object().shape({
@@ -26,42 +25,81 @@ const windowWidth = Dimensions.get('window').width;
 const CardForm = ({onClickToSave, redirectSubmittedData}) => {
   const {handleSubmit, trigger, watch, errors, control} = useForm({
     resolver: yupResolver(projectFormSchema),
+    mode: 'onSubmit',
   });
-  const [image, setImage] = useState(null);
-  const [images, setImages] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
+  const [logoImage, setLogoImage] = useState(null);
   const onSubmit = (data) => {
     redirectSubmittedData(data);
   };
-  const pickSingle = (cropit, circular = false, mediaType) => {
+  const pickFromGallery = (type) => {
     ImagePicker.openPicker({
       width: 500,
       height: 500,
-      cropping: cropit,
-      cropperCircleOverlay: circular,
+      cropping: true,
+      cropperCircleOverlay: true,
       sortOrder: 'none',
       compressImageMaxWidth: 1000,
       compressImageMaxHeight: 1000,
       compressImageQuality: 1,
       compressVideoPreset: 'MediumQuality',
       includeExif: true,
-      cropperStatusBarColor: 'white',
-      cropperToolbarColor: 'white',
+      cropperStatusBarColor: '#A9E2FD',
+      cropperToolbarColor: '#A9E2FD',
       cropperActiveWidgetColor: 'white',
-      cropperToolbarWidgetColor: '#3498DB',
+      cropperToolbarWidgetColor: 'white',
     })
       .then((image) => {
         console.log('received image', image);
-
-        setImage({
+        const obj = {
           uri: image.path,
           width: image.width,
           height: image.height,
           mime: image.mime,
-        });
+        };
+        if (type == 'profile') {
+          setProfileImage(obj);
+        } else {
+          setLogoImage(obj);
+        }
       })
       .catch((e) => {
-        console.log(e);
-        Alert.alert(e.message ? e.message : e);
+        return null;
+      });
+  };
+  const openCamara = (type) => {
+    ImagePicker.openCamera({
+      width: 500,
+      height: 500,
+      cropping: true,
+      cropperCircleOverlay: true,
+      sortOrder: 'none',
+      compressImageMaxWidth: 1000,
+      compressImageMaxHeight: 1000,
+      compressImageQuality: 1,
+      compressVideoPreset: 'MediumQuality',
+      includeExif: true,
+      cropperStatusBarColor: '#A9E2FD',
+      cropperToolbarColor: '#A9E2FD',
+      cropperActiveWidgetColor: 'white',
+      cropperToolbarWidgetColor: 'white',
+    })
+      .then((image) => {
+        console.log(image);
+        const obj = {
+          uri: image.path,
+          width: image.width,
+          height: image.height,
+          mime: image.mime,
+        };
+        if (type == 'profile') {
+          setProfileImage(obj);
+        } else {
+          setLogoImage(obj);
+        }
+      })
+      .catch((e) => {
+        return null;
       });
   };
   useEffect(() => {
@@ -71,69 +109,49 @@ const CardForm = ({onClickToSave, redirectSubmittedData}) => {
     <View style={Styles.outsideContainer}>
       <View style={{marginBottom: 25, width: '100%'}}>
         <Text style={Styles.titleEntries}>Profile Photo</Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            top: 10,
-          }}>
-          {image ? (
-            <Image
-              style={{
-                width: 90,
-                height: 90,
-                resizeMode: 'contain',
-                borderRadius: 100 / 2,
-              }}
-              source={image}
-            />
+        <View style={Styles.photoContainer}>
+          {profileImage ? (
+            <>
+              <Image style={Styles.photoStyles} source={profileImage} />
+              <TouchableOpacity
+                onPress={() => {
+                  setProfileImage(null);
+                }}>
+                <LinearGradient
+                  style={Styles.deleteImageButton}
+                  colors={['#A9E2FD', '#8AB1F2']}>
+                  <Text style={{color: 'white', textAlign: 'center'}}>
+                    Delete
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </>
           ) : (
-            <></>
-          )}
-          <TouchableOpacity
-            style={{
-              height: 40,
-              width: 120,
-            }}
-            onPress={() => {
-              pickSingle(true, true);
-            }}>
-            <LinearGradient
-              style={{
-                height: '100%',
-                width: '100%',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: 20,
-              }}
-              colors={['#A9E2FD', '#8AB1F2']}>
-              <Text style={{color: 'white'}}>Choose image</Text>
-            </LinearGradient>
-          </TouchableOpacity>
-          {image ? (
-            <TouchableOpacity
-              style={{
-                height: 40,
-                width: 70,
-              }}
-              onPress={() => {
-                setImage(null);
-              }}>
-              <LinearGradient
-                style={{
-                  height: '100%',
-                  width: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 20,
-                }}
-                colors={['#A9E2FD', '#8AB1F2']}>
-                <Text style={{color: 'white'}}>Delete</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          ) : (
-            <></>
+            <>
+              <TouchableOpacity
+                onPress={() => {
+                  pickFromGallery('profile');
+                }}>
+                <LinearGradient
+                  style={Styles.chooseImageButton}
+                  colors={['#A9E2FD', '#8AB1F2']}>
+                  <Text style={{color: 'white'}}>Choose picture</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => {
+                  openCamara('profile');
+                }}>
+                <LinearGradient
+                  style={Styles.deleteImageButton}
+                  colors={['#A9E2FD', '#8AB1F2']}>
+                  <Text style={{color: 'white', textAlign: 'center'}}>
+                    Take picture
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </>
           )}
         </View>
       </View>
@@ -228,6 +246,65 @@ const CardForm = ({onClickToSave, redirectSubmittedData}) => {
         {errors.companyName && (
           <Text style={{color: 'red'}}>This is required.</Text>
         )}
+      </View>
+      <View
+        style={{
+          borderColor: 'gainsboro',
+          borderBottomWidth: 2.5,
+          marginBottom: 20,
+        }}>
+        <View
+          style={{
+            marginBottom: 25,
+            width: '100%',
+          }}>
+          <Text style={Styles.titleEntries}>Company Logo</Text>
+          <View style={Styles.photoContainer}>
+            {logoImage ? (
+              <>
+                <Image style={Styles.photoStyles} source={logoImage} />
+                <TouchableOpacity
+                  onPress={() => {
+                    setLogoImage(null);
+                  }}>
+                  <LinearGradient
+                    style={Styles.deleteImageButton}
+                    colors={['#A9E2FD', '#8AB1F2']}>
+                    <Text style={{color: 'white', textAlign: 'center'}}>
+                      Delete
+                    </Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </>
+            ) : (
+              <>
+                <TouchableOpacity
+                  onPress={() => {
+                    pickFromGallery('logo');
+                  }}>
+                  <LinearGradient
+                    style={Styles.chooseImageButton}
+                    colors={['#A9E2FD', '#8AB1F2']}>
+                    <Text style={{color: 'white'}}>Choose picture</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => {
+                    openCamara('logo');
+                  }}>
+                  <LinearGradient
+                    style={Styles.deleteImageButton}
+                    colors={['#A9E2FD', '#8AB1F2']}>
+                    <Text style={{color: 'white', textAlign: 'center'}}>
+                      Take picture
+                    </Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </>
+            )}
+          </View>
+        </View>
       </View>
       <TouchableOpacity>
         <ConnectFacebookIcon
