@@ -45,7 +45,9 @@ const HeaderSearch = () => {
   } else {
     return (
       <View style={Styles.header}>
-        <ImageBackground source={HeaderBackground} style={Styles.background}>
+        <LinearGradient
+          style={Styles.background}
+          colors={['#A9E2FD', '#8AB1F2']}>
           <View style={Styles.searchBarView}>
             <TouchableOpacity
               onPress={() => {
@@ -55,7 +57,7 @@ const HeaderSearch = () => {
             </TouchableOpacity>
             <SearchBar />
           </View>
-        </ImageBackground>
+        </LinearGradient>
       </View>
     );
   }
