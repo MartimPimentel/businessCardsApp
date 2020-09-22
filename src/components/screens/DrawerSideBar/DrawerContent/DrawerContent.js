@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {
   View,
   Platform,
@@ -6,26 +6,25 @@ import {
   ImageBackground,
   Image,
   Dimensions,
-} from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import Svg from "react-native-svg";
+} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import Svg from 'react-native-svg';
 import {
   MyCardsIcon,
   PersonalAreaIcon,
   UnknownUser,
-} from "../../../../assets/icons";
-import { SidebarBackground } from "../../../../assets/backgrounds";
-import Styles from "./DrawerContentStyles";
+} from '../../../../assets/icons';
+import {SidebarBackground} from '../../../../assets/backgrounds';
+import Styles from './DrawerContentStyles';
 
 const DrawerContent = (props) => {
   const [isMyCardsSelected, setIsMyCardSelected] = useState(true);
   return (
-    <View style={{ top: -28, left: -25, width: "90%" }}>
+    <View style={{top: -28, left: -25, width: '90%'}}>
       <ImageBackground
         source={SidebarBackground}
         resizeMode="stretch"
-        style={Styles.backgroundContainer}
-      >
+        style={Styles.backgroundContainer}>
         <View style={Styles.userProfileContainer}>
           <View style={Styles.userImageContainer}>
             <Image source={UnknownUser} style={Styles.userImageStyles} />
@@ -39,9 +38,8 @@ const DrawerContent = (props) => {
             style={Styles.myCardsStyle(isMyCardsSelected)}
             onPress={() => {
               setIsMyCardSelected(true);
-              props.navigation.navigate("MyCards");
-            }}
-          >
+              props.navigation.navigate('MyCards');
+            }}>
             <View style={Styles.seletecTag(isMyCardsSelected)}></View>
             <MyCardsIcon height={30} width={30} />
             <Text style={Styles.textStyle}>My Cards</Text>
@@ -51,9 +49,8 @@ const DrawerContent = (props) => {
             style={Styles.personalAreaStyle(!isMyCardsSelected)}
             onPress={() => {
               setIsMyCardSelected(false);
-              props.navigation.navigate("PersonalArea");
-            }}
-          >
+              props.navigation.navigate('PersonalArea');
+            }}>
             <View style={Styles.seletecTag(!isMyCardsSelected)}></View>
             <PersonalAreaIcon height={30} width={30} />
             <Text style={Styles.textStyle}>Personal Area</Text>

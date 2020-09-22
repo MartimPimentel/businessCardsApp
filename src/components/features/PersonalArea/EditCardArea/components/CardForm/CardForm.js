@@ -1,31 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, Dimensions } from "react-native";
-import Styles from "./CardFormStyles";
-import { useForm, Controller } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-/* import * as ImagePicker from "expo-image-picker";
-import * as Permissions from "expo-permissions";
-import ImageManipulator from "./manipulator/ImageManipulator"; */
-import ImagePicker from "react-native-image-crop-picker";
+import React, {useEffect, useState} from 'react';
+import {View, Text, TextInput, Dimensions, Image} from 'react-native';
+import Styles from './CardFormStyles';
+import {useForm, Controller} from 'react-hook-form';
+import * as yup from 'yup';
+import {yupResolver} from '@hookform/resolvers';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import ImagePicker from 'react-native-image-crop-picker';
 import {
   ConnectFacebookIcon,
   ConnectInstagramIcon,
   ConnectLinkedInIcon,
-} from "../../../../../../assets/icons";
-import { Image } from "react-native";
-const projectFormSchema = yup.object().shape({
-  name: yup.string().required("*Required"),
-  email: yup.string().required("*Required"),
-  phoneNumber: yup.string().required("*Required"),
-  address: yup.string().required("*Required"),
-  companyName: yup.string().required("*Required"),
-});
-const windowWidth = Dimensions.get("window").width;
+} from '../../../../../../assets/icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-const CardForm = ({ onClickToSave, redirectSubmittedData }) => {
-  const { handleSubmit, trigger, watch, errors, control } = useForm({
+const projectFormSchema = yup.object().shape({
+  name: yup.string().required('*Required'),
+  email: yup.string().required('*Required'),
+  phoneNumber: yup.string().required('*Required'),
+  address: yup.string().required('*Required'),
+  companyName: yup.string().required('*Required'),
+});
+const windowWidth = Dimensions.get('window').width;
+
+const CardForm = ({onClickToSave, redirectSubmittedData}) => {
+  const {handleSubmit, trigger, watch, errors, control} = useForm({
     resolver: yupResolver(projectFormSchema),
   });
   const [image, setImage] = useState(null);
@@ -39,19 +37,19 @@ const CardForm = ({ onClickToSave, redirectSubmittedData }) => {
       height: 500,
       cropping: cropit,
       cropperCircleOverlay: circular,
-      sortOrder: "none",
+      sortOrder: 'none',
       compressImageMaxWidth: 1000,
       compressImageMaxHeight: 1000,
       compressImageQuality: 1,
-      compressVideoPreset: "MediumQuality",
+      compressVideoPreset: 'MediumQuality',
       includeExif: true,
-      cropperStatusBarColor: "white",
-      cropperToolbarColor: "white",
-      cropperActiveWidgetColor: "white",
-      cropperToolbarWidgetColor: "#3498DB",
+      cropperStatusBarColor: 'white',
+      cropperToolbarColor: 'white',
+      cropperActiveWidgetColor: 'white',
+      cropperToolbarWidgetColor: '#3498DB',
     })
       .then((image) => {
-        console.log("received image", image);
+        console.log('received image', image);
 
         setImage({
           uri: image.path,
@@ -70,34 +68,59 @@ const CardForm = ({ onClickToSave, redirectSubmittedData }) => {
   }, [onClickToSave]);
   return (
     <View style={Styles.outsideContainer}>
-      <View style={{ marginBottom: 15 }}>
+      <View style={{marginBottom: 15, width: '80%'}}>
         <Text style={Styles.titleEntries}>Profile Photo</Text>
-
-        <TouchableOpacity
-          style={{ height: 50, width: 50, backgroundColor: "red" }}
-          onPress={() => pickSingle(true, true)}
-        ></TouchableOpacity>
-        {image ? (
-          <Image
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          {image ? (
+            <Image
+              style={{
+                width: 100,
+                height: 100,
+                resizeMode: 'contain',
+                borderRadius: 100 / 2,
+              }}
+              source={image}
+            />
+          ) : (
+            <></>
+          )}
+          <TouchableOpacity
             style={{
+              height: 40,
               width: 100,
-              height: 100,
-              resizeMode: "contain",
-              borderRadius: 100 / 2,
+              backgroundColor: 'grey',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
-            source={image}
-          />
-        ) : (
-          <></>
-        )}
+            onPress={() => pickSingle(true, true)}>
+            <Text style={{color: 'white'}}>Choose image</Text>
+          </TouchableOpacity>
+          {image ? (
+            <TouchableOpacity
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              onPress={() => setImage(null)}>
+              <Icon name="close" size={30} color="blue" />
+            </TouchableOpacity>
+          ) : (
+            <></>
+          )}
+        </View>
       </View>
-      <View style={{ marginBottom: 15 }}>
+      <View style={{marginBottom: 15}}>
         <Text style={Styles.titleEntries}>NAME</Text>
         <Controller
           control={control}
           name="name"
           defaultValue=""
-          render={({ onChange, onBlur, value }) => (
+          render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
               onBlur={onBlur}
@@ -106,16 +129,16 @@ const CardForm = ({ onClickToSave, redirectSubmittedData }) => {
             />
           )}
         />
-        {errors.name && <Text style={{ color: "red" }}>This is required.</Text>}
+        {errors.name && <Text style={{color: 'red'}}>This is required.</Text>}
       </View>
 
-      <View style={{ marginBottom: 15 }}>
+      <View style={{marginBottom: 15}}>
         <Text style={Styles.titleEntries}>EMAIL</Text>
         <Controller
           control={control}
           name="email"
           defaultValue=""
-          render={({ onChange, onBlur, value }) => (
+          render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
               onBlur={onBlur}
@@ -124,17 +147,15 @@ const CardForm = ({ onClickToSave, redirectSubmittedData }) => {
             />
           )}
         />
-        {errors.email && (
-          <Text style={{ color: "red" }}>This is required.</Text>
-        )}
+        {errors.email && <Text style={{color: 'red'}}>This is required.</Text>}
       </View>
-      <View style={{ marginBottom: 15 }}>
+      <View style={{marginBottom: 15}}>
         <Text style={Styles.titleEntries}>PHONE NUMBER</Text>
         <Controller
           control={control}
           name="phoneNumber"
           defaultValue=""
-          render={({ onChange, onBlur, value }) => (
+          render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
               onBlur={onBlur}
@@ -144,16 +165,16 @@ const CardForm = ({ onClickToSave, redirectSubmittedData }) => {
           )}
         />
         {errors.phoneNumber && (
-          <Text style={{ color: "red" }}>This is required.</Text>
+          <Text style={{color: 'red'}}>This is required.</Text>
         )}
       </View>
-      <View style={{ marginBottom: 15 }}>
+      <View style={{marginBottom: 15}}>
         <Text style={Styles.titleEntries}>ADDRESS</Text>
         <Controller
           control={control}
           name="address"
           defaultValue=""
-          render={({ onChange, onBlur, value }) => (
+          render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
               onBlur={onBlur}
@@ -163,16 +184,16 @@ const CardForm = ({ onClickToSave, redirectSubmittedData }) => {
           )}
         />
         {errors.address && (
-          <Text style={{ color: "red" }}>This is required.</Text>
+          <Text style={{color: 'red'}}>This is required.</Text>
         )}
       </View>
-      <View style={{ marginBottom: 15 }}>
+      <View style={{marginBottom: 15}}>
         <Text style={Styles.titleEntries}>COMPANY NAME</Text>
         <Controller
           control={control}
           name="companyName"
           defaultValue=""
-          render={({ onChange, onBlur, value }) => (
+          render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
               onBlur={onBlur}
@@ -182,25 +203,25 @@ const CardForm = ({ onClickToSave, redirectSubmittedData }) => {
           )}
         />
         {errors.companyName && (
-          <Text style={{ color: "red" }}>This is required.</Text>
+          <Text style={{color: 'red'}}>This is required.</Text>
         )}
       </View>
       <TouchableOpacity>
         <ConnectFacebookIcon
-          viewBox={windowWidth <= 350 ? "10 -7 250 95" : ""}
-          style={{ left: windowWidth <= 350 ? -50 : -10 }}
+          viewBox={windowWidth <= 350 ? '10 -7 250 95' : ''}
+          style={{left: windowWidth <= 350 ? -50 : -10}}
         />
       </TouchableOpacity>
       <TouchableOpacity>
         <ConnectInstagramIcon
-          viewBox={windowWidth <= 350 ? "10 -7 250 95" : ""}
-          style={{ left: windowWidth <= 350 ? -50 : -10 }}
+          viewBox={windowWidth <= 350 ? '10 -7 250 95' : ''}
+          style={{left: windowWidth <= 350 ? -50 : -10}}
         />
       </TouchableOpacity>
       <TouchableOpacity>
         <ConnectLinkedInIcon
-          viewBox={windowWidth <= 350 ? "10 -7 250 95" : ""}
-          style={{ left: windowWidth <= 350 ? -50 : -10 }}
+          viewBox={windowWidth <= 350 ? '10 -7 250 95' : ''}
+          style={{left: windowWidth <= 350 ? -50 : -10}}
         />
       </TouchableOpacity>
     </View>
