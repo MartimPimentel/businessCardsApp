@@ -2,7 +2,7 @@ import {Platform, StyleSheet} from 'react-native';
 
 export default Styles = StyleSheet.create({
   header: {
-    height: '15%',
+    height: Platform.OS == 'android' ? '13%' : '15%',
     borderBottomLeftRadius: 29,
     borderBottomRightRadius: 29,
     flexDirection: 'column',

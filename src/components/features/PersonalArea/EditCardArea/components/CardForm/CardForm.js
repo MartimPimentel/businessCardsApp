@@ -11,7 +11,6 @@ import {
   ConnectInstagramIcon,
   ConnectLinkedInIcon,
 } from '../../../../../../assets/icons';
-import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 
 const projectFormSchema = yup.object().shape({

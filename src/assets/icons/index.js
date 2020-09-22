@@ -13,4 +13,7 @@ export {default as ConnectInstagramIcon} from './ConnectInstagramIcon.svg';
 export {default as ConnectLinkedInIcon} from './ConnectLinkedInIcon.svg';
 export {default as SearchIcon} from './searchIcon.svg';
 export {default as SearchBarIcon} from './searchBarIcon.svg';
+export {default as FBGoToProfile} from './fbGoToProfile.svg';
+export {default as IGGoToProfile} from './igGoToProfile.svg';
+export {default as LIGoToProfile} from './liGoToProfile.svg';
 export const UnknownUser = require('./UnknownUser.jpg');
