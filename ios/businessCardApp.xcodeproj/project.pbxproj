@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* businessCardAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* businessCardAppTests.m */; };
+		066DA8C95C8844F0B3B74CF8 /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1CF9D3E999BC443383625B21 /* NunitoSans-Regular.ttf */; };
 		0FA10FC841AE03FB8414A0FA /* libPods-businessCardApp-businessCardAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B18511B8316F34DA972BB58 /* libPods-businessCardApp-businessCardAppTests.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -16,15 +17,14 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* businessCardAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* businessCardAppTests.m */; };
+		428F01BF297B44A5BB12F67B /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92324851FBE34B1880079D4D /* Nunito-Regular.ttf */; };
+		444B39E45E5C42BAA736F335 /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 085B86B395474A5599A0724F /* Nunito-Bold.ttf */; };
+		6BA2DC1A597D4F1E98234A5D /* NunitoSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A23C199DDA0D4BAFB467A912 /* NunitoSans-Bold.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9404EE27F0D44BD9B8360F09 /* Nunito-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0329DE85FBEB4550B51B1903 /* Nunito-SemiBold.ttf */; };
 		9FDDA2D1EB3CD75D6EBCD3CF /* libPods-businessCardApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 567740B59D620D82F8819DF2 /* libPods-businessCardApp-tvOS.a */; };
 		DDC70A99AE0ADD42A35FEF3D /* libPods-businessCardApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C8F85EAFBFA2C5287B354EDB /* libPods-businessCardApp.a */; };
 		E84211E196C60BFFF02854A2 /* libPods-businessCardApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 741C5BFE7FED5F951506A9C6 /* libPods-businessCardApp-tvOSTests.a */; };
-		444B39E45E5C42BAA736F335 /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 085B86B395474A5599A0724F /* Nunito-Bold.ttf */; };
-		428F01BF297B44A5BB12F67B /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92324851FBE34B1880079D4D /* Nunito-Regular.ttf */; };
-		9404EE27F0D44BD9B8360F09 /* Nunito-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0329DE85FBEB4550B51B1903 /* Nunito-SemiBold.ttf */; };
-		6BA2DC1A597D4F1E98234A5D /* NunitoSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A23C199DDA0D4BAFB467A912 /* NunitoSans-Bold.ttf */; };
-		066DA8C95C8844F0B3B74CF8 /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1CF9D3E999BC443383625B21 /* NunitoSans-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,12 +49,15 @@
 		00E356EE1AD99517003FC87E /* businessCardAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = businessCardAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* businessCardAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = businessCardAppTests.m; sourceTree = "<group>"; };
+		0329DE85FBEB4550B51B1903 /* Nunito-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-SemiBold.ttf"; path = "../src/assets/fonts/Nunito-SemiBold.ttf"; sourceTree = "<group>"; };
+		085B86B395474A5599A0724F /* Nunito-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-Bold.ttf"; path = "../src/assets/fonts/Nunito-Bold.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* businessCardApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = businessCardApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = businessCardApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = businessCardApp/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = businessCardApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = businessCardApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = businessCardApp/main.m; sourceTree = "<group>"; };
+		1CF9D3E999BC443383625B21 /* NunitoSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NunitoSans-Regular.ttf"; path = "../src/assets/fonts/NunitoSans-Regular.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* businessCardApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "businessCardApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* businessCardApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "businessCardApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DAFE6897CAEF8FC58096F19 /* Pods-businessCardApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-businessCardApp.release.xcconfig"; path = "Target Support Files/Pods-businessCardApp/Pods-businessCardApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -63,8 +66,10 @@
 		741C5BFE7FED5F951506A9C6 /* libPods-businessCardApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-businessCardApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B18511B8316F34DA972BB58 /* libPods-businessCardApp-businessCardAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-businessCardApp-businessCardAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = businessCardApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		92324851FBE34B1880079D4D /* Nunito-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-Regular.ttf"; path = "../src/assets/fonts/Nunito-Regular.ttf"; sourceTree = "<group>"; };
 		9AD551BFD8B0E23998AB4C81 /* Pods-businessCardApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-businessCardApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-businessCardApp-tvOSTests/Pods-businessCardApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A1D13384016D21894051AFA5 /* Pods-businessCardApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-businessCardApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-businessCardApp-tvOSTests/Pods-businessCardApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		A23C199DDA0D4BAFB467A912 /* NunitoSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NunitoSans-Bold.ttf"; path = "../src/assets/fonts/NunitoSans-Bold.ttf"; sourceTree = "<group>"; };
 		C8F85EAFBFA2C5287B354EDB /* libPods-businessCardApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-businessCardApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC5A50AA561D608B43E5E0B4 /* Pods-businessCardApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-businessCardApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-businessCardApp-tvOS/Pods-businessCardApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		DE249320562969617ACFACEA /* Pods-businessCardApp-businessCardAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-businessCardApp-businessCardAppTests.debug.xcconfig"; path = "Target Support Files/Pods-businessCardApp-businessCardAppTests/Pods-businessCardApp-businessCardAppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -72,11 +77,6 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		FF6E1A9D29F74A98E601EFB8 /* Pods-businessCardApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-businessCardApp.debug.xcconfig"; path = "Target Support Files/Pods-businessCardApp/Pods-businessCardApp.debug.xcconfig"; sourceTree = "<group>"; };
-		085B86B395474A5599A0724F /* Nunito-Bold.ttf */ = {isa = PBXFileReference; name = "Nunito-Bold.ttf"; path = "../src/assets/fonts/Nunito-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		92324851FBE34B1880079D4D /* Nunito-Regular.ttf */ = {isa = PBXFileReference; name = "Nunito-Regular.ttf"; path = "../src/assets/fonts/Nunito-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		0329DE85FBEB4550B51B1903 /* Nunito-SemiBold.ttf */ = {isa = PBXFileReference; name = "Nunito-SemiBold.ttf"; path = "../src/assets/fonts/Nunito-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A23C199DDA0D4BAFB467A912 /* NunitoSans-Bold.ttf */ = {isa = PBXFileReference; name = "NunitoSans-Bold.ttf"; path = "../src/assets/fonts/NunitoSans-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		1CF9D3E999BC443383625B21 /* NunitoSans-Regular.ttf */ = {isa = PBXFileReference; name = "NunitoSans-Regular.ttf"; path = "../src/assets/fonts/NunitoSans-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +159,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		824C111EFDFE4CC5B2A6F795 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				085B86B395474A5599A0724F /* Nunito-Bold.ttf */,
+				92324851FBE34B1880079D4D /* Nunito-Regular.ttf */,
+				0329DE85FBEB4550B51B1903 /* Nunito-SemiBold.ttf */,
+				A23C199DDA0D4BAFB467A912 /* NunitoSans-Bold.ttf */,
+				1CF9D3E999BC443383625B21 /* NunitoSans-Regular.ttf */,
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,19 +221,6 @@
 			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		824C111EFDFE4CC5B2A6F795 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				085B86B395474A5599A0724F /* Nunito-Bold.ttf */,
-				92324851FBE34B1880079D4D /* Nunito-Regular.ttf */,
-				0329DE85FBEB4550B51B1903 /* Nunito-SemiBold.ttf */,
-				A23C199DDA0D4BAFB467A912 /* NunitoSans-Bold.ttf */,
-				1CF9D3E999BC443383625B21 /* NunitoSans-Regular.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -276,6 +276,7 @@
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
 				2D02E4791E0B4A5D006451C7 /* Resources */,
 				2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */,
+				FEB47DF77EAF84F4628B5D04 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -449,14 +450,14 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-businessCardApp-businessCardAppTests/Pods-businessCardApp-businessCardAppTests-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core.common-CoreModulesHeaders/AccessibilityResources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/RNImageCropPicker/QBImagePicker.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOCropViewControllerBundle.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -515,14 +516,14 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-businessCardApp/Pods-businessCardApp-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core.common-CoreModulesHeaders/AccessibilityResources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/RNImageCropPicker/QBImagePicker.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOCropViewControllerBundle.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -588,6 +589,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FEB47DF77EAF84F4628B5D04 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-businessCardApp-tvOS/Pods-businessCardApp-tvOS-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core.common/AccessibilityResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-businessCardApp-tvOS/Pods-businessCardApp-tvOS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

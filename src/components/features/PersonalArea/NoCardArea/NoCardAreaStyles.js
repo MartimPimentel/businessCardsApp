@@ -1,17 +1,17 @@
-import { Platform, StyleSheet } from "react-native";
+import {Platform, StyleSheet} from 'react-native';
 
 export default Styles = StyleSheet.create({
   text: {
-    fontFamily: "Nunito-Regular",
-    fontSize: 17,
-    alignSelf: "center",
+    fontFamily: 'Nunito-Regular',
+    fontSize: 20,
+    alignSelf: 'center',
   },
   icon: {
     marginTop: 70,
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   textBox: {
-    alignSelf: "center",
+    alignSelf: 'center',
     marginTop: 30,
   },
 });
