@@ -317,6 +317,8 @@ PODS:
     - React
   - RNSVG (12.1.0):
     - React
+  - RNVectorIcons (7.1.0):
+    - React
   - TOCropViewController (2.5.4)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -376,6 +378,7 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -459,6 +462,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -506,10 +511,11 @@ SPEC CHECKSUMS:
   RNReanimated: b5ccb50650ba06f6e749c7c329a1bc3ae0c88b43
   RNScreens: c526239bbe0e957b988dacc8d75ac94ec9cb19da
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
+  RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
   TOCropViewController: 2a1ae1242600b1f2d996fd91a5268b2309a33b5c
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 29b267301da7555441fde9b37774cf53da039488
+PODFILE CHECKSUM: 84212f27307fba40e70b30bc4090835bcee2ab10
 
 COCOAPODS: 1.9.3
