@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Keyboard} from 'react-native';
+import {View, Text, Keyboard, KeyboardAvoidingView} from 'react-native';
 import {
   ScrollView,
   TouchableWithoutFeedback,
@@ -23,6 +23,7 @@ const EditCardArea = () => {
             setPressedSave(pressedSave != undefined ? !pressedSave : true);
           }}
         />
+
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{marginTop: 10}}>

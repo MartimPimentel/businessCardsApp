@@ -55,4 +55,9 @@ export default Styles = StyleSheet.create({
     borderRadius: 20,
     marginLeft: '20%',
   },
+  separatorPhotos: {
+    borderColor: 'gainsboro',
+    borderBottomWidth: 2.5,
+    marginBottom: 15,
+  },
 });
