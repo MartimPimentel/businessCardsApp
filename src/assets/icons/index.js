@@ -16,4 +16,6 @@ export {default as SearchBarIcon} from './searchBarIcon.svg';
 export {default as FBGoToProfile} from './fbGoToProfile.svg';
 export {default as IGGoToProfile} from './igGoToProfile.svg';
 export {default as LIGoToProfile} from './liGoToProfile.svg';
+export {default as LILogo} from './liLogo.svg';
+export {default as FBLogo} from './fbLogo.svg';
 export const UnknownUser = require('./UnknownUser.jpg');
