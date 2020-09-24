@@ -1,33 +1,26 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from 'react-native';
 export default Styles = StyleSheet.create({
   outsideContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    height: "50%",
+    height: '70%',
+    width: '90%',
+    alignSelf: 'center',
   },
-  text: {
-    color: "#fff",
-    fontSize: 30,
-    fontWeight: "bold",
-    alignSelf: "center",
-    textAlign: "center",
-  },
-  cardDimensions: {
-    height: "100%",
-    width: "90%",
-    backgroundColor: "lightblue",
+  backgroundStyles: {
+    alignSelf: 'center',
+    width: '100%',
+    height: '100%',
     borderRadius: 10,
-    justifyContent: "center",
-    elevation: 10,
   },
-  underCardShadow: {
-    backgroundColor: "black",
-    width: "80%",
-    alignSelf: "center",
-    borderBottomStartRadius: 10,
-    borderBottomEndRadius: 10,
-    opacity: 0.03,
-    top: 0,
+  leftDrawingsStyle: {
+    position: 'absolute',
+    width: '90%',
+    height: '100%',
+    justifyContent: 'flex-end',
+  },
+  rightDrawingStyles: {
+    alignSelf: 'flex-end',
+    alignItems: 'flex-end',
+    width: '80%',
+    height: '60%',
   },
 });

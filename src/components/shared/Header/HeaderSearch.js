@@ -29,7 +29,13 @@ const HeaderSearch = () => {
               onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
               <MenuIcon />
             </TouchableOpacity>
-            <CardsIcon />
+            <View style={{width: '30%'}}>
+              <CardsIcon
+                width="100%"
+                height="100%"
+                preserveAspectRatio="meet"
+              />
+            </View>
             <View style={Styles.rightIcon}>
               <TouchableOpacity
                 onPress={() => {
@@ -61,44 +67,6 @@ const HeaderSearch = () => {
       </View>
     );
   }
-
-  return (
-    <View style={Styles.header}>
-      <ImageBackground source={HeaderBackground} style={Styles.background}>
-        if (!searchBarActivated)
-        {
-          <View style={Styles.icons}>
-            <TouchableOpacity
-              style={Styles.leftIcon}
-              onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
-              <MenuIcon />
-            </TouchableOpacity>
-            <CardsIcon />
-            <View style={Styles.rightIcon}>
-              <TouchableOpacity
-                onPress={() => {
-                  searchBarActivated = true;
-                }}>
-                <SearchIcon />
-              </TouchableOpacity>
-            </View>
-          </View>
-        }
-        else
-        {
-          <View style={Styles.searchBarView}>
-            <TouchableOpacity
-              onPress={() => {
-                searchBarActivated = false;
-              }}>
-              <LeftArrowIcon style={{marginLeft: 20}} />
-            </TouchableOpacity>
-            <SearchBar />
-          </View>
-        }
-      </ImageBackground>
-    </View>
-  );
 };
 
 export default HeaderSearch;

@@ -6,55 +6,23 @@ import {LILogo, FBLogo} from '../../../assets/icons';
 import LinearGradient from 'react-native-linear-gradient';
 const Card = ({data}) => {
   return (
-    <View
-      style={{
-        height: '100%',
-        width: '100%',
-        alignItems: 'center',
-      }}>
-      <View
-        style={{
-          width: '90%',
-          height: '70%',
-        }}>
-        <LinearGradient
-          start={{x: 0, y: 1}}
-          end={{x: 1, y: 1}}
-          style={{
-            alignSelf: 'center',
-            width: '100%',
-            height: '100%',
-            borderRadius: 10,
-          }}
-          colors={['#80C8FC', '#5350DB']}>
-          <View
-            style={{
-              position: 'absolute',
-              width: '90%',
-              height: '100%',
-              justifyContent: 'flex-end',
-            }}>
-            <CardDrawLeft
-              width="100%"
-              height="100%"
-              preserveAspectRatio="none"
-            />
-          </View>
-          <View
-            style={{
-              alignSelf: 'flex-end',
-              alignItems: 'flex-end',
-              width: '80%',
-              height: '60%',
-            }}>
-            <CardDrawRight
-              width="100%"
-              height="100%"
-              preserveAspectRatio="none"
-            />
-          </View>
-        </LinearGradient>
-      </View>
+    <View style={Styles.outsideContainer}>
+      <LinearGradient
+        start={{x: 0, y: 1}}
+        end={{x: 1, y: 1}}
+        style={Styles.backgroundStyles}
+        colors={['#80C8FC', '#5350DB']}>
+        <View style={Styles.leftDrawingsStyle}>
+          <CardDrawLeft width="100%" height="100%" preserveAspectRatio="none" />
+        </View>
+        <View style={Styles.rightDrawingStyles}>
+          <CardDrawRight
+            width="100%"
+            height="100%"
+            preserveAspectRatio="none"
+          />
+        </View>
+      </LinearGradient>
     </View>
   );
 };
