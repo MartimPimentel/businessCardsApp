@@ -30,20 +30,28 @@ const Card = ({data}) => {
           <View
             style={{
               position: 'absolute',
-              width: '30%',
+              width: '90%',
               height: '100%',
               justifyContent: 'flex-end',
             }}>
-            <CardDrawLeft />
+            <CardDrawLeft
+              width="100%"
+              height="100%"
+              preserveAspectRatio="none"
+            />
           </View>
           <View
             style={{
-              position: 'absolute',
-              height: '50%',
-              width: '70%',
               alignSelf: 'flex-end',
+              alignItems: 'flex-end',
+              width: '80%',
+              height: '60%',
             }}>
-            <CardDrawRight style={{alignSelf: 'flex-end'}} />
+            <CardDrawRight
+              width="100%"
+              height="100%"
+              preserveAspectRatio="none"
+            />
           </View>
         </LinearGradient>
       </View>
