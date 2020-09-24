@@ -26,6 +26,7 @@ export default Styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    bottom: 10,
   },
   leftIcon: {
     marginLeft: 30,
@@ -38,7 +39,7 @@ export default Styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    height: '80%',
+    height: '100%',
     marginTop: 35,
   },
 });
