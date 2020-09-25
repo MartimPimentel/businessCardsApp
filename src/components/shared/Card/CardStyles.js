@@ -20,7 +20,7 @@ export default Styles = StyleSheet.create({
   rightDrawingStyles: {
     alignSelf: 'flex-end',
     alignItems: 'flex-end',
-    width: '80%',
+    width: '70%',
     height: '60%',
   },
 });

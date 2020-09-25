@@ -6,7 +6,14 @@ import {
   CardDrawLeft,
   PictureBorder,
 } from '../../../assets/backgrounds';
-import {LILogo, FBLogo} from '../../../assets/icons';
+import {
+  LILogo,
+  FBLogo,
+  CompanyLogo,
+  AddressIcon,
+  PhoneIcon,
+  NameIcon,
+} from '../../../assets/icons';
 import LinearGradient from 'react-native-linear-gradient';
 const Card = ({data}) => {
   return (
@@ -37,17 +44,36 @@ const Card = ({data}) => {
             <View
               style={{
                 height: '100%',
-                width: '50%',
+                width: '35%',
                 justifyContent: 'center',
               }}>
-              <PictureBorder style={{alignSelf: 'center', marginRight: 80}} />
+              <PictureBorder style={{alignSelf: 'center'}} />
             </View>
             <View
               style={{
                 height: '100%',
-                width: '50%',
-                backgroundColor: 'blue',
-              }}></View>
+                width: '65%',
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginTop: 15,
+                  marginRight: 15,
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    marginRight: 15,
+                    fontFamily: 'Nunito-Regular',
+                    color: 'white',
+                    fontSize: 12,
+                  }}>
+                  Company Name
+                </Text>
+                <CompanyLogo />
+              </View>
+            </View>
           </View>
           <View style={{height: '50%', width: '100%', flexDirection: 'row'}}>
             <View
@@ -55,44 +81,73 @@ const Card = ({data}) => {
                 height: '100%',
                 width: '50%',
                 justifyContent: 'center',
+                paddingLeft: 20,
               }}>
-              <Text
+              <View
                 style={{
-                  marginLeft: 10,
-                  marginBottom: 5,
-                  fontFamily: 'Nunito-SemiBold',
-                  color: 'white',
-                  fontSize: 16,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginBottom: 10,
                 }}>
-                Jane Dow
-              </Text>
-              <Text
+                <NameIcon />
+                <Text
+                  style={{
+                    marginLeft: 10,
+                    fontFamily: 'Nunito-SemiBold',
+                    color: 'white',
+                    fontSize: 16,
+                  }}>
+                  Jane Dow
+                </Text>
+              </View>
+
+              <View
                 style={{
-                  marginLeft: 10,
-                  marginBottom: 5,
-                  fontFamily: 'Nunito-Regular',
-                  color: 'white',
-                  fontSize: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginBottom: 10,
                 }}>
-                +1 123 456 789
-              </Text>
-              <Text
+                <PhoneIcon />
+                <Text
+                  style={{
+                    marginLeft: 10,
+                    fontFamily: 'Nunito-Regular',
+                    color: 'white',
+                    fontSize: 12,
+                  }}>
+                  +1 123 456 789
+                </Text>
+              </View>
+
+              <View
                 style={{
-                  marginLeft: 10,
+                  flexDirection: 'row',
+                  alignItems: 'center',
                   marginBottom: 5,
-                  fontFamily: 'Nunito-Regular',
-                  color: 'white',
-                  fontSize: 12,
                 }}>
-                Abc st, po 12345, NY, USA
-              </Text>
+                <AddressIcon />
+                <Text
+                  style={{
+                    marginLeft: 10,
+                    fontFamily: 'Nunito-Regular',
+                    color: 'white',
+                    fontSize: 12,
+                  }}>
+                  Abc st, po 12345, NY, USA
+                </Text>
+              </View>
             </View>
             <View
               style={{
                 height: '100%',
                 width: '50%',
-                backgroundColor: 'black',
-              }}></View>
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'flex-end',
+              }}>
+              <FBLogo style={{marginRight: 15, marginTop: 10}} />
+              <LILogo style={{marginRight: 15, marginTop: 15}} />
+            </View>
           </View>
         </View>
       </LinearGradient>

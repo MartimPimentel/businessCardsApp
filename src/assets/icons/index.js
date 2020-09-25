@@ -18,4 +18,8 @@ export {default as IGGoToProfile} from './igGoToProfile.svg';
 export {default as LIGoToProfile} from './liGoToProfile.svg';
 export {default as LILogo} from './liLogo.svg';
 export {default as FBLogo} from './fbLogo.svg';
+export {default as CompanyLogo} from './CompanyLogo.svg';
+export {default as NameIcon} from './NameIcon.svg';
+export {default as PhoneIcon} from './PhoneIcon.svg';
+export {default as AddressIcon} from './AddressIcon.svg';
 export const UnknownUser = require('./UnknownUser.jpg');
