@@ -7,7 +7,6 @@ export default Styles = StyleSheet.create({
     borderBottomRightRadius: 29,
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-between',
   },
   background: {
     flex: 1,
@@ -33,6 +32,9 @@ export default Styles = StyleSheet.create({
   },
   rightIcon: {
     marginRight: 30,
+  },
+  rightIconSave: {
+    marginRight: 25,
   },
   searchBarView: {
     width: '100%',

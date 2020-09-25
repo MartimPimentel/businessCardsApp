@@ -53,19 +53,21 @@ const HeaderSearch = () => {
   } else {
     return (
       <View style={Styles.header}>
-        <LinearGradient
-          style={Styles.background}
-          colors={['#A9E2FD', '#8AB1F2']}>
-          <View style={Styles.searchBarView}>
-            <TouchableOpacity
-              onPress={() => {
-                setSearchBarActivated(false);
-              }}>
-              <LeftArrowIcon style={{marginLeft: 20}} />
-            </TouchableOpacity>
-            <SearchBar />
-          </View>
-        </LinearGradient>
+        <SafeAreaView style={Styles.safeAreaView}>
+          <LinearGradient
+            style={Styles.background}
+            colors={['#A9E2FD', '#8AB1F2']}>
+            <View style={Styles.searchBarView}>
+              <TouchableOpacity
+                onPress={() => {
+                  setSearchBarActivated(false);
+                }}>
+                <LeftArrowIcon style={{marginLeft: 20}} />
+              </TouchableOpacity>
+              <SearchBar />
+            </View>
+          </LinearGradient>
+        </SafeAreaView>
       </View>
     );
   }

@@ -22,21 +22,10 @@ const HeaderEdit = ({onClickToSaveData}) => {
               <LeftArrowIcon />
             </TouchableOpacity>
             <CardsIcon />
-            <TouchableOpacity
-              style={Styles.rightIcon}
-              onPress={onClickToSaveData}>
-              <SaveIcon style={{marginBottom: 15}} />
-              <Text
-                style={{
-                  fontSize: 11,
-                  color: 'white',
-                  fontFamily: 'Nunito-SemiBold',
-                  position: 'absolute',
-                  alignSelf: 'center',
-                  marginTop: 38,
-                }}>
-                Save
-              </Text>
+            <TouchableOpacity onPress={onClickToSaveData}>
+              <View style={Styles.rightIconSave}>
+                <SaveIcon />
+              </View>
             </TouchableOpacity>
           </View>
         </LinearGradient>

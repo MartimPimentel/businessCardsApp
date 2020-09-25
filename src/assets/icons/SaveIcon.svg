@@ -1,6 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38">
-  <g id="Group_5069" data-name="Group 5069" transform="translate(-308.717 -57.717)">
-    <circle id="Ellipse_396" data-name="Ellipse 396" cx="19" cy="19" r="19" transform="translate(308.717 57.717)" fill="#fff"/>
-    <path id="Icon_awesome-check" data-name="Icon awesome-check" d="M7.471,20.659.322,13.51a1.1,1.1,0,0,1,0-1.555L1.878,10.4a1.1,1.1,0,0,1,1.555,0l4.816,4.816L18.564,4.9a1.1,1.1,0,0,1,1.555,0l1.555,1.555a1.1,1.1,0,0,1,0,1.555L9.027,20.659A1.1,1.1,0,0,1,7.471,20.659Z" transform="translate(316.88 63.938)" fill="#8db6f3"/>
+  <g id="Group_5070" data-name="Group 5070" transform="translate(-310 -48.465)">
+    <g id="Group_5069" data-name="Group 5069" transform="translate(310 51.233)">
+      <circle id="Ellipse_396" data-name="Ellipse 396" cx="19" cy="19" r="19" transform="translate(0 -2.767)" fill="#fff"/>
+      <path id="Icon_awesome-check" data-name="Icon awesome-check" d="M5.264,20.659.227,13.51a1.446,1.446,0,0,1,0-1.555l1.1-1.555a.627.627,0,0,1,1.1,0l3.393,4.816L13.079,4.9a.627.627,0,0,1,1.1,0l1.1,1.555a1.446,1.446,0,0,1,0,1.555L6.359,20.659A.627.627,0,0,1,5.264,20.659Z" transform="translate(11.163 3.618)" fill="#8db6f3"/>
+    </g>
   </g>
 </svg>
