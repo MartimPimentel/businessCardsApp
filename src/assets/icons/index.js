@@ -16,6 +16,8 @@ export {default as SearchBarIcon} from './searchBarIcon.svg';
 export {default as FBGoToProfile} from './FBGoToProfile.svg';
 export {default as IGGoToProfile} from './IGGoToProfile.svg';
 export {default as LIGoToProfile} from './LIGoToProfile.svg';
+export {default as QRCodeIcon} from './QRCodeIcon.svg';
+export {default as NFCIcon} from './NFCIcon.svg';
 export {default as LILogo} from './liLogo.svg';
 export {default as FBLogo} from './fbLogo.svg';
 export {default as CompanyLogo} from './CompanyLogo.svg';

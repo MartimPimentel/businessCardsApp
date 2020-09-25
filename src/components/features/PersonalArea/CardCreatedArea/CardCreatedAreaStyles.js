@@ -1,16 +1,34 @@
-import { Platform, StyleSheet } from "react-native";
-
+import {Dimensions, StyleSheet} from 'react-native';
+const windowHeight = Dimensions.get('window').height;
 export default Styles = StyleSheet.create({
-  text: {
-    fontFamily: "Nunito-Regular",
-    fontSize: 17,
-    alignSelf: "center",
+  divider: {
+    height: '40%',
+    justifyContent: 'flex-end',
   },
   textBox: {
-    alignSelf: "center",
+    alignSelf: 'center',
     marginTop: 30,
   },
-  card: {
-    marginTop: Platform.OS == "android" ? -260 : -200,
+  outsideContainer: {
+    height: windowHeight < 550 ? '60%' : '40%',
+    width: '100%',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  card: {height: '40%'},
+  footerBackground: {
+    backgroundColor: 'white',
+    height: '50%',
+    width: '100%',
+    borderTopRightRadius: 50,
+    borderTopLeftRadius: 50,
+  },
+  buttonsContainer: {
+    position: 'absolute',
+    flexDirection: 'row',
+    height: '100%',
+    width: '100%',
+    paddingHorizontal: '10%',
+    justifyContent: 'space-evenly',
   },
 });
