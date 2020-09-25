@@ -42,4 +42,10 @@ export default Styles = StyleSheet.create({
     height: '100%',
     marginTop: 35,
   },
+  safeAreaView: {
+    flex: 1,
+    backgroundColor: '#A9E2FD',
+    borderBottomLeftRadius: 39,
+    borderBottomRightRadius: 39,
+  },
 });

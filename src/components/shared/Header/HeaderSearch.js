@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ImageBackground, View} from 'react-native';
+import {ImageBackground, SafeAreaView, View} from 'react-native';
 import SearchBar from '../SearchBar/SearchBar';
 import Styles from './HeaderStyles';
 import {
@@ -20,32 +20,34 @@ const HeaderSearch = () => {
   if (!searchBarActivated) {
     return (
       <View style={Styles.header}>
-        <LinearGradient
-          style={Styles.background}
-          colors={['#A9E2FD', '#8AB1F2']}>
-          <View style={Styles.icons}>
-            <TouchableOpacity
-              style={Styles.leftIcon}
-              onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
-              <MenuIcon />
-            </TouchableOpacity>
-            <View style={{width: '30%'}}>
-              <CardsIcon
-                width="100%"
-                height="100%"
-                preserveAspectRatio="meet"
-              />
-            </View>
-            <View style={Styles.rightIcon}>
+        <SafeAreaView style={Styles.safeAreaView}>
+          <LinearGradient
+            style={Styles.background}
+            colors={['#A9E2FD', '#8AB1F2']}>
+            <View style={Styles.icons}>
               <TouchableOpacity
-                onPress={() => {
-                  setSearchBarActivated(true);
-                }}>
-                <SearchIcon />
+                style={Styles.leftIcon}
+                onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
+                <MenuIcon />
               </TouchableOpacity>
+              <View style={{width: '30%'}}>
+                <CardsIcon
+                  width="100%"
+                  height="100%"
+                  preserveAspectRatio="meet"
+                />
+              </View>
+              <View style={Styles.rightIcon}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setSearchBarActivated(true);
+                  }}>
+                  <SearchIcon />
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        </LinearGradient>
+          </LinearGradient>
+        </SafeAreaView>
       </View>
     );
   } else {
