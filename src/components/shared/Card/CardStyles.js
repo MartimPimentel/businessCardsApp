@@ -3,8 +3,8 @@ const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 export default Styles = StyleSheet.create({
   outsideContainer: {
-    height: windowHeight <= 550 ? '80%' : 220,
-    width: windowWidth <= 350 ? '90%' : 350,
+    height: windowHeight <= 550 ? 180 : 220,
+    width: windowWidth <= 350 ? 290 : 350,
     alignSelf: 'center',
   },
   backgroundStyles: {

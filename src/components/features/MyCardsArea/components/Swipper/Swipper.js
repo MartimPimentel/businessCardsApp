@@ -8,11 +8,13 @@ const windowHeight = Dimensions.get('window').height;
 const arr = [{title: 'card one'}, {title: 'card two'}, {title: 'card three'}];
 const Swipper = () => {
   return (
-    <Swiper showsButtons={false} loop={false} style={{height: 240}}>
-      {arr.map((data, index) => {
-        return <Card key={index} data={data.title} />;
-      })}
-    </Swiper>
+    <View style={{height: windowHeight <= 550 ? 210 : 250}}>
+      <Swiper showsButtons={false} loop={false} paginationStyle={{bottom: 0}}>
+        {arr.map((data, index) => {
+          return <Card key={index} data={data.title} />;
+        })}
+      </Swiper>
+    </View>
   );
 };
 export default Swipper;
