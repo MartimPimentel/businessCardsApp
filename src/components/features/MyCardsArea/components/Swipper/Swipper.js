@@ -8,10 +8,7 @@ const windowHeight = Dimensions.get('window').height;
 const arr = [{title: 'card one'}, {title: 'card two'}, {title: 'card three'}];
 const Swipper = () => {
   return (
-    <Swiper
-      paginationStyle={{bottom: windowHeight <= 550 ? '10%' : 50}}
-      showsButtons={false}
-      loop={false}>
+    <Swiper showsButtons={false} loop={false} style={{height: 240}}>
       {arr.map((data, index) => {
         return <Card key={index} data={data.title} />;
       })}

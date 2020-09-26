@@ -18,15 +18,12 @@ const MyCardsArea = () => {
       <HeaderSearch />
       <Text style={Styles.titleStyles}>My Cards</Text>
       <View style={Styles.outsideContainer}>
-        <View style={{height: '50%'}}>
-          <Swipper />
-        </View>
+        <Swipper />
 
         <View style={{height: '51%'}}>
           <ScrollView
             style={{
               paddingHorizontal: 30,
-              marginTop: windowHeight <= 550 ? '-5%' : -40,
             }}>
             <View style={{marginBottom: 15}}>
               <Text style={Styles.categoryText}>NAME</Text>
