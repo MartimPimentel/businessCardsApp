@@ -1,9 +1,10 @@
 import {Dimensions, StyleSheet} from 'react-native';
 const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width;
 export default Styles = StyleSheet.create({
   outsideContainer: {
-    height: windowHeight <= 550 ? '80%' : '70%',
-    width: '90%',
+    height: windowHeight <= 550 ? '80%' : 220,
+    width: windowWidth <= 350 ? '90%' : 350,
     alignSelf: 'center',
   },
   backgroundStyles: {
