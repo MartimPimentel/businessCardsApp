@@ -26,7 +26,7 @@ const MyCardsArea = () => {
           <ScrollView
             style={{
               paddingHorizontal: 30,
-              marginTop: windowHeight <= 550 ? '-5%' : '-20%',
+              marginTop: windowHeight <= 550 ? '-5%' : -40,
             }}>
             <View style={{marginBottom: 15}}>
               <Text style={Styles.categoryText}>NAME</Text>

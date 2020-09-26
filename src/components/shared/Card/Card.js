@@ -69,8 +69,8 @@ const Card = ({data}) => {
               </View>
             </View>
             <View style={Styles.logoView}>
-              <FBLogo style={{marginRight: 15, marginTop: 10}} />
-              <LILogo style={{marginRight: 15, marginTop: 15}} />
+              <FBLogo style={{marginRight: 15}} />
+              <LILogo style={{marginRight: 15, marginTop: 5}} />
             </View>
           </View>
         </View>
