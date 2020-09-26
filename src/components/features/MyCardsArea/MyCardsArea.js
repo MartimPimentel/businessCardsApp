@@ -20,7 +20,7 @@ const MyCardsArea = () => {
       <View style={Styles.outsideContainer}>
         <Swipper />
 
-        <View>
+        <View style={{height: windowHeight <= 600 ? '45%' : '50%'}}>
           <ScrollView
             style={{
               paddingHorizontal: 30,

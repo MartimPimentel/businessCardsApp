@@ -3,8 +3,8 @@ const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 export default Styles = StyleSheet.create({
   outsideContainer: {
-    height: windowHeight <= 550 ? 180 : 220,
-    width: windowWidth <= 350 ? 290 : 350,
+    height: windowHeight <= 600 ? 180 : 220,
+    width: '90%',
     alignSelf: 'center',
   },
   backgroundStyles: {
@@ -38,8 +38,8 @@ export default Styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   imageView: {
-    height: windowHeight <= 550 ? 70 : 90,
-    width: windowHeight <= 550 ? 70 : 90,
+    height: windowHeight <= 600 ? 70 : 90,
+    width: windowHeight <= 600 ? 70 : 90,
     justifyContent: 'center',
     left: '25%',
     top: '2%',

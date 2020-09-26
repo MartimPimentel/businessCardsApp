@@ -9,7 +9,7 @@ export default Styles = StyleSheet.create({
     alignSelf: 'center',
   },
   outsideContainer: {
-    height: windowHeight < 550 ? '60%' : '40%',
+    height: windowHeight < 600 ? '60%' : '40%',
     width: '100%',
     justifyContent: 'flex-end',
     alignItems: 'center',

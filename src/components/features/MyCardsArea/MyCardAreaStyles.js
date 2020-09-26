@@ -2,7 +2,7 @@ import {Dimensions, Platform, StyleSheet} from 'react-native';
 const windowHeight = Dimensions.get('window').height;
 export default Styles = StyleSheet.create({
   outsideContainer: {
-    height: '80%',
+    height: '100%',
     alignSelf: 'center',
   },
   titleStyles: {

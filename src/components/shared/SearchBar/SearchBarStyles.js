@@ -14,6 +14,6 @@ export default Styles = StyleSheet.create({
   textInput: {
     width: '80%',
     marginLeft: 15,
-    height: windowHeight < 550 ? 40 : 50,
+    height: windowHeight < 600 ? 40 : 50,
   },
 });
