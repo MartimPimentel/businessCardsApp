@@ -6,15 +6,27 @@ import Card from '../../../shared/Card/Card';
 import {QRCodeIcon, NFCIcon} from '../../../../assets/icons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
+const personalData = {
+  name: 'Martim Pimentel',
+  phone: '+351 915 803 555',
+  address: 'Rua Cesário Verde 484, Cascais',
+  companyName: 'M&M Mobile Solutions',
+};
+
 const CardCreatedArea = () => {
   return (
     <View style={{height: '100%'}}>
       <Header />
-      <View style={Styles.textBox}>
-        <Text style={Styles.titleTexts}>Personal Area</Text>
-      </View>
-      <View style={Styles.card}>
-        <Card />
+      <View
+        style={{
+          justifyContent: 'center',
+        }}>
+        <View style={Styles.textBox}>
+          <Text style={Styles.titleTexts}>Personal Area</Text>
+        </View>
+        <View style={Styles.card}>
+          <Card data={personalData} />
+        </View>
       </View>
       <View style={Styles.divider}>
         <View style={Styles.outsideContainer}>

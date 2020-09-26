@@ -74,7 +74,7 @@ export default Styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'yellow',
   },
-  fullInfoView: {width: '80%'},
+  fullInfoView: {},
   infoView: {
     flexDirection: 'row',
     alignItems: 'center',

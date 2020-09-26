@@ -8,7 +8,7 @@ export default Styles = StyleSheet.create({
   titleStyles: {
     textAlign: 'center',
     fontSize: 20,
-    color: '#393939',
+    color: '#474D5D',
     fontFamily: 'Nunito-Regular',
     padding: 10,
   },

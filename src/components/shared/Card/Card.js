@@ -19,6 +19,7 @@ import {
 } from '../../../assets/icons';
 import LinearGradient from 'react-native-linear-gradient';
 const Card = ({data}) => {
+  const {phone, address, companyName, name} = data;
   return (
     <View style={Styles.outsideContainer}>
       <LinearGradient
@@ -44,23 +45,23 @@ const Card = ({data}) => {
             <View style={Styles.fullInfoView}>
               <View style={Styles.infoView}>
                 <NameIcon />
-                <Text style={Styles.nameText}>Jane Dow</Text>
+                <Text style={Styles.nameText}>{name}</Text>
               </View>
 
               <View style={Styles.infoView}>
                 <PhoneIcon />
-                <Text style={Styles.infoText}>+1 123 456 789</Text>
+                <Text style={Styles.infoText}>{phone}</Text>
               </View>
 
               <View style={Styles.infoView}>
                 <AddressIcon />
-                <Text style={Styles.infoText}>Abc st, po 12345, NY, USA</Text>
+                <Text style={Styles.infoText}>{address}</Text>
               </View>
             </View>
           </View>
           <View style={Styles.rightView}>
             <View style={Styles.companyView}>
-              <Text style={Styles.companyText}>Company Name</Text>
+              <Text style={Styles.companyText}>{companyName}</Text>
               <CompanyLogo />
             </View>
             <View style={Styles.logoView}>
