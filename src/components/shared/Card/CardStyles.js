@@ -29,20 +29,25 @@ export default Styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     position: 'absolute',
-    flexDirection: 'column',
-  },
-  topView: {
-    height: '50%',
-    width: '100%',
+    paddingLeft: '7%',
+    paddingRight: '3%',
+    paddingVertical: '3%',
     flexDirection: 'row',
+  },
+  leftView: {
+    height: '100%',
+    width: '50%',
+    justifyContent: 'space-between',
+  },
+  rightView: {
+    height: '100%',
+    width: '50%',
     justifyContent: 'space-between',
   },
   imageView: {
     height: windowHeight <= 600 ? 70 : 90,
     width: windowHeight <= 600 ? 70 : 90,
     justifyContent: 'center',
-    left: '25%',
-    top: '2%',
   },
   image: {
     alignSelf: 'center',
@@ -55,8 +60,6 @@ export default Styles = StyleSheet.create({
   },
   companyView: {
     flexDirection: 'row',
-    marginTop: '2%',
-    marginRight: '5%',
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
@@ -69,18 +72,13 @@ export default Styles = StyleSheet.create({
   bottomView: {
     height: '50%',
     width: '100%',
-    flexDirection: 'row',
+    backgroundColor: 'yellow',
   },
-  fullInfoView: {
-    height: '100%',
-    width: '50%',
-    justifyContent: 'center',
-    paddingLeft: 20,
-  },
+  fullInfoView: {width: '80%'},
   infoView: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: '3%',
+    marginTop: '3%',
   },
   infoText: {
     marginLeft: 10,
@@ -95,10 +93,6 @@ export default Styles = StyleSheet.create({
     fontSize: 16,
   },
   logoView: {
-    height: '100%',
-    width: '50%',
-    flexDirection: 'column',
-    justifyContent: 'center',
     alignItems: 'flex-end',
   },
 });

@@ -36,22 +36,10 @@ const Card = ({data}) => {
           />
         </View>
         <View style={Styles.fullCardView}>
-          <View style={Styles.topView}>
+          <View style={Styles.leftView}>
             <View style={Styles.imageView}>
               <Image source={UnknownUser} style={Styles.image} />
             </View>
-            <View
-              style={{
-                height: '100%',
-                width: '65%',
-              }}>
-              <View style={Styles.companyView}>
-                <Text style={Styles.companyText}>Company Name</Text>
-                <CompanyLogo />
-              </View>
-            </View>
-          </View>
-          <View style={Styles.bottomView}>
             <View style={Styles.fullInfoView}>
               <View style={Styles.infoView}>
                 <NameIcon />
@@ -67,6 +55,12 @@ const Card = ({data}) => {
                 <AddressIcon />
                 <Text style={Styles.infoText}>Abc st, po 12345, NY, USA</Text>
               </View>
+            </View>
+          </View>
+          <View style={Styles.rightView}>
+            <View style={Styles.companyView}>
+              <Text style={Styles.companyText}>Company Name</Text>
+              <CompanyLogo />
             </View>
             <View style={Styles.logoView}>
               <FBLogo style={{marginRight: 15}} />
