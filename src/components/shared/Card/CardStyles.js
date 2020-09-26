@@ -43,7 +43,7 @@ export default Styles = StyleSheet.create({
     marginLeft: 10,
     alignSelf: 'center',
     height: '80%',
-    borderRadius: 130 / 2,
+    borderRadius: 100,
     width: '80%',
     backgroundColor: 'transparent',
     borderWidth: 5,
