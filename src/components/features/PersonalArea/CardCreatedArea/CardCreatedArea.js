@@ -11,7 +11,7 @@ const CardCreatedArea = () => {
     <View style={{height: '100%'}}>
       <Header />
       <View style={Styles.textBox}>
-        <Text style={Styles.text}>Personal Area</Text>
+        <Text style={Styles.titleTexts}>Personal Area</Text>
       </View>
       <View style={Styles.card}>
         <Card />

@@ -7,7 +7,6 @@ export default Styles = StyleSheet.create({
   },
   textBox: {
     alignSelf: 'center',
-    marginTop: 30,
   },
   outsideContainer: {
     height: windowHeight < 550 ? '60%' : '40%',
@@ -30,5 +29,12 @@ export default Styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: '10%',
     justifyContent: 'space-evenly',
+  },
+  titleTexts: {
+    textAlign: 'center',
+    fontSize: 20,
+    color: '#393939',
+    fontFamily: 'Nunito-Regular',
+    padding: 10,
   },
 });
