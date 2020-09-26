@@ -15,6 +15,7 @@ import {
   PhoneIcon,
   NameIcon,
   UnknownUser,
+  IGLogo,
 } from '../../../assets/icons';
 import LinearGradient from 'react-native-linear-gradient';
 const Card = ({data}) => {
@@ -63,8 +64,9 @@ const Card = ({data}) => {
               <CompanyLogo />
             </View>
             <View style={Styles.logoView}>
-              <FBLogo style={{marginRight: 15}} />
-              <LILogo style={{marginRight: 15, marginTop: 5}} />
+              <FBLogo />
+              <IGLogo style={{marginTop: 5}} />
+              <LILogo style={{marginTop: 5}} />
             </View>
           </View>
         </View>

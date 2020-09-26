@@ -94,5 +94,6 @@ export default Styles = StyleSheet.create({
   },
   logoView: {
     alignItems: 'flex-end',
+    marginRight: '4%',
   },
 });
