@@ -1,5 +1,6 @@
 import React from 'react';
-import {ImageBackground, Text, View} from 'react-native';
+import {Dimensions, Image, ImageBackground, Text, View} from 'react-native';
+const windowHeight = Dimensions.get('window').height;
 import Styles from './CardStyles';
 import {
   CardDrawRight,
@@ -13,6 +14,7 @@ import {
   AddressIcon,
   PhoneIcon,
   NameIcon,
+  UnknownUser,
 } from '../../../assets/icons';
 import LinearGradient from 'react-native-linear-gradient';
 const Card = ({data}) => {
@@ -33,118 +35,40 @@ const Card = ({data}) => {
             preserveAspectRatio="none"
           />
         </View>
-        <View
-          style={{
-            height: '100%',
-            width: '100%',
-            position: 'absolute',
-            flexDirection: 'column',
-          }}>
-          <View style={{height: '50%', width: '100%', flexDirection: 'row'}}>
-            <View
-              style={{
-                height: '100%',
-                width: '35%',
-                justifyContent: 'center',
-              }}>
-              <PictureBorder style={{alignSelf: 'center'}} />
+        <View style={Styles.fullCardView}>
+          <View style={Styles.topView}>
+            <View style={Styles.imageView}>
+              <Image source={UnknownUser} style={Styles.image} />
             </View>
             <View
               style={{
                 height: '100%',
                 width: '65%',
               }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginTop: 15,
-                  marginRight: 15,
-                  justifyContent: 'flex-end',
-                  alignItems: 'center',
-                }}>
-                <Text
-                  style={{
-                    marginRight: 15,
-                    fontFamily: 'Nunito-Regular',
-                    color: 'white',
-                    fontSize: 12,
-                  }}>
-                  Company Name
-                </Text>
+              <View style={Styles.companyView}>
+                <Text style={Styles.companyText}>Company Name</Text>
                 <CompanyLogo />
               </View>
             </View>
           </View>
-          <View style={{height: '50%', width: '100%', flexDirection: 'row'}}>
-            <View
-              style={{
-                height: '100%',
-                width: '50%',
-                justifyContent: 'center',
-                paddingLeft: 20,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginBottom: 10,
-                }}>
+          <View style={Styles.bottomView}>
+            <View style={Styles.fullInfoView}>
+              <View style={Styles.infoView}>
                 <NameIcon />
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    fontFamily: 'Nunito-SemiBold',
-                    color: 'white',
-                    fontSize: 16,
-                  }}>
-                  Jane Dow
-                </Text>
+                <Text style={Styles.nameText}>Jane Dow</Text>
               </View>
 
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginBottom: 10,
-                }}>
+              <View style={Styles.infoView}>
                 <PhoneIcon />
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    fontFamily: 'Nunito-Regular',
-                    color: 'white',
-                    fontSize: 12,
-                  }}>
-                  +1 123 456 789
-                </Text>
+                <Text style={Styles.infoText}>+1 123 456 789</Text>
               </View>
 
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginBottom: 5,
-                }}>
+              <View style={Styles.infoView}>
                 <AddressIcon />
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    fontFamily: 'Nunito-Regular',
-                    color: 'white',
-                    fontSize: 12,
-                  }}>
-                  Abc st, po 12345, NY, USA
-                </Text>
+                <Text style={Styles.infoText}>Abc st, po 12345, NY, USA</Text>
               </View>
             </View>
-            <View
-              style={{
-                height: '100%',
-                width: '50%',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'flex-end',
-              }}>
+            <View style={Styles.logoView}>
               <FBLogo style={{marginRight: 15, marginTop: 10}} />
               <LILogo style={{marginRight: 15, marginTop: 15}} />
             </View>
