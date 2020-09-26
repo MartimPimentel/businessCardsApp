@@ -10,6 +10,7 @@ import {
   LIGoToProfile,
 } from '../../../assets/icons';
 const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const MyCardsArea = () => {
   return (
@@ -22,7 +23,11 @@ const MyCardsArea = () => {
         </View>
 
         <View style={{height: '51%'}}>
-          <ScrollView style={{paddingHorizontal: 30, marginTop: '-10%'}}>
+          <ScrollView
+            style={{
+              paddingHorizontal: 30,
+              marginTop: windowHeight <= 550 ? '-5%' : '-10%',
+            }}>
             <View style={{marginBottom: 15}}>
               <Text style={Styles.categoryText}>NAME</Text>
               <View

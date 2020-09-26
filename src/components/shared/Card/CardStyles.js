@@ -1,7 +1,8 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
+const windowHeight = Dimensions.get('window').height;
 export default Styles = StyleSheet.create({
   outsideContainer: {
-    height: '70%',
+    height: windowHeight <= 550 ? '80%' : '70%',
     width: '90%',
     alignSelf: 'center',
   },
@@ -33,26 +34,28 @@ export default Styles = StyleSheet.create({
     height: '50%',
     width: '100%',
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   imageView: {
-    height: '100%',
-    width: '35%',
+    height: windowHeight <= 550 ? 70 : 90,
+    width: windowHeight <= 550 ? 70 : 90,
     justifyContent: 'center',
+    left: '25%',
+    top: '2%',
   },
   image: {
-    marginLeft: 10,
     alignSelf: 'center',
-    height: '80%',
-    borderRadius: 100,
-    width: '80%',
+    height: '100%',
+    borderRadius: 500,
+    width: '100%',
     backgroundColor: 'transparent',
     borderWidth: 5,
     borderColor: '#BFD0F7',
   },
   companyView: {
     flexDirection: 'row',
-    marginTop: 15,
-    marginRight: 15,
+    marginTop: '2%',
+    marginRight: '5%',
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
@@ -76,7 +79,7 @@ export default Styles = StyleSheet.create({
   infoView: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: '3%',
   },
   infoText: {
     marginLeft: 10,
