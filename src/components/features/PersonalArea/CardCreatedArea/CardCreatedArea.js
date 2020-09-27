@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Text, Dimensions} from 'react-native';
+import {View, Text} from 'react-native';
 import Styles from './CardCreatedAreaStyles';
-import Header from '../../../shared/Header/Header';
+import PersonalAreaHeader from './components/Header/PersonalAreaHeader';
 import Card from '../../../shared/Card/Card';
 import {QRCodeIcon, NFCIcon} from '../../../../assets/icons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -16,7 +16,7 @@ const personalData = {
 const CardCreatedArea = () => {
   return (
     <View style={{height: '100%'}}>
-      <Header />
+      <PersonalAreaHeader />
       <View
         style={{
           justifyContent: 'center',

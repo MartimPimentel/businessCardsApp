@@ -25,4 +25,5 @@ export {default as CompanyLogo} from './CompanyLogo.svg';
 export {default as NameIcon} from './NameIcon.svg';
 export {default as PhoneIcon} from './PhoneIcon.svg';
 export {default as AddressIcon} from './AddressIcon.svg';
+export {default as AddIcon} from './AddIcon.svg';
 export const UnknownUser = require('./UnknownUser.jpg');

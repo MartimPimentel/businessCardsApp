@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {View, Text, Keyboard, KeyboardAvoidingView} from 'react-native';
+import {View, Text, Keyboard} from 'react-native';
 import {
   ScrollView,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
-import HeaderEdit from '../../../shared/Header/HeaderEdit';
+import HeaderEdit from './components/Header/HeaderEdit';
 import CardForm from './components/CardForm/CardForm';
 import Styles from './EditCardAreaStyles';
 const EditCardArea = () => {

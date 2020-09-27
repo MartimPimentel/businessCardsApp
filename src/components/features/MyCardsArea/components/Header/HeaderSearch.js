@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
-import {ImageBackground, SafeAreaView, View} from 'react-native';
-import SearchBar from '../SearchBar/SearchBar';
+import {SafeAreaView, View} from 'react-native';
+import SearchBar from '../../../../shared/SearchBar/SearchBar';
 import Styles from './HeaderStyles';
 import {
   MenuIcon,
   CardsIcon,
   SearchIcon,
   LeftArrowIcon,
-} from '../../../assets/icons';
-import {HeaderBackground} from '../../../assets/backgrounds';
+} from '../../../../../assets/icons';
 import {DrawerActions, useNavigation} from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';

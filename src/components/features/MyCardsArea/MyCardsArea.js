@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, LogBox} from 'react-native';
 import Swipper from './components/Swipper/Swipper';
 import Styles from './MyCardAreaStyles';
-import HeaderSearch from '../../shared/Header/HeaderSearch';
+import HeaderSearch from './components/Header/HeaderSearch';
 import CardForm from './components/CardForm/CardForm';
 
 const dataObj = [

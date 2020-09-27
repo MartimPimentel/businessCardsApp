@@ -1,13 +1,12 @@
 import React from 'react';
-import {Text, ImageBackground, View, SafeAreaView} from 'react-native';
-import Styles from './HeaderStyles';
-import {LeftArrowIcon, SaveIcon, CardsIcon} from '../../../assets/icons';
+import {SafeAreaView, View} from 'react-native';
+import Styles from './PersonalAreaHeaderStyles';
+import {EditIcon, MenuIcon, CardsIcon} from '../../../../../../assets/icons';
 import {DrawerActions, useNavigation} from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {HeaderBackground} from '../../../assets/backgrounds';
 import LinearGradient from 'react-native-linear-gradient';
 
-const HeaderEdit = ({onClickToSaveData}) => {
+const PersonalAreaHeader = () => {
   const navigation = useNavigation();
   return (
     <View style={Styles.header}>
@@ -18,14 +17,14 @@ const HeaderEdit = ({onClickToSaveData}) => {
           <View style={Styles.icons}>
             <TouchableOpacity
               style={Styles.leftIcon}
-              onPress={() => navigation.goBack()}>
-              <LeftArrowIcon />
+              onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
+              <MenuIcon />
             </TouchableOpacity>
             <CardsIcon />
-            <TouchableOpacity onPress={onClickToSaveData}>
-              <View style={Styles.rightIconSave}>
-                <SaveIcon />
-              </View>
+            <TouchableOpacity
+              style={Styles.rightIcon}
+              onPress={() => navigation.navigate('EditCardArea')}>
+              <EditIcon />
             </TouchableOpacity>
           </View>
         </LinearGradient>
@@ -34,4 +33,4 @@ const HeaderEdit = ({onClickToSaveData}) => {
   );
 };
 
-export default HeaderEdit;
+export default PersonalAreaHeader;

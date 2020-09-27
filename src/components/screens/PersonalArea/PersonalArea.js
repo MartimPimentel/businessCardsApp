@@ -6,7 +6,7 @@ import NoCardArea from '../../features/PersonalArea/NoCardArea/NoCardArea';
 
 const PersonalArea = () => {
   const personalCardExists = () => {
-    return true;
+    return false;
   };
   if (personalCardExists()) {
     return <CardCreatedArea />;

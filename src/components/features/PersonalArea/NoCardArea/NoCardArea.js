@@ -1,10 +1,10 @@
-import React from "react";
-import { View, Text } from "react-native";
-import Styles from "./NoCardAreaStyles";
-import Header from "../../../shared/Header/Header";
-import { NoCardIcon, AddCardIcon } from "../../../../assets/icons";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native";
+import React from 'react';
+import {View, Text} from 'react-native';
+import Styles from './NoCardAreaStyles';
+import Header from './components/Header/NoCardsHeader';
+import {NoCardIcon, AddCardIcon} from '../../../../assets/icons';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
 const NoCardArea = () => {
   const navigation = useNavigation();
   return (
@@ -13,8 +13,7 @@ const NoCardArea = () => {
       <ScrollView
         alwaysBounceHorizontal={false}
         alwaysBounceVertical={false}
-        bounces={false}
-      >
+        bounces={false}>
         <View style={Styles.textBox}>
           <Text style={Styles.text}>Personal Area</Text>
         </View>
@@ -28,9 +27,8 @@ const NoCardArea = () => {
         <TouchableOpacity
           style={Styles.icon}
           onPress={() => {
-            navigation.navigate("EditCardArea");
-          }}
-        >
+            navigation.navigate('EditCardArea');
+          }}>
           <AddCardIcon />
         </TouchableOpacity>
       </ScrollView>
