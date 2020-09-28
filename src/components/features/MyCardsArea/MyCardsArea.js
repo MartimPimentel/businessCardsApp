@@ -8,13 +8,13 @@ import CardForm from './components/CardForm/CardForm';
 const dataObj = [
   {
     name: 'Martim Pimentel',
-    phone: '+351 915 803 555',
+    phoneNumber: '+351 915 803 555',
     address: 'Rua Cesário Verde 484, Cascais',
     companyName: 'M&M Mobile Solutions',
   },
   {
     name: 'Martim Bello',
-    phone: '+351 914 205 333',
+    phoneNumber: '+351 914 205 333',
     address: 'Rua dos Panucas 200, Estremoz',
     companyName: 'M&M Mobile Solutions',
   },

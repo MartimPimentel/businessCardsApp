@@ -7,7 +7,6 @@ export default Styles = StyleSheet.create({
     fontFamily: 'NunitoSans-Bold',
   },
   textInputStyles: {
-    height: 40,
     borderColor: 'gainsboro',
     borderBottomWidth: 2.5,
     opacity: 0.8,

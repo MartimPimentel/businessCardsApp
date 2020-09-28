@@ -7,9 +7,10 @@ import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 const NoCardArea = ({data}) => {
   const navigation = useNavigation();
+
   return (
     <>
-      <Header />
+      <Header data={data} />
       <ScrollView
         alwaysBounceHorizontal={false}
         alwaysBounceVertical={false}

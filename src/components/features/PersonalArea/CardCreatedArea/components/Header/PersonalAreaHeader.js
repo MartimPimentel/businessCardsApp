@@ -8,6 +8,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const PersonalAreaHeader = ({data}) => {
   const navigation = useNavigation();
+
   return (
     <View style={Styles.header}>
       <SafeAreaView style={Styles.safeAreaView}>
