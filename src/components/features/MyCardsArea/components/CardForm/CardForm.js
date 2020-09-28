@@ -16,7 +16,7 @@ const CardForm = ({data}) => {
   return (
     <View
       style={{
-        height: windowHeight <= 600 ? '45%' : '50%',
+        height: windowHeight <= 600 ? '45%' : '52%',
       }}>
       <ScrollView
         style={{
