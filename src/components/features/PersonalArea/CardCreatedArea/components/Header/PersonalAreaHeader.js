@@ -6,7 +6,7 @@ import {DrawerActions, useNavigation} from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 
-const PersonalAreaHeader = () => {
+const PersonalAreaHeader = ({data}) => {
   const navigation = useNavigation();
   return (
     <View style={Styles.header}>
@@ -23,7 +23,7 @@ const PersonalAreaHeader = () => {
             <CardsIcon />
             <TouchableOpacity
               style={Styles.rightIcon}
-              onPress={() => navigation.navigate('EditCardArea')}>
+              onPress={() => navigation.navigate('EditCardArea', data)}>
               <EditIcon />
             </TouchableOpacity>
           </View>

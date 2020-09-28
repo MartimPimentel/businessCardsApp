@@ -13,10 +13,10 @@ const personalData = {
   companyName: 'M&M Mobile Solutions',
 };
 
-const CardCreatedArea = () => {
+const CardCreatedArea = ({data}) => {
   return (
     <View style={{height: '100%'}}>
-      <PersonalAreaHeader />
+      <PersonalAreaHeader data={data} />
       <View
         style={{
           justifyContent: 'center',

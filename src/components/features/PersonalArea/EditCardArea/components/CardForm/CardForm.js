@@ -21,7 +21,7 @@ const projectFormSchema = yup.object().shape({
 });
 const windowWidth = Dimensions.get('window').width;
 
-const CardForm = ({onClickToSave, redirectSubmittedData}) => {
+const CardForm = ({onClickToSave, redirectSubmittedData, data}) => {
   const {handleSubmit, trigger, watch, errors, control} = useForm({
     resolver: yupResolver(projectFormSchema),
     mode: 'onSubmit',
@@ -29,6 +29,19 @@ const CardForm = ({onClickToSave, redirectSubmittedData}) => {
   const onSubmit = (data) => {
     redirectSubmittedData(data);
   };
+  const {
+    name,
+    address,
+    companyLogo,
+    companyName,
+    email,
+    facebookLink,
+    instagramLink,
+    linkedInLink,
+    observations,
+    phoneNumber,
+    profilePhoto,
+  } = data;
 
   useEffect(() => {
     return handleSubmit(onSubmit);
@@ -57,7 +70,7 @@ const CardForm = ({onClickToSave, redirectSubmittedData}) => {
         <Controller
           control={control}
           name="name"
-          defaultValue=""
+          defaultValue={name}
           render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
@@ -77,7 +90,7 @@ const CardForm = ({onClickToSave, redirectSubmittedData}) => {
         <Controller
           control={control}
           name="email"
-          defaultValue=""
+          defaultValue={email}
           render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
@@ -94,7 +107,7 @@ const CardForm = ({onClickToSave, redirectSubmittedData}) => {
         <Controller
           control={control}
           name="phoneNumber"
-          defaultValue=""
+          defaultValue={phoneNumber}
           render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
@@ -113,7 +126,7 @@ const CardForm = ({onClickToSave, redirectSubmittedData}) => {
         <Controller
           control={control}
           name="address"
-          defaultValue=""
+          defaultValue={address}
           render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
@@ -132,7 +145,7 @@ const CardForm = ({onClickToSave, redirectSubmittedData}) => {
         <Controller
           control={control}
           name="companyName"
-          defaultValue=""
+          defaultValue={companyName}
           render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
@@ -156,7 +169,7 @@ const CardForm = ({onClickToSave, redirectSubmittedData}) => {
           <Controller
             control={control}
             name="companyLogo"
-            defaultValue=""
+            defaultValue={companyLogo}
             render={({onChange, onBlur, value}) => (
               <PhotoPicker
                 onChange={(image) => {
@@ -172,7 +185,7 @@ const CardForm = ({onClickToSave, redirectSubmittedData}) => {
         <Controller
           control={control}
           name="observations"
-          defaultValue=""
+          defaultValue={observations}
           render={({onChange, onBlur, value}) => (
             <TextInput
               style={[

@@ -7,11 +7,27 @@ import {
 import HeaderEdit from './components/Header/HeaderEdit';
 import CardForm from './components/CardForm/CardForm';
 import Styles from './EditCardAreaStyles';
-const EditCardArea = () => {
+import AsyncStorage from '@react-native-community/async-storage';
+import {useNavigation, useRoute} from '@react-navigation/native';
+const EditCardArea = ({data}) => {
+  const navigation = useNavigation();
+  const route = useRoute();
+
   const [pressedSave, setPressedSave] = useState(undefined);
+  const storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('@PERSONAL_DATA', jsonValue);
+    } catch (e) {
+      // saving error
+    }
+  };
+
   const saveCardData = (data) => {
     console.log('Saved data:', data);
-    //Redirect to personal Area page here!
+    storeData(data);
+
+    navigation.navigate('PersonalArea');
   };
   return (
     <>
@@ -33,6 +49,7 @@ const EditCardArea = () => {
             <CardForm
               onClickToSave={pressedSave}
               redirectSubmittedData={saveCardData}
+              data={route.params}
             />
           </View>
         </ScrollView>
