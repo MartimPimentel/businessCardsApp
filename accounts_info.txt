@@ -1,0 +1,7 @@
+GMAIL
+email: martimappdev@gmail.com
+pass: businessCardsApp
+
+FACEBOOK    
+email: martimappdev@gmail.com
+pass: businessCardsApp
