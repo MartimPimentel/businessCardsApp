@@ -14,7 +14,7 @@ export default Styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
-  card: {height: '40%'},
+  card: {height: '40%', paddingTop: 30},
   footerBackground: {
     backgroundColor: 'white',
     height: '50%',

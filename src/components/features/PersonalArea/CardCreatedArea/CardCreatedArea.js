@@ -19,7 +19,7 @@ const CardCreatedArea = ({data}) => {
       <PersonalAreaHeader data={data} />
       <View
         style={{
-          justifyContent: 'center',
+          marginTop: 20,
         }}>
         <View style={Styles.textBox}>
           <Text style={Styles.titleTexts}>Personal Area</Text>

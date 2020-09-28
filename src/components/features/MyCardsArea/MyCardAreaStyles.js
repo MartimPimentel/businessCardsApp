@@ -4,6 +4,7 @@ export default Styles = StyleSheet.create({
   outsideContainer: {
     height: '100%',
     alignSelf: 'center',
+    paddingTop: 30,
   },
   titleStyles: {
     textAlign: 'center',
@@ -11,6 +12,7 @@ export default Styles = StyleSheet.create({
     color: '#474D5D',
     fontFamily: 'Nunito-Regular',
     padding: 10,
+    marginTop: 20,
   },
   categoryText: {
     color: '#8DB6F3',
