@@ -9,6 +9,7 @@ import {
   ConnectFacebookIcon,
   ConnectInstagramIcon,
   ConnectLinkedInIcon,
+  DeleteCard,
 } from '../../../../../../assets/icons';
 import PhotoPicker from '../../../../../shared/PhotoPicker/PhotoPicker';
 
@@ -21,14 +22,13 @@ const projectFormSchema = yup.object().shape({
 });
 const windowWidth = Dimensions.get('window').width;
 
-const CardForm = ({onClickToSave, redirectSubmittedData, data}) => {
-  const {handleSubmit, trigger, watch, errors, control} = useForm({
-    resolver: yupResolver(projectFormSchema),
-    mode: 'onSubmit',
-  });
-  const onSubmit = (data) => {
-    redirectSubmittedData(data);
-  };
+const CardForm = ({
+  onClickToSave,
+  redirectSubmittedData,
+  data,
+  onClickToDelete,
+  deleteErrors,
+}) => {
   const {
     name,
     address,
@@ -42,10 +42,49 @@ const CardForm = ({onClickToSave, redirectSubmittedData, data}) => {
     phoneNumber,
     profilePhoto,
   } = data;
+  const {handleSubmit, errors, control, reset, clearErrors} = useForm({
+    resolver: yupResolver(projectFormSchema),
+    mode: 'onSubmit',
+    defaultValues: {
+      name: name,
+      address: address,
+      companyLogo: companyLogo,
+      companyName: companyName,
+      email: email,
+      facebookLink: facebookLink,
+      instagramLink: instagramLink,
+      linkedInLink: linkedInLink,
+      observations: observations,
+      phoneNumber: phoneNumber,
+      profilePhoto: profilePhoto,
+    },
+  });
+  const onSubmit = (data) => {
+    redirectSubmittedData(data);
+  };
+  const onDeleteCard = () => {
+    reset({
+      name: '',
+      address: '',
+      companyLogo: '',
+      companyName: '',
+      email: '',
+      facebookLink: '',
+      instagramLink: '',
+      linkedInLink: '',
+      observations: '',
+      phoneNumber: '',
+      profilePhoto: '',
+    });
+    onClickToDelete();
+  };
 
   useEffect(() => {
     return handleSubmit(onSubmit);
   }, [onClickToSave]);
+  useEffect(() => {
+    clearErrors();
+  }, [deleteErrors]);
   return (
     <View style={Styles.outsideContainer}>
       <View style={Styles.separatorPhotos}>
@@ -54,7 +93,6 @@ const CardForm = ({onClickToSave, redirectSubmittedData, data}) => {
           <Controller
             control={control}
             name="profilePhoto"
-            defaultValue=""
             render={({onChange, onBlur, value}) => (
               <PhotoPicker
                 onChange={(image) => {
@@ -70,7 +108,6 @@ const CardForm = ({onClickToSave, redirectSubmittedData, data}) => {
         <Controller
           control={control}
           name="name"
-          defaultValue={name}
           render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
@@ -90,13 +127,13 @@ const CardForm = ({onClickToSave, redirectSubmittedData, data}) => {
         <Controller
           control={control}
           name="email"
-          defaultValue={email}
           render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
               value={value}
+              keyboardType="email-address"
             />
           )}
         />
@@ -107,13 +144,13 @@ const CardForm = ({onClickToSave, redirectSubmittedData, data}) => {
         <Controller
           control={control}
           name="phoneNumber"
-          defaultValue={phoneNumber}
           render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
               value={value}
+              keyboardType="phone-pad"
             />
           )}
         />
@@ -126,7 +163,6 @@ const CardForm = ({onClickToSave, redirectSubmittedData, data}) => {
         <Controller
           control={control}
           name="address"
-          defaultValue={address}
           render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
@@ -145,7 +181,6 @@ const CardForm = ({onClickToSave, redirectSubmittedData, data}) => {
         <Controller
           control={control}
           name="companyName"
-          defaultValue={companyName}
           render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
@@ -169,7 +204,6 @@ const CardForm = ({onClickToSave, redirectSubmittedData, data}) => {
           <Controller
             control={control}
             name="companyLogo"
-            defaultValue={companyLogo}
             render={({onChange, onBlur, value}) => (
               <PhotoPicker
                 onChange={(image) => {
@@ -185,7 +219,6 @@ const CardForm = ({onClickToSave, redirectSubmittedData, data}) => {
         <Controller
           control={control}
           name="observations"
-          defaultValue={observations}
           render={({onChange, onBlur, value}) => (
             <TextInput
               style={[
@@ -218,7 +251,6 @@ const CardForm = ({onClickToSave, redirectSubmittedData, data}) => {
           <Controller
             control={control}
             name="facebookLink"
-            defaultValue=""
             render={({onChange, onBlur, value}) => (
               <TouchableOpacity>
                 <ConnectFacebookIcon
@@ -231,7 +263,6 @@ const CardForm = ({onClickToSave, redirectSubmittedData, data}) => {
           <Controller
             control={control}
             name="instagramLink"
-            defaultValue=""
             render={({onChange, onBlur, value}) => (
               <TouchableOpacity>
                 <ConnectInstagramIcon
@@ -244,7 +275,6 @@ const CardForm = ({onClickToSave, redirectSubmittedData, data}) => {
           <Controller
             control={control}
             name="linkedInLink"
-            defaultValue=""
             render={({onChange, onBlur, value}) => (
               <TouchableOpacity>
                 <ConnectLinkedInIcon
@@ -255,6 +285,12 @@ const CardForm = ({onClickToSave, redirectSubmittedData, data}) => {
             )}
           />
         </View>
+      </View>
+      <View style={{marginBottom: 15}}>
+        <Text style={Styles.titleEntries}>DELETE CARD</Text>
+        <TouchableOpacity onPress={onDeleteCard}>
+          <DeleteCard style={{alignSelf: 'center', marginTop: 10}} />
+        </TouchableOpacity>
       </View>
     </View>
   );

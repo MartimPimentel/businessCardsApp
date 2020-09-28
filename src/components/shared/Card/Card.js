@@ -19,7 +19,7 @@ import {
 } from '../../../assets/icons';
 import LinearGradient from 'react-native-linear-gradient';
 const Card = ({data}) => {
-  const {phone, address, companyName, name} = data;
+  const {phoneNumber, address, companyName, name} = data;
   return (
     <View style={Styles.outsideContainer}>
       <LinearGradient
@@ -50,7 +50,7 @@ const Card = ({data}) => {
 
               <View style={Styles.infoView}>
                 <PhoneIcon />
-                <Text style={Styles.infoText}>{phone}</Text>
+                <Text style={Styles.infoText}>{phoneNumber}</Text>
               </View>
 
               <View style={Styles.infoView}>

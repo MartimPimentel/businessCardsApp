@@ -25,7 +25,7 @@ const CardCreatedArea = ({data}) => {
           <Text style={Styles.titleTexts}>Personal Area</Text>
         </View>
         <View style={Styles.card}>
-          <Card data={personalData} />
+          <Card data={data} />
         </View>
       </View>
       <View style={Styles.divider}>
