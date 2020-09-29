@@ -16,10 +16,22 @@ import {
   NameIcon,
   UnknownUser,
   IGLogo,
+  EmailIcon,
 } from '../../../assets/icons';
 import LinearGradient from 'react-native-linear-gradient';
 const Card = ({data}) => {
-  const {phoneNumber, address, companyName, name} = data;
+  const {
+    phoneNumber,
+    address,
+    companyName,
+    name,
+    profilePhoto,
+    companyLogo,
+    facebookLink,
+    instagramLink,
+    linkedInLink,
+    email,
+  } = data;
   return (
     <View style={Styles.outsideContainer}>
       <LinearGradient
@@ -40,34 +52,48 @@ const Card = ({data}) => {
         <View style={Styles.fullCardView}>
           <View style={Styles.leftView}>
             <View style={Styles.imageView}>
-              <Image source={UnknownUser} style={Styles.image} />
+              <Image
+                source={UnknownUser}
+                style={Styles.image(!!profilePhoto)}
+              />
             </View>
             <View style={Styles.fullInfoView}>
-              <View style={Styles.infoView}>
+              <View style={[Styles.infoView(!!name), {left: -2}]}>
                 <NameIcon />
                 <Text style={Styles.nameText}>{name}</Text>
               </View>
 
-              <View style={Styles.infoView}>
+              <View style={Styles.infoView(!!phoneNumber)}>
                 <PhoneIcon />
                 <Text style={Styles.infoText}>{phoneNumber}</Text>
               </View>
 
-              <View style={Styles.infoView}>
+              <View style={Styles.infoView(!!address)}>
                 <AddressIcon />
                 <Text style={Styles.infoText}>{address}</Text>
+              </View>
+              <View style={Styles.infoView(!!email)}>
+                <EmailIcon />
+                <Text style={Styles.infoText}>{email}</Text>
               </View>
             </View>
           </View>
           <View style={Styles.rightView}>
             <View style={Styles.companyView}>
-              <Text style={Styles.companyText}>{companyName}</Text>
-              <CompanyLogo />
+              <Text style={Styles.companyText(!!companyName)}>
+                {companyName}
+              </Text>
+
+              <CompanyLogo style={{display: companyLogo ? 'flex' : 'none'}} />
             </View>
             <View style={Styles.logoView}>
-              <FBLogo />
-              <IGLogo style={{marginTop: 5}} />
-              <LILogo style={{marginTop: 5}} />
+              <FBLogo style={{display: facebookLink ? 'flex' : 'none'}} />
+              <IGLogo
+                style={{marginTop: 5, display: instagramLink ? 'flex' : 'none'}}
+              />
+              <LILogo
+                style={{marginTop: 5, display: linkedInLink ? 'flex' : 'none'}}
+              />
             </View>
           </View>
         </View>

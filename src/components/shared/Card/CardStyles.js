@@ -37,7 +37,6 @@ export default Styles = StyleSheet.create({
   leftView: {
     height: '100%',
     width: '50%',
-    justifyContent: 'space-between',
   },
   rightView: {
     height: '100%',
@@ -49,36 +48,46 @@ export default Styles = StyleSheet.create({
     width: windowHeight <= 600 ? 70 : 90,
     justifyContent: 'center',
   },
-  image: {
-    alignSelf: 'center',
-    height: '100%',
-    borderRadius: 500,
-    width: '100%',
-    backgroundColor: 'transparent',
-    borderWidth: 5,
-    borderColor: '#BFD0F7',
+  image: (isVisible) => {
+    return {
+      alignSelf: 'center',
+      height: '100%',
+      borderRadius: 500,
+      width: '100%',
+      backgroundColor: 'transparent',
+      borderWidth: 5,
+      borderColor: '#BFD0F7',
+      display: isVisible ? 'flex' : 'none',
+    };
   },
   companyView: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
+    height: '20%',
   },
-  companyText: {
-    marginRight: 15,
-    fontFamily: 'Nunito-Regular',
-    color: 'white',
-    fontSize: 12,
+  companyText: (isVisible) => {
+    return {
+      marginRight: 15,
+      fontFamily: 'Nunito-Regular',
+      color: 'white',
+      fontSize: 12,
+    };
   },
   bottomView: {
     height: '50%',
     width: '100%',
     backgroundColor: 'yellow',
   },
-  fullInfoView: {},
-  infoView: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: '3%',
+  fullInfoView: {top: '3%'},
+
+  infoView: (isVisible) => {
+    return {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: '2%',
+      display: isVisible ? 'flex' : 'none',
+    };
   },
   infoText: {
     marginLeft: 10,

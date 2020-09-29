@@ -11,6 +11,12 @@ const dataObj = [
     phoneNumber: '+351 915 803 555',
     address: 'Rua Cesário Verde 484, Cascais',
     companyName: 'M&M Mobile Solutions',
+    companyLogo: 'bla',
+    facebookLink: 'bla',
+    instagramLink: 'bla',
+    linkedInLink: 'bla',
+    profilePhoto: 'bla',
+    email: 'bla@mail.com',
   },
   {
     name: 'Martim Bello',
