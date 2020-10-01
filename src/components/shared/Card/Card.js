@@ -72,10 +72,10 @@ const Card = ({data}) => {
                 <AddressIcon />
                 <Text style={Styles.infoText}>{address}</Text>
               </View>
-              <View style={Styles.infoView(!!email)}>
+              {/* <View style={Styles.infoView(!!email)}>
                 <EmailIcon />
                 <Text style={Styles.infoText}>{email}</Text>
-              </View>
+              </View> */}
             </View>
           </View>
           <View style={Styles.rightView}>
@@ -84,7 +84,11 @@ const Card = ({data}) => {
                 {companyName}
               </Text>
 
-              <CompanyLogo style={{display: companyLogo ? 'flex' : 'none'}} />
+              <CompanyLogo
+                style={{
+                  display: companyLogo ? 'flex' : 'none',
+                }}
+              />
             </View>
             <View style={Styles.logoView}>
               <FBLogo style={{display: facebookLink ? 'flex' : 'none'}} />

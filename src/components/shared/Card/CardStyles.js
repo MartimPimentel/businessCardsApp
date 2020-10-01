@@ -31,16 +31,17 @@ export default Styles = StyleSheet.create({
     position: 'absolute',
     paddingLeft: '7%',
     paddingRight: '3%',
-    paddingVertical: '3%',
+    paddingBottom: '5%',
+    paddingTop: '3%',
     flexDirection: 'row',
   },
   leftView: {
     height: '100%',
-    width: '50%',
+    width: '55%',
   },
   rightView: {
     height: '100%',
-    width: '50%',
+    width: '45%',
     justifyContent: 'space-between',
   },
   imageView: {
@@ -68,18 +69,19 @@ export default Styles = StyleSheet.create({
   },
   companyText: (isVisible) => {
     return {
-      marginRight: 15,
       fontFamily: 'Nunito-Regular',
       color: 'white',
       fontSize: 12,
+      display: isVisible ? 'flex' : 'none',
+      marginRight: 15,
+      textAlign: 'center',
     };
   },
   bottomView: {
     height: '50%',
     width: '100%',
-    backgroundColor: 'yellow',
   },
-  fullInfoView: {top: '3%'},
+  fullInfoView: {top: '5%'},
 
   infoView: (isVisible) => {
     return {

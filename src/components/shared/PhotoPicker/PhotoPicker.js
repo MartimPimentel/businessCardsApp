@@ -89,11 +89,17 @@ const PhotoPicker = ({onChange}) => {
           </TouchableOpacity>
         </>
       ) : (
-        <>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            width: '100%',
+          }}>
           <TouchableOpacity
             onPress={() => {
               pickFromGallery();
-            }}>
+            }}
+            style={{width: '120%'}}>
             <LinearGradient
               style={Styles.chooseImageButton}
               colors={['#A9E2FD', '#8AB1F2']}>
@@ -104,16 +110,17 @@ const PhotoPicker = ({onChange}) => {
           <TouchableOpacity
             onPress={() => {
               openCamara();
-            }}>
+            }}
+            style={{width: '150%'}}>
             <LinearGradient
-              style={Styles.deleteImageButton}
+              style={Styles.chooseImageButton}
               colors={['#A9E2FD', '#8AB1F2']}>
               <Text style={{color: 'white', textAlign: 'center'}}>
                 Take picture
               </Text>
             </LinearGradient>
           </TouchableOpacity>
-        </>
+        </View>
       )}
     </View>
   );

@@ -7,11 +7,11 @@ export default Styles = StyleSheet.create({
     alignSelf: 'center',
   },
   icon: {
-    marginTop: 70,
+    marginTop: '15%',
     alignSelf: 'center',
   },
   textBox: {
     alignSelf: 'center',
-    marginTop: 30,
+    marginTop: '8%',
   },
 });

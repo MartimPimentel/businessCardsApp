@@ -4,7 +4,7 @@ export default Styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     top: 10,
-    left: -3,
+    left: '-35%',
   },
   photoStyles: {
     width: 90,
@@ -14,17 +14,9 @@ export default Styles = StyleSheet.create({
   },
   chooseImageButton: {
     height: 40,
-    width: 130,
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 20,
-  },
-  deleteImageButton: {
-    height: 40,
-    width: 120,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 20,
-    marginLeft: '20%',
   },
 });

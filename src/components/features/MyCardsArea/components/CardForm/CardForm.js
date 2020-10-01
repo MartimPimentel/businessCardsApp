@@ -11,7 +11,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const CardForm = ({data}) => {
-  const {phoneNumber, address, companyName, name} = data;
+  const {phoneNumber, address, companyName, name, email, observations} = data;
 
   return (
     <View
@@ -33,6 +33,16 @@ const CardForm = ({data}) => {
           </View>
         </View>
         <View style={{marginBottom: 15}}>
+          <Text style={Styles.categoryText}>COMPANY NAME</Text>
+          <View
+            style={{
+              borderColor: 'gainsboro',
+              borderBottomWidth: 2.5,
+            }}>
+            <Text style={Styles.informationText}>{companyName}</Text>
+          </View>
+        </View>
+        <View style={{marginBottom: 15}}>
           <Text style={Styles.categoryText}>PHONE NUMBER</Text>
           <View
             style={{
@@ -40,6 +50,16 @@ const CardForm = ({data}) => {
               borderBottomWidth: 2.5,
             }}>
             <Text style={Styles.informationText}>{phoneNumber}</Text>
+          </View>
+        </View>
+        <View style={{marginBottom: 15}}>
+          <Text style={Styles.categoryText}>EMAIL</Text>
+          <View
+            style={{
+              borderColor: 'gainsboro',
+              borderBottomWidth: 2.5,
+            }}>
+            <Text style={Styles.informationText}>{email}</Text>
           </View>
         </View>
         <View style={{marginBottom: 15}}>
@@ -53,13 +73,13 @@ const CardForm = ({data}) => {
           </View>
         </View>
         <View style={{marginBottom: 15}}>
-          <Text style={Styles.categoryText}>COMPANY NAME</Text>
+          <Text style={Styles.categoryText}>OBSERVATIONS</Text>
           <View
             style={{
               borderColor: 'gainsboro',
               borderBottomWidth: 2.5,
             }}>
-            <Text style={Styles.informationText}>{companyName}</Text>
+            <Text style={Styles.informationText}>{observations}</Text>
           </View>
         </View>
         <View>

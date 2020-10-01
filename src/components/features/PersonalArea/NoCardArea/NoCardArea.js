@@ -1,10 +1,11 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Dimensions} from 'react-native';
 import Styles from './NoCardAreaStyles';
 import Header from './components/Header/NoCardsHeader';
 import {NoCardIcon, AddCardIcon} from '../../../../assets/icons';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
+
 const NoCardArea = ({data}) => {
   const navigation = useNavigation();
 
@@ -14,7 +15,8 @@ const NoCardArea = ({data}) => {
       <ScrollView
         alwaysBounceHorizontal={false}
         alwaysBounceVertical={false}
-        bounces={false}>
+        bounces={false}
+        style={{height: '87%'}}>
         <View style={Styles.textBox}>
           <Text style={Styles.text}>Personal Area</Text>
         </View>

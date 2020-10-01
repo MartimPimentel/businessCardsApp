@@ -17,12 +17,20 @@ const dataObj = [
     linkedInLink: 'bla',
     profilePhoto: 'bla',
     email: 'bla@mail.com',
+    observations: 'The best programmer alive',
   },
   {
     name: 'Martim Bello',
     phoneNumber: '+351 914 205 333',
     address: 'Rua dos Panucas 200, Estremoz',
     companyName: 'M&M Mobile Solutions',
+    companyLogo: 'bla',
+    facebookLink: 'bla',
+    instagramLink: 'bla',
+    linkedInLink: 'bla',
+    profilePhoto: 'bla',
+    email: 'panuca@mail.com',
+    observations: 'The wannabe best programmer alive...',
   },
 ];
 
