@@ -4,6 +4,7 @@ import {View, Text, Image} from 'react-native';
 import Styles from './PhotoPickerStyles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
+
 const PhotoPicker = ({onChange}) => {
   const [imageTaken, setImageTaken] = useState(null);
 
@@ -11,6 +12,7 @@ const PhotoPicker = ({onChange}) => {
     ImagePicker.openPicker({
       width: 500,
       height: 500,
+      includeBase64: true,
       cropping: true,
       cropperCircleOverlay: true,
       sortOrder: 'none',
@@ -27,10 +29,8 @@ const PhotoPicker = ({onChange}) => {
       .then((image) => {
         console.log('received image', image);
         const obj = {
-          uri: image.path,
-          width: image.width,
-          height: image.height,
           mime: image.mime,
+          data: image.data,
         };
         setImageTaken(obj);
         onChange(obj);
@@ -44,6 +44,7 @@ const PhotoPicker = ({onChange}) => {
       width: 500,
       height: 500,
       cropping: true,
+      includeBase64: true,
       cropperCircleOverlay: true,
       sortOrder: 'none',
       compressImageMaxWidth: 1000,
@@ -59,10 +60,8 @@ const PhotoPicker = ({onChange}) => {
       .then((image) => {
         console.log(image);
         const obj = {
-          uri: image.path,
-          width: image.width,
-          height: image.height,
           mime: image.mime,
+          data: image.data,
         };
         setImageTaken(obj);
         onChange(obj);
@@ -74,44 +73,61 @@ const PhotoPicker = ({onChange}) => {
   return (
     <View style={Styles.photoContainer}>
       {imageTaken ? (
-        <>
-          <Image style={Styles.photoStyles} source={imageTaken} />
-          <TouchableOpacity
-            onPress={() => {
-              setImageTaken(null);
-              onChange(null);
-            }}>
-            <LinearGradient
-              style={Styles.deleteImageButton}
-              colors={['#A9E2FD', '#8AB1F2']}>
-              <Text style={{color: 'white', textAlign: 'center'}}>Delete</Text>
-            </LinearGradient>
-          </TouchableOpacity>
-        </>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            width: '100%',
+          }}>
+          <Image
+            style={Styles.photoStyles}
+            source={{
+              uri: `data:${imageTaken.mime};base64,${imageTaken.data}`,
+            }}
+          />
+          <View style={{width: '70%'}}>
+            <TouchableOpacity
+              onPress={() => {
+                setImageTaken(null);
+                onChange(null);
+              }}
+              style={{
+                width: '50%',
+                alignSelf: 'center',
+              }}>
+              <LinearGradient
+                style={Styles.deleteImageButton}
+                colors={['#A9E2FD', '#8AB1F2']}>
+                <Text style={{color: 'white', textAlign: 'center'}}>
+                  Delete
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+        </View>
       ) : (
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'space-evenly',
             width: '100%',
           }}>
           <TouchableOpacity
             onPress={() => {
               pickFromGallery();
             }}
-            style={{width: '120%'}}>
+            style={{width: 120}}>
             <LinearGradient
               style={Styles.chooseImageButton}
               colors={['#A9E2FD', '#8AB1F2']}>
               <Text style={{color: 'white'}}>Choose picture</Text>
             </LinearGradient>
           </TouchableOpacity>
-
+          <View style={{width: '5%'}}></View>
           <TouchableOpacity
             onPress={() => {
               openCamara();
             }}
-            style={{width: '150%'}}>
+            style={{width: 110}}>
             <LinearGradient
               style={Styles.chooseImageButton}
               colors={['#A9E2FD', '#8AB1F2']}>

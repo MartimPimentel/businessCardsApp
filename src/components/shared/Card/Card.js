@@ -19,6 +19,7 @@ import {
   EmailIcon,
 } from '../../../assets/icons';
 import LinearGradient from 'react-native-linear-gradient';
+import base64 from 'react-native-base64';
 const Card = ({data}) => {
   const {
     phoneNumber,
@@ -53,8 +54,10 @@ const Card = ({data}) => {
           <View style={Styles.leftView}>
             <View style={Styles.imageView}>
               <Image
-                source={UnknownUser}
-                style={Styles.image(!!profilePhoto)}
+                source={{
+                  uri: `data:${profilePhoto.mime};base64,${profilePhoto.data}`,
+                }}
+                style={Styles.imageProfile(!!profilePhoto)}
               />
             </View>
             <View style={Styles.fullInfoView}>
@@ -68,14 +71,14 @@ const Card = ({data}) => {
                 <Text style={Styles.infoText}>{phoneNumber}</Text>
               </View>
 
-              <View style={Styles.infoView(!!address)}>
+              {/* <View style={Styles.infoView(!!address)}>
                 <AddressIcon />
                 <Text style={Styles.infoText}>{address}</Text>
-              </View>
-              {/* <View style={Styles.infoView(!!email)}>
-                <EmailIcon />
-                <Text style={Styles.infoText}>{email}</Text>
               </View> */}
+              <View style={Styles.infoView(!!email)}>
+                <EmailIcon />
+                <Text style={[Styles.infoText, {fontSize: 13}]}>{email}</Text>
+              </View>
             </View>
           </View>
           <View style={Styles.rightView}>
@@ -84,10 +87,11 @@ const Card = ({data}) => {
                 {companyName}
               </Text>
 
-              <CompanyLogo
-                style={{
-                  display: companyLogo ? 'flex' : 'none',
+              <Image
+                source={{
+                  uri: `data:${companyLogo.mime};base64,${companyLogo.data}`,
                 }}
+                style={Styles.imageLogo(!!companyLogo)}
               />
             </View>
             <View style={Styles.logoView}>
