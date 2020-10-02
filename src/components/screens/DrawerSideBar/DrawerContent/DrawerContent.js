@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Platform,
@@ -17,9 +17,30 @@ import {
 import {SidebarBackground} from '../../../../assets/backgrounds';
 import Styles from './DrawerContentStyles';
 import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-community/async-storage';
+import {useIsDrawerOpen} from '@react-navigation/drawer';
 
 const DrawerContent = (props) => {
+  const isDrawerOpen = useIsDrawerOpen();
   const [isMyCardsSelected, setIsMyCardSelected] = useState(true);
+  const [username, setUsername] = useState(null);
+  const [profilePhoto, setProfilePhoto] = useState(null);
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@PERSONAL_DATA');
+      const {name, profilePhoto} =
+        jsonValue != null ? JSON.parse(jsonValue) : '';
+      setUsername(name);
+      setProfilePhoto(profilePhoto);
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+  useEffect(() => {
+    if (isDrawerOpen) getData();
+  }, [isDrawerOpen]);
+
   return (
     <View
       style={{
@@ -50,10 +71,19 @@ const DrawerContent = (props) => {
       </View>
       <View style={Styles.userProfileContainer}>
         <View style={Styles.userImageContainer}>
-          <Image source={UnknownUser} style={Styles.userImageStyles} />
+          <Image
+            source={
+              profilePhoto
+                ? {
+                    uri: `data:${profilePhoto.mime};base64,${profilePhoto.data}`,
+                  }
+                : UnknownUser
+            }
+            style={Styles.userImageStyles}
+          />
         </View>
-        <Text style={Styles.userNameStyles}>Unknown User</Text>
-        <Text style={Styles.userEmailStyles}>JonDoe@mail.com</Text>
+        <Text style={Styles.userNameStyles}>{username}</Text>
+        {/* <Text style={Styles.userEmailStyles}>JonDoe@mail.com</Text> */}
       </View>
       <View style={Styles.menusContainer}>
         <TouchableOpacity

@@ -19,7 +19,6 @@ import {
   EmailIcon,
 } from '../../../assets/icons';
 import LinearGradient from 'react-native-linear-gradient';
-import base64 from 'react-native-base64';
 const Card = ({data}) => {
   const {
     phoneNumber,
@@ -55,7 +54,9 @@ const Card = ({data}) => {
             <View style={Styles.imageView}>
               <Image
                 source={{
-                  uri: `data:${profilePhoto.mime};base64,${profilePhoto.data}`,
+                  uri: profilePhoto
+                    ? `data:${profilePhoto.mime};base64,${profilePhoto.data}`
+                    : null,
                 }}
                 style={Styles.imageProfile(!!profilePhoto)}
               />
@@ -89,7 +90,9 @@ const Card = ({data}) => {
 
               <Image
                 source={{
-                  uri: `data:${companyLogo.mime};base64,${companyLogo.data}`,
+                  uri: companyLogo
+                    ? `data:${companyLogo.mime};base64,${companyLogo.data}`
+                    : null,
                 }}
                 style={Styles.imageLogo(!!companyLogo)}
               />

@@ -20,19 +20,7 @@ const emptyObject = {
 };
 const PersonalArea = () => {
   const isFocused = useIsFocused();
-  const [objData, setObjData] = useState({
-    name: '',
-    address: '',
-    companyLogo: '',
-    companyName: '',
-    email: '',
-    facebookLink: '',
-    instagramLink: '',
-    linkedInLink: '',
-    observations: '',
-    phoneNumber: '',
-    profilePhoto: '',
-  });
+  const [objData, setObjData] = useState(emptyObject);
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@PERSONAL_DATA');

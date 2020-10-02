@@ -98,6 +98,7 @@ const CardForm = ({
                 onChange={(image) => {
                   onChange(image);
                 }}
+                data={profilePhoto}
               />
             )}
           />

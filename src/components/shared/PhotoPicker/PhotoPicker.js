@@ -5,8 +5,8 @@ import Styles from './PhotoPickerStyles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 
-const PhotoPicker = ({onChange}) => {
-  const [imageTaken, setImageTaken] = useState(null);
+const PhotoPicker = ({onChange, data}) => {
+  const [imageTaken, setImageTaken] = useState(data);
 
   const pickFromGallery = () => {
     ImagePicker.openPicker({
@@ -27,7 +27,6 @@ const PhotoPicker = ({onChange}) => {
       cropperToolbarWidgetColor: 'white',
     })
       .then((image) => {
-        console.log('received image', image);
         const obj = {
           mime: image.mime,
           data: image.data,
@@ -58,7 +57,6 @@ const PhotoPicker = ({onChange}) => {
       cropperToolbarWidgetColor: 'white',
     })
       .then((image) => {
-        console.log(image);
         const obj = {
           mime: image.mime,
           data: image.data,
