@@ -6,13 +6,6 @@ import Card from '../../../shared/Card/Card';
 import {QRCodeIcon, NFCIcon} from '../../../../assets/icons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const personalData = {
-  name: 'Martim Pimentel',
-  phone: '+351 915 803 555',
-  address: 'Rua Cesário Verde 484, Cascais',
-  companyName: 'M&M Mobile Solutions',
-};
-
 const CardCreatedArea = ({data}) => {
   return (
     <View style={{height: '100%'}}>

@@ -21,7 +21,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 const Card = ({data}) => {
   const {
-    phoneNumber,
+    phoneData,
     address,
     companyName,
     name,
@@ -53,8 +53,12 @@ const Card = ({data}) => {
           <View style={Styles.leftView}>
             <View style={Styles.imageView}>
               <Image
-                source={UnknownUser}
-                style={Styles.image(!!profilePhoto)}
+                source={{
+                  uri: profilePhoto
+                    ? `data:${profilePhoto.mime};base64,${profilePhoto.data}`
+                    : null,
+                }}
+                style={Styles.imageProfile(!!profilePhoto)}
               />
             </View>
             <View style={Styles.fullInfoView}>
@@ -63,19 +67,21 @@ const Card = ({data}) => {
                 <Text style={Styles.nameText}>{name}</Text>
               </View>
 
-              <View style={Styles.infoView(!!phoneNumber)}>
+              <View style={Styles.infoView(!!phoneData.phoneNumber)}>
                 <PhoneIcon />
-                <Text style={Styles.infoText}>{phoneNumber}</Text>
+                <Text style={Styles.infoText}>
+                  {'+' + phoneData.callingCode + ' ' + phoneData.phoneNumber}
+                </Text>
               </View>
 
-              <View style={Styles.infoView(!!address)}>
+              {/* <View style={Styles.infoView(!!address)}>
                 <AddressIcon />
                 <Text style={Styles.infoText}>{address}</Text>
-              </View>
-              {/* <View style={Styles.infoView(!!email)}>
-                <EmailIcon />
-                <Text style={Styles.infoText}>{email}</Text>
               </View> */}
+              <View style={Styles.infoView(!!email)}>
+                <EmailIcon />
+                <Text style={[Styles.infoText, {fontSize: 13}]}>{email}</Text>
+              </View>
             </View>
           </View>
           <View style={Styles.rightView}>
@@ -84,10 +90,13 @@ const Card = ({data}) => {
                 {companyName}
               </Text>
 
-              <CompanyLogo
-                style={{
-                  display: companyLogo ? 'flex' : 'none',
+              <Image
+                source={{
+                  uri: companyLogo
+                    ? `data:${companyLogo.mime};base64,${companyLogo.data}`
+                    : null,
                 }}
+                style={Styles.imageLogo(!!companyLogo)}
               />
             </View>
             <View style={Styles.logoView}>

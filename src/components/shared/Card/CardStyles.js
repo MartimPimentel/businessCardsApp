@@ -49,7 +49,7 @@ export default Styles = StyleSheet.create({
     width: windowHeight <= 600 ? 70 : 90,
     justifyContent: 'center',
   },
-  image: (isVisible) => {
+  imageProfile: (isVisible) => {
     return {
       alignSelf: 'center',
       height: '100%',
@@ -61,11 +61,23 @@ export default Styles = StyleSheet.create({
       display: isVisible ? 'flex' : 'none',
     };
   },
+  imageLogo: (isVisible) => {
+    return {
+      alignSelf: 'center',
+      height: '110%',
+
+      width: '30%',
+      backgroundColor: 'transparent',
+
+      display: isVisible ? 'flex' : 'none',
+    };
+  },
   companyView: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
     height: '20%',
+    width: '100%',
   },
   companyText: (isVisible) => {
     return {
