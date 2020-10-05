@@ -15,7 +15,7 @@ const emptyObject = {
   instagramLink: '',
   linkedInLink: '',
   observations: '',
-  phoneNumber: '',
+  phoneData: {phoneNumber: '', callingCode: '', countryCode: 'PT'},
   profilePhoto: '',
 };
 const PersonalArea = () => {

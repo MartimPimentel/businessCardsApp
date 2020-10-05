@@ -21,7 +21,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 const Card = ({data}) => {
   const {
-    phoneNumber,
+    phoneData,
     address,
     companyName,
     name,
@@ -67,9 +67,11 @@ const Card = ({data}) => {
                 <Text style={Styles.nameText}>{name}</Text>
               </View>
 
-              <View style={Styles.infoView(!!phoneNumber)}>
+              <View style={Styles.infoView(!!phoneData.phoneNumber)}>
                 <PhoneIcon />
-                <Text style={Styles.infoText}>{phoneNumber}</Text>
+                <Text style={Styles.infoText}>
+                  {'+' + phoneData.callingCode + ' ' + phoneData.phoneNumber}
+                </Text>
               </View>
 
               {/* <View style={Styles.infoView(!!address)}>

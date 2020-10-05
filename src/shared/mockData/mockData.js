@@ -3,7 +3,11 @@ import {logo1} from './photosBase64/logo1';
 export const data = [
   {
     name: 'Bill Gates',
-    phoneNumber: '+1 2027953213',
+    phoneData: {
+      phoneNumber: '2027953213',
+      callingCode: '1',
+      countryCode: 'US',
+    },
     address: '11 Times Square, New York, NY 10036, Estados Unidos',
     companyName: 'Microsoft Corporation',
     companyLogo: {data: logo1, mime: 'image/jpeg'},
@@ -16,7 +20,11 @@ export const data = [
   },
   {
     name: 'Martim Bello',
-    phoneNumber: '+351 914 205 333',
+    phoneData: {
+      phoneNumber: '917720666',
+      callingCode: '351',
+      countryCode: 'PT',
+    },
     address: 'Rua dos Panucas 200, Estremoz',
     companyName: 'M&M Mobile Solutions',
     companyLogo: 'bla',

@@ -11,7 +11,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const CardForm = ({data}) => {
-  const {phoneNumber, address, companyName, name, email, observations} = data;
+  const {phoneData, address, companyName, name, email, observations} = data;
 
   return (
     <View
@@ -49,7 +49,9 @@ const CardForm = ({data}) => {
               borderColor: 'gainsboro',
               borderBottomWidth: 2.5,
             }}>
-            <Text style={Styles.informationText}>{phoneNumber}</Text>
+            <Text style={Styles.informationText}>
+              {'+' + phoneData.callingCode + ' ' + phoneData.phoneNumber}
+            </Text>
           </View>
         </View>
         <View style={{marginBottom: 15}}>

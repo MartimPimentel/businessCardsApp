@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, Text, TextInput, Dimensions} from 'react-native';
 import Styles from './CardFormStyles';
 import {useForm, Controller} from 'react-hook-form';
@@ -12,11 +12,20 @@ import {
   DeleteCard,
 } from '../../../../../../assets/icons';
 import PhotoPicker from '../../../../../shared/PhotoPicker/PhotoPicker';
+import PhoneInput from 'react-native-phone-number-input';
 
+var phoneInput = null;
 const projectFormSchema = yup.object().shape({
   name: yup.string().required('*Required'),
   email: yup.string(),
-  phoneNumber: yup.string(),
+  phoneData: yup
+    .object()
+    .test('isValidNumber', '*Invalid number', function (value) {
+      return (
+        value.phoneNumber == '' ||
+        phoneInput.current.isValidNumber(value.callingCode + value.phoneNumber)
+      );
+    }),
   address: yup.string(),
   companyName: yup.string(),
 });
@@ -39,7 +48,7 @@ const CardForm = ({
     instagramLink,
     linkedInLink,
     observations,
-    phoneNumber,
+    phoneData,
     profilePhoto,
   } = data;
   const {handleSubmit, errors, control, reset, clearErrors} = useForm({
@@ -55,7 +64,7 @@ const CardForm = ({
       instagramLink: instagramLink,
       linkedInLink: linkedInLink,
       observations: observations,
-      phoneNumber: phoneNumber,
+      phoneData: phoneData,
       profilePhoto: profilePhoto,
     },
   });
@@ -73,18 +82,19 @@ const CardForm = ({
       instagramLink: '',
       linkedInLink: '',
       observations: '',
-      phoneNumber: '',
+      phoneData: '',
       profilePhoto: '',
     });
     onClickToDelete();
   };
-
   useEffect(() => {
     return handleSubmit(onSubmit);
   }, [onClickToSave]);
   useEffect(() => {
     clearErrors();
   }, [deleteErrors]);
+
+  phoneInput = useRef();
   return (
     <View style={Styles.outsideContainer}>
       <View style={Styles.separatorPhotos}>
@@ -144,19 +154,26 @@ const CardForm = ({
         <Text style={Styles.titleEntries}>PHONE NUMBER</Text>
         <Controller
           control={control}
-          name="phoneNumber"
+          name="phoneData"
           render={({onChange, onBlur, value}) => (
-            <TextInput
-              style={Styles.textInputStyles}
-              onBlur={onBlur}
-              onChangeText={(value) => onChange(value)}
-              value={value}
-              keyboardType="phone-pad"
+            <PhoneInput
+              containerStyle={{marginTop: 10}}
+              ref={phoneInput}
+              defaultValue={value.phoneNumber}
+              defaultCode={phoneData.countryCode}
+              onChangeText={(number) => {
+                onChange({
+                  countryCode: phoneInput.current.getCountryCode(),
+                  callingCode: phoneInput.current.getCallingCode(),
+                  phoneNumber: number,
+                });
+              }}
+              withShadow
             />
           )}
         />
-        {errors.phoneNumber && (
-          <Text style={{color: 'red'}}>This is required.</Text>
+        {errors.phoneData && (
+          <Text style={{color: 'red'}}>{errors.phoneData.message}</Text>
         )}
       </View>
       <View style={{marginBottom: 15}}>
