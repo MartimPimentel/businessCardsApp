@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, TextInput, Dimensions} from 'react-native';
+import LinkedInModal from 'react-native-linkedin';
 import Styles from './CardFormStyles';
 import {useForm, Controller} from 'react-hook-form';
 import * as yup from 'yup';
@@ -283,6 +284,12 @@ const CardForm = ({
                 />
               </TouchableOpacity>
             )}
+          />
+          <LinkedInModal
+            clientID="77pax7gelc4gqw"
+            clientSecret="ioWoA4Q1Yb3U3hNp"
+            redirectUri="https://www.google.co.in"
+            onSuccess={(token) => console.log(token)}
           />
         </View>
       </View>
