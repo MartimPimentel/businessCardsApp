@@ -12,8 +12,9 @@ import {DrawerActions, useNavigation} from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 
-const HeaderSearch = () => {
+const HeaderSearch = ({data, handleFilter}) => {
   const navigation = useNavigation();
+
   const [searchBarActivated, setSearchBarActivated] = useState(false);
 
   if (!searchBarActivated) {
@@ -63,7 +64,7 @@ const HeaderSearch = () => {
                 }}>
                 <LeftArrowIcon style={{marginLeft: 20}} />
               </TouchableOpacity>
-              <SearchBar />
+              <SearchBar data={data} onFilter={handleFilter} />
             </View>
           </LinearGradient>
         </SafeAreaView>
