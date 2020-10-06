@@ -1,17 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {View, Text, TextInput, Dimensions} from 'react-native';
-import LinkedInModal from 'react-native-linkedin';
 import Styles from './CardFormStyles';
 import {useForm, Controller} from 'react-hook-form';
 import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {
-  ConnectFacebookIcon,
-  ConnectInstagramIcon,
-  ConnectLinkedInIcon,
-  DeleteCard,
-} from '../../../../../../assets/icons';
+import {DeleteCard} from '../../../../../../assets/icons';
 import PhotoPicker from '../../../../../shared/PhotoPicker/PhotoPicker';
 import PhoneInput from 'react-native-phone-number-input';
 
@@ -29,6 +23,9 @@ const projectFormSchema = yup.object().shape({
     }),
   address: yup.string(),
   companyName: yup.string(),
+  linkedInLink: yup.string(),
+  facebookLink: yup.string(),
+  instagramLink: yup.string(),
 });
 const windowWidth = Dimensions.get('window').width;
 
@@ -265,49 +262,51 @@ const CardForm = ({
         )}
       </View>
       <View style={{marginBottom: 15}}>
-        <Text style={Styles.titleEntries}>SOCIAL NETWORKS</Text>
-        <View style={{marginTop: 10, left: -3}}>
-          <Controller
-            control={control}
-            name="facebookLink"
-            render={({onChange, onBlur, value}) => (
-              <TouchableOpacity>
-                <ConnectFacebookIcon
-                  viewBox={windowWidth <= 350 ? '10 -7 250 95' : ''}
-                  style={{left: windowWidth <= 350 ? -50 : -10}}
-                />
-              </TouchableOpacity>
-            )}
-          />
-          <Controller
-            control={control}
-            name="instagramLink"
-            render={({onChange, onBlur, value}) => (
-              <TouchableOpacity>
-                <ConnectInstagramIcon
-                  viewBox={windowWidth <= 350 ? '10 -7 250 95' : ''}
-                  style={{left: windowWidth <= 350 ? -50 : -10}}
-                />
-              </TouchableOpacity>
-            )}
-          />
+        <View style={{marginBottom: 10}}>
+          <Text style={Styles.titleEntries}>LINKEDIN URL</Text>
           <Controller
             control={control}
             name="linkedInLink"
             render={({onChange, onBlur, value}) => (
-              <TouchableOpacity>
-                <ConnectLinkedInIcon
-                  viewBox={windowWidth <= 350 ? '10 -7 250 95' : ''}
-                  style={{left: windowWidth <= 350 ? -50 : -10}}
-                />
-              </TouchableOpacity>
+              <TextInput
+                style={Styles.textInputStyles}
+                onBlur={onBlur}
+                onChangeText={(value) => onChange(value)}
+                value={value}
+              />
             )}
           />
-          <LinkedInModal
-            clientID="77pax7gelc4gqw"
-            clientSecret="ioWoA4Q1Yb3U3hNp"
-            redirectUri="https://www.google.co.in"
-            onSuccess={(token) => console.log(token)}
+        </View>
+
+        <View style={{marginBottom: 10}}>
+          <Text style={Styles.titleEntries}>FACEBOOK URL</Text>
+          <Controller
+            control={control}
+            name="facebookLink"
+            render={({onChange, onBlur, value}) => (
+              <TextInput
+                style={Styles.textInputStyles}
+                onBlur={onBlur}
+                onChangeText={(value) => onChange(value)}
+                value={value}
+              />
+            )}
+          />
+        </View>
+
+        <View style={{marginBottom: 10}}>
+          <Text style={Styles.titleEntries}>INSTAGRAM URL</Text>
+          <Controller
+            control={control}
+            name="instagramLink"
+            render={({onChange, onBlur, value}) => (
+              <TextInput
+                style={Styles.textInputStyles}
+                onBlur={onBlur}
+                onChangeText={(value) => onChange(value)}
+                value={value}
+              />
+            )}
           />
         </View>
       </View>

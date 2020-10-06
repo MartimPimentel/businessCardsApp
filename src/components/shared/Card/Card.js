@@ -1,20 +1,13 @@
 import React from 'react';
-import {Dimensions, Image, ImageBackground, Text, View} from 'react-native';
+import {Dimensions, Image, Text, View} from 'react-native';
 const windowHeight = Dimensions.get('window').height;
 import Styles from './CardStyles';
-import {
-  CardDrawRight,
-  CardDrawLeft,
-  PictureBorder,
-} from '../../../assets/backgrounds';
+import {CardDrawRight, CardDrawLeft} from '../../../assets/backgrounds';
 import {
   LILogo,
   FBLogo,
-  CompanyLogo,
-  AddressIcon,
   PhoneIcon,
   NameIcon,
-  UnknownUser,
   IGLogo,
   EmailIcon,
 } from '../../../assets/icons';

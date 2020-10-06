@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, View, Text, Dimensions} from 'react-native';
+import {ScrollView, View, Text, Dimensions, Linking} from 'react-native';
 import Styles from './CardFormStyles';
 
 import {
@@ -7,11 +7,22 @@ import {
   IGGoToProfile,
   LIGoToProfile,
 } from '../../../../../assets/icons';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const CardForm = ({data}) => {
-  const {phoneData, address, companyName, name, email, observations} = data;
+  const {
+    phoneData,
+    address,
+    companyName,
+    name,
+    email,
+    observations,
+    facebookLink,
+    linkedInLink,
+    instagramLink,
+  } = data;
 
   return (
     <View
@@ -87,15 +98,32 @@ const CardForm = ({data}) => {
         <View>
           <Text style={Styles.categoryText}>SOCIAL NETWORKS</Text>
           <View style={{marginTop: 10}}>
-            <FBGoToProfile viewBox={windowWidth <= 350 ? '40 -7 250 95' : ''} />
-            <IGGoToProfile
-              style={{top: windowWidth <= 350 ? -25 : -10}}
-              viewBox={windowWidth <= 350 ? '40 -7 250 95' : ''}
-            />
-            <LIGoToProfile
-              style={{top: windowWidth <= 350 ? -40 : -20}}
-              viewBox={windowWidth <= 350 ? '40 0 250 95' : ''}
-            />
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL(facebookLink);
+              }}>
+              <FBGoToProfile
+                viewBox={windowWidth <= 350 ? '40 -7 250 95' : ''}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL(instagramLink);
+              }}>
+              <IGGoToProfile
+                style={{top: windowWidth <= 350 ? -25 : -10, marginTop: 10}}
+                viewBox={windowWidth <= 350 ? '40 -7 250 95' : ''}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL(linkedInLink);
+              }}>
+              <LIGoToProfile
+                style={{top: windowWidth <= 350 ? -40 : -20, marginTop: 10}}
+                viewBox={windowWidth <= 350 ? '40 0 250 95' : ''}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>

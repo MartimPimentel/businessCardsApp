@@ -83,7 +83,6 @@ const DrawerContent = (props) => {
           />
         </View>
         <Text style={Styles.userNameStyles}>{username}</Text>
-        {/* <Text style={Styles.userEmailStyles}>JonDoe@mail.com</Text> */}
       </View>
       <View style={Styles.menusContainer}>
         <TouchableOpacity
