@@ -24,4 +24,14 @@ export default Styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'NunitoSans-Regular',
   },
+  noInfoContainer: {
+    alignSelf: 'center',
+    height: '50%',
+    justifyContent: 'center',
+  },
+  noInfoTextStyles: {
+    fontFamily: 'Nunito-Regular',
+    fontSize: 20,
+    alignSelf: 'center',
+  },
 });

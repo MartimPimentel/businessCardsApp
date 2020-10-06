@@ -11,18 +11,31 @@ const MyCardsArea = () => {
     'Warning: Cannot update a component from inside the function body of a different component.',
   ]);
   const [cardIndex, setCardIndex] = useState(0);
+  const [filteredData, setFilteredData] = useState(data);
   const handleIndexChange = (i) => {
     setCardIndex(i);
   };
-
+  const allData = data;
   return (
     <>
-      <HeaderSearch />
+      <HeaderSearch
+        data={data}
+        handleFilter={(filtered) => {
+          filtered != [] ? setFilteredData(filtered) : setFilteredData(allData);
+        }}
+      />
       <Text style={Styles.titleStyles}>My Cards</Text>
-      <View style={Styles.outsideContainer}>
-        <Swipper data={data} onChangeIndex={handleIndexChange} />
-        <CardForm data={data[cardIndex]} />
-      </View>
+
+      {filteredData[0] ? (
+        <View style={Styles.outsideContainer}>
+          <Swipper data={filteredData} onChangeIndex={handleIndexChange} />
+          <CardForm data={filteredData[cardIndex]} />
+        </View>
+      ) : (
+        <View style={Styles.noInfoContainer}>
+          <Text style={Styles.noInfoTextStyles}>No results to your search</Text>
+        </View>
+      )}
     </>
   );
 };
