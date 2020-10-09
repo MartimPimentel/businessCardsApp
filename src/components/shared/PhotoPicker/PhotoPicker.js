@@ -5,7 +5,7 @@ import Styles from './PhotoPickerStyles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 
-const PhotoPicker = ({onChange, data}) => {
+const PhotoPicker = ({onChange, data,croppingCircular=false}) => {
   const [imageTaken, setImageTaken] = useState(data);
 
   const pickFromGallery = () => {
@@ -14,7 +14,7 @@ const PhotoPicker = ({onChange, data}) => {
       height: 500,
       includeBase64: true,
       cropping: true,
-      cropperCircleOverlay: true,
+      cropperCircleOverlay: croppingCircular,
       sortOrder: 'none',
       compressImageMaxWidth: 1000,
       compressImageMaxHeight: 1000,
@@ -44,7 +44,7 @@ const PhotoPicker = ({onChange, data}) => {
       height: 500,
       cropping: true,
       includeBase64: true,
-      cropperCircleOverlay: true,
+      cropperCircleOverlay: croppingCircular,
       sortOrder: 'none',
       compressImageMaxWidth: 1000,
       compressImageMaxHeight: 1000,
@@ -78,7 +78,7 @@ const PhotoPicker = ({onChange, data}) => {
             width: '100%',
           }}>
           <Image
-            style={Styles.photoStyles}
+            style={Styles.photoStyles(croppingCircular)}
             source={{
               uri: `data:${imageTaken.mime};base64,${imageTaken.data}`,
             }}

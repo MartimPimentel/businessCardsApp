@@ -107,6 +107,7 @@ const CardForm = ({
                   onChange(image);
                 }}
                 data={profilePhoto}
+                croppingCircular
               />
             )}
           />
@@ -225,6 +226,7 @@ const CardForm = ({
                 onChange={(image) => {
                   onChange(image);
                 }}
+                data={companyLogo}
               />
             )}
           />

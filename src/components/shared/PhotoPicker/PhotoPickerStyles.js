@@ -5,11 +5,14 @@ export default Styles = StyleSheet.create({
     alignItems: 'center',
     top: 10,
   },
-  photoStyles: {
+  
+  photoStyles: (radius) => {
+    return {
     width: 90,
     height: 90,
     resizeMode: 'contain',
-    borderRadius: 300,
+    borderRadius: radius?300:0,
+  }
   },
   chooseImageButton: {
     height: 40,
