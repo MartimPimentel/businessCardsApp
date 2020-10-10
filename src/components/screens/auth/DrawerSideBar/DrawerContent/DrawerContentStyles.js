@@ -85,4 +85,19 @@ export default Styles = StyleSheet.create({
     textAlign: 'center',
   },
   userEmailStyles: {color: 'white', top: 10, fontSize: 15},
+  logOutContainer: {
+    position: 'absolute',
+    bottom: '10%',
+  },
+  logOutButton: {
+    flexDirection: 'row',
+    left: 75,
+  },
+  logOutSeparator: {
+    height: 10,
+    width: '90%',
+    left: 70,
+    borderBottomWidth: 0.5,
+    borderBottomColor: 'white',
+  },
 });

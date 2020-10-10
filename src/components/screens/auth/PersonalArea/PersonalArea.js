@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, ActivityIndicator} from 'react-native';
-import CardCreatedArea from '../../features/PersonalArea/CardCreatedArea/CardCreatedArea';
-import EditCardArea from '../../features/PersonalArea/EditCardArea/EditCardArea';
-import NoCardArea from '../../features/PersonalArea/NoCardArea/NoCardArea';
+import {View,  ActivityIndicator} from 'react-native';
+import CardCreatedArea from '../../../features/PersonalArea/CardCreatedArea/CardCreatedArea';
+import NoCardArea from '../../../features/PersonalArea/NoCardArea/NoCardArea';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useIsFocused} from '@react-navigation/native';
 const emptyObject = {
