@@ -5,11 +5,16 @@ import {useForm, Controller} from 'react-hook-form';
 import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {DeleteCard} from '../../../../../../assets/icons';
+import {
+  DeleteCard,
+  AddPhoneIcon,
+  RemovePhoneIcon,
+} from '../../../../../../assets/icons';
 import PhotoPicker from '../../../../../shared/PhotoPicker/PhotoPicker';
 import PhoneInput from 'react-native-phone-number-input';
 
 var phoneInput = null;
+var phoneInput2 = null;
 const projectFormSchema = yup.object().shape({
   name: yup.string().required('*Required'),
   email: yup.string(),
@@ -20,6 +25,17 @@ const projectFormSchema = yup.object().shape({
         value.phoneNumber == '' ||
         phoneInput.current.isValidNumber(value.callingCode + value.phoneNumber)
       );
+    })
+    .test('checkField2', '*Must fill this field first', function (value) {
+      return !(value.phoneNumber == '' && !!this.parent.phoneData2.phoneNumber);
+    }),
+  phoneData2: yup
+    .object()
+    .test('isValidNumber', '*Invalid number', function (value) {
+      return (
+        value.phoneNumber == '' ||
+        phoneInput2.current.isValidNumber(value.callingCode + value.phoneNumber)
+      );
     }),
   address: yup.string(),
   companyName: yup.string(),
@@ -27,7 +43,6 @@ const projectFormSchema = yup.object().shape({
   facebookLink: yup.string(),
   instagramLink: yup.string(),
 });
-const windowWidth = Dimensions.get('window').width;
 
 const CardForm = ({
   onClickToSave,
@@ -48,10 +63,19 @@ const CardForm = ({
     observations,
     phoneData,
     profilePhoto,
+    phoneData2,
   } = data;
-  const {handleSubmit, errors, control, reset, clearErrors} = useForm({
+  const {
+    handleSubmit,
+    errors,
+    control,
+    reset,
+    clearErrors,
+    watch,
+    setError,
+  } = useForm({
     resolver: yupResolver(projectFormSchema),
-    mode: 'onSubmit',
+    mode: 'onChange',
     defaultValues: {
       name: name,
       address: address,
@@ -63,9 +87,13 @@ const CardForm = ({
       linkedInLink: linkedInLink,
       observations: observations,
       phoneData: phoneData,
+      phoneData2: phoneData2,
       profilePhoto: profilePhoto,
     },
   });
+  const [click2AddPhoneNum, setClick2AddPhoneNum] = useState(
+    !!phoneData2.phoneNumber,
+  );
   const onSubmit = (data) => {
     redirectSubmittedData(data);
   };
@@ -93,6 +121,8 @@ const CardForm = ({
   }, [deleteErrors]);
 
   phoneInput = useRef();
+  phoneInput2 = useRef();
+
   return (
     <View style={Styles.outsideContainer}>
       <View style={Styles.separatorPhotos}>
@@ -150,7 +180,7 @@ const CardForm = ({
         {errors.email && <Text style={{color: 'red'}}>This is required.</Text>}
       </View>
       <View style={{marginBottom: 15}}>
-        <Text style={Styles.titleEntries}>PHONE NUMBER</Text>
+        <Text style={Styles.titleEntries}>PHONE NUMBER(PRINCIPAL)</Text>
         <Controller
           control={control}
           name="phoneData"
@@ -158,7 +188,9 @@ const CardForm = ({
             <PhoneInput
               containerStyle={{marginTop: 10}}
               ref={phoneInput}
-              defaultValue={value.phoneNumber}
+              defaultValue={
+                value.phoneNumber != undefined ? value.phoneNumber : ''
+              }
               defaultCode={phoneData.countryCode}
               onChangeText={(number) => {
                 onChange({
@@ -175,6 +207,56 @@ const CardForm = ({
           <Text style={{color: 'red'}}>{errors.phoneData.message}</Text>
         )}
       </View>
+
+      <TouchableOpacity
+        style={Styles.removeAddContainer(!click2AddPhoneNum)}
+        onPress={() => setClick2AddPhoneNum(true)}>
+        <AddPhoneIcon />
+        <Text style={Styles.removeAddTextStyles}>Add new phone number</Text>
+      </TouchableOpacity>
+      <View
+        style={{
+          marginBottom: 15,
+          display: click2AddPhoneNum ? 'flex' : 'none',
+        }}>
+        <Text style={Styles.titleEntries}>PHONE NUMBER(ALTERNATIVE)</Text>
+        <Controller
+          control={control}
+          name="phoneData2"
+          render={({onChange, onBlur, value}) => (
+            <PhoneInput
+              containerStyle={{marginTop: 10}}
+              ref={phoneInput2}
+              defaultValue={
+                value.phoneNumber != undefined ? value.phoneNumber : ''
+              }
+              defaultCode={phoneData.countryCode}
+              onChangeText={(number) => {
+                onChange({
+                  countryCode: phoneInput.current.getCountryCode(),
+                  callingCode: phoneInput.current.getCallingCode(),
+                  phoneNumber: number,
+                });
+              }}
+              withShadow
+            />
+          )}
+        />
+        {errors.phoneData2 && (
+          <Text style={{color: 'red'}}>{errors.phoneData2.message}</Text>
+        )}
+      </View>
+      <TouchableOpacity
+        style={Styles.removeAddContainer(click2AddPhoneNum)}
+        onPress={() => {
+          setClick2AddPhoneNum(false);
+          reset({
+            phoneData2: '',
+          });
+        }}>
+        <RemovePhoneIcon />
+        <Text style={Styles.removeAddTextStyles}>Remove phone number</Text>
+      </TouchableOpacity>
       <View style={{marginBottom: 15}}>
         <Text style={Styles.titleEntries}>ADDRESS</Text>
         <Controller

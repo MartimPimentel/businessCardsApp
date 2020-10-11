@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View,  ActivityIndicator} from 'react-native';
+import {View, ActivityIndicator} from 'react-native';
 import CardCreatedArea from '../../../features/PersonalArea/CardCreatedArea/CardCreatedArea';
 import NoCardArea from '../../../features/PersonalArea/NoCardArea/NoCardArea';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -15,6 +15,7 @@ const emptyObject = {
   linkedInLink: '',
   observations: '',
   phoneData: {phoneNumber: '', callingCode: '', countryCode: 'PT'},
+  phoneData2: {phoneNumber: '', callingCode: '', countryCode: 'PT'},
   profilePhoto: '',
 };
 const PersonalArea = () => {

@@ -59,4 +59,20 @@ export default Styles = StyleSheet.create({
     borderBottomWidth: 2.5,
     marginBottom: 15,
   },
+  removeAddContainer: (isVisible) => {
+    return {
+      flexDirection: 'row',
+      marginBottom: 15,
+      marginTop: -5,
+      marginLeft: 5,
+      display: isVisible ? 'flex' : 'none',
+    };
+  },
+  removeAddTextStyles: {
+    textAlignVertical: 'center',
+    marginLeft: 10,
+    color: '#393939',
+    fontSize: 16,
+    fontFamily: 'NunitoSans-Regular',
+  },
 });
