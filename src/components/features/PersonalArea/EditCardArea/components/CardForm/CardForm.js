@@ -65,32 +65,26 @@ const CardForm = ({
     profilePhoto,
     phoneData2,
   } = data;
-  const {
-    handleSubmit,
-    errors,
-    control,
-    reset,
-    clearErrors,
-    watch,
-    setError,
-  } = useForm({
-    resolver: yupResolver(projectFormSchema),
-    mode: 'onChange',
-    defaultValues: {
-      name: name,
-      address: address,
-      companyLogo: companyLogo,
-      companyName: companyName,
-      email: email,
-      facebookLink: facebookLink,
-      instagramLink: instagramLink,
-      linkedInLink: linkedInLink,
-      observations: observations,
-      phoneData: phoneData,
-      phoneData2: phoneData2,
-      profilePhoto: profilePhoto,
+  const {handleSubmit, errors, control, reset, clearErrors, setValue} = useForm(
+    {
+      resolver: yupResolver(projectFormSchema),
+      mode: 'onChange',
+      defaultValues: {
+        name: name,
+        address: address,
+        companyLogo: companyLogo,
+        companyName: companyName,
+        email: email,
+        facebookLink: facebookLink,
+        instagramLink: instagramLink,
+        linkedInLink: linkedInLink,
+        observations: observations,
+        phoneData: phoneData,
+        phoneData2: phoneData2,
+        profilePhoto: profilePhoto,
+      },
     },
-  });
+  );
   const [click2AddPhoneNum, setClick2AddPhoneNum] = useState(
     !!phoneData2.phoneNumber,
   );
@@ -109,6 +103,7 @@ const CardForm = ({
       linkedInLink: '',
       observations: '',
       phoneData: '',
+      phoneData2: '',
       profilePhoto: '',
     });
     onClickToDelete();
@@ -188,9 +183,7 @@ const CardForm = ({
             <PhoneInput
               containerStyle={{marginTop: 10}}
               ref={phoneInput}
-              defaultValue={
-                value.phoneNumber != undefined ? value.phoneNumber : ''
-              }
+              defaultValue={value.phoneNumber}
               defaultCode={phoneData.countryCode}
               onChangeText={(number) => {
                 onChange({
@@ -227,9 +220,7 @@ const CardForm = ({
             <PhoneInput
               containerStyle={{marginTop: 10}}
               ref={phoneInput2}
-              defaultValue={
-                value.phoneNumber != undefined ? value.phoneNumber : ''
-              }
+              defaultValue={value.phoneNumber}
               defaultCode={phoneData.countryCode}
               onChangeText={(number) => {
                 onChange({
@@ -250,8 +241,10 @@ const CardForm = ({
         style={Styles.removeAddContainer(click2AddPhoneNum)}
         onPress={() => {
           setClick2AddPhoneNum(false);
-          reset({
-            phoneData2: '',
+          setValue('phoneData2', {
+            callingCode: '',
+            countryCode: 'PT',
+            phoneNumber: '',
           });
         }}>
         <RemovePhoneIcon />
