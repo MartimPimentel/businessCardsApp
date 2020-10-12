@@ -42,6 +42,7 @@ const projectFormSchema = yup.object().shape({
   linkedInLink: yup.string(),
   facebookLink: yup.string(),
   instagramLink: yup.string(),
+  companyPosition: yup.string(),
 });
 
 const CardForm = ({
@@ -53,6 +54,7 @@ const CardForm = ({
 }) => {
   const {
     name,
+    companyPosition,
     address,
     companyLogo,
     companyName,
@@ -71,6 +73,7 @@ const CardForm = ({
       mode: 'onChange',
       defaultValues: {
         name: name,
+        companyPosition: companyPosition,
         address: address,
         companyLogo: companyLogo,
         companyName: companyName,
@@ -95,6 +98,7 @@ const CardForm = ({
     reset({
       name: '',
       address: '',
+      companyPosition: '',
       companyLogo: '',
       companyName: '',
       email: '',
@@ -284,6 +288,24 @@ const CardForm = ({
           )}
         />
         {errors.companyName && (
+          <Text style={{color: 'red'}}>This is required.</Text>
+        )}
+      </View>
+      <View style={{marginBottom: 15}}>
+        <Text style={Styles.titleEntries}>COMPANY POSITION</Text>
+        <Controller
+          control={control}
+          name="companyPosition"
+          render={({onChange, onBlur, value}) => (
+            <TextInput
+              style={Styles.textInputStyles}
+              onBlur={onBlur}
+              onChangeText={(value) => onChange(value)}
+              value={value}
+            />
+          )}
+        />
+        {errors.companyPosition && (
           <Text style={{color: 'red'}}>This is required.</Text>
         )}
       </View>

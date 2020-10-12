@@ -79,14 +79,29 @@ export default Styles = StyleSheet.create({
     height: '20%',
     width: '100%',
   },
-  companyText: (isVisible) => {
+  companyNameText: (isVisible) => {
     return {
       fontFamily: 'Nunito-Regular',
+      alignSelf: 'center',
       color: 'white',
       fontSize: 12,
       display: isVisible ? 'flex' : 'none',
       marginRight: 15,
       textAlign: 'center',
+    };
+  },
+  companyPositionText: (isVisible) => {
+    return {
+      fontFamily: 'Nunito-Regular',
+      alignSelf: 'center',
+      color: 'white',
+      fontSize: 11,
+      display: isVisible ? 'flex' : 'none',
+      marginRight: 15,
+      textAlign: 'center',
+      alignSelf: 'center',
+      top: 3,
+      width: '70%',
     };
   },
   bottomView: {

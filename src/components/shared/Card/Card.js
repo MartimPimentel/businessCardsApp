@@ -16,6 +16,7 @@ const Card = ({data}) => {
   const {
     phoneData,
     address,
+    companyPosition,
     companyName,
     name,
     profilePhoto,
@@ -79,10 +80,14 @@ const Card = ({data}) => {
           </View>
           <View style={Styles.rightView}>
             <View style={Styles.companyView}>
-              <Text style={Styles.companyText(!!companyName)}>
-                {companyName}
-              </Text>
-
+              <View style={{height: '100%', width: '100%'}}>
+                <Text style={Styles.companyNameText(!!companyName)}>
+                  {companyName}
+                </Text>
+                <Text style={Styles.companyPositionText(!!companyPosition)}>
+                  {companyPosition}
+                </Text>
+              </View>
               <Image
                 source={{
                   uri: companyLogo
@@ -92,6 +97,7 @@ const Card = ({data}) => {
                 style={Styles.imageLogo(!!companyLogo)}
               />
             </View>
+
             <View style={Styles.logoView}>
               <FBLogo style={{display: facebookLink ? 'flex' : 'none'}} />
               <IGLogo

@@ -7,6 +7,7 @@ import {useIsFocused} from '@react-navigation/native';
 const emptyObject = {
   name: '',
   address: '',
+  companyPosition: '',
   companyLogo: '',
   companyName: '',
   email: '',
