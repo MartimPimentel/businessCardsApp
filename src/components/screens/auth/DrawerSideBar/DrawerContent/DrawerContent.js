@@ -28,11 +28,11 @@ const DrawerContent = (props) => {
       // error reading value
     }
   };
-  const clearData = async () => {
+  const clearKey = async () => {
     try {
-      await AsyncStorage.clear();
+      await AsyncStorage.removeItem('@AUTH_KEY');
     } catch (e) {
-      // clear error
+      // remove error
     }
 
     console.log('Done.');
@@ -112,7 +112,7 @@ const DrawerContent = (props) => {
         <TouchableOpacity
           style={Styles.logOutButton}
           onPress={() => {
-            clearData();
+            clearKey();
             props.navigation.navigate('NotAuth');
           }}>
           <LogOutIcon height={30} width={30} />

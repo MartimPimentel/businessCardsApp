@@ -24,12 +24,12 @@ const PersonalArea = () => {
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@PERSONAL_DATA');
-
       setObjData(jsonValue != null ? JSON.parse(jsonValue) : emptyObject);
     } catch (e) {
       // error reading value
     }
   };
+
   useEffect(() => {
     if (isFocused) getData();
   }, [isFocused]);

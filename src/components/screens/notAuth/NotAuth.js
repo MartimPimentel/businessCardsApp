@@ -30,7 +30,7 @@ const NotAuth = () => {
         }}
         onPress={() => {
           storeData('chave_de_entrada');
-          navigation.navigate('Auth');
+          navigation.push('Auth');
         }}>
         <Text style={{color: 'white', textAlign: 'center'}}>
           Login/Register

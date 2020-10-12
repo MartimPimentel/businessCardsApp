@@ -246,6 +246,7 @@ const CardForm = ({
             countryCode: 'PT',
             phoneNumber: '',
           });
+          clearErrors('phoneData');
         }}>
         <RemovePhoneIcon />
         <Text style={Styles.removeAddTextStyles}>Remove phone number</Text>
