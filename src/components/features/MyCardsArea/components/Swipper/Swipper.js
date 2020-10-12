@@ -1,21 +1,30 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Dimensions, View} from 'react-native';
-import Swiper from 'react-native-swiper';
+import SwiperFlatList from 'react-native-swiper-flatlist';
 import Card from '../../../../shared/Card/Card';
 const windowHeight = Dimensions.get('window').height;
-
+export const {width} = Dimensions.get('window');
 const Swipper = ({data, onChangeIndex}) => {
+  const swipperRef = useRef();
+  useEffect(() => {
+    swipperRef.current.goToFirstIndex();
+  }, [data]);
   return (
     <View style={{height: windowHeight <= 600 ? 210 : 250}}>
-      <Swiper
-        showsButtons={false}
-        loop={false}
-        paginationStyle={{bottom: 0}}
-        onIndexChanged={onChangeIndex}>
-        {data.map((data, index) => {
-          return <Card key={index} data={data} />;
-        })}
-      </Swiper>
+      <SwiperFlatList
+        showPagination
+        ref={swipperRef}
+        paginationDefaultColor="grey"
+        paginationActiveColor="#8AB1F2"
+        paginationStyleItem={{height: 12, width: 12, marginRight: 0}}
+        data={data}
+        renderItem={({item}) => (
+          <View style={{width}}>
+            <Card key={item.key} data={item} />
+          </View>
+        )}
+        onChangeIndex={({index}) => onChangeIndex(index)}
+      />
     </View>
   );
 };

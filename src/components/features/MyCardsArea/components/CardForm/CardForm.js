@@ -22,9 +22,8 @@ const CardForm = ({data}) => {
     facebookLink,
     linkedInLink,
     instagramLink,
-  } = data;
-
-  return (
+  } = !!data ? data : '';
+  return !!data ? (
     <View
       style={{
         height: windowHeight <= 600 ? '45%' : '52%',
@@ -128,6 +127,8 @@ const CardForm = ({data}) => {
         </View>
       </ScrollView>
     </View>
+  ) : (
+    <></>
   );
 };
 
