@@ -28,4 +28,8 @@ export {default as AddressIcon} from './AddressIcon.svg';
 export {default as AddIcon} from './AddIcon.svg';
 export {default as DeleteCard} from './DeleteCard.svg';
 export {default as EmailIcon} from './EmailIcon.svg';
+export {default as UserAuth} from './UserAuth.svg';
+export {default as LockAuth} from './LockAuth.svg';
+export {default as RegisterBtn} from './RegisterBtn.svg';
+export {default as LogInBtn} from './LogInBtn.svg';
 export const UnknownUser = require('./UnknownUser.jpg');
