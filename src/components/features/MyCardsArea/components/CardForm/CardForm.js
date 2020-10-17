@@ -13,7 +13,9 @@ const windowHeight = Dimensions.get('window').height;
 
 const CardForm = ({data}) => {
   const {
+    companyPosition,
     phoneData,
+    phoneData2,
     address,
     companyName,
     name,
@@ -22,9 +24,8 @@ const CardForm = ({data}) => {
     facebookLink,
     linkedInLink,
     instagramLink,
-  } = data;
-
-  return (
+  } = !!data ? data : '';
+  return !!data ? (
     <View
       style={{
         height: windowHeight <= 600 ? '45%' : '52%',
@@ -54,7 +55,17 @@ const CardForm = ({data}) => {
           </View>
         </View>
         <View style={{marginBottom: 15}}>
-          <Text style={Styles.categoryText}>PHONE NUMBER</Text>
+          <Text style={Styles.categoryText}>COMPANY POSITION</Text>
+          <View
+            style={{
+              borderColor: 'gainsboro',
+              borderBottomWidth: 2.5,
+            }}>
+            <Text style={Styles.informationText}>{companyPosition}</Text>
+          </View>
+        </View>
+        <View style={{marginBottom: 15}}>
+          <Text style={Styles.categoryText}>PHONE NUMBER(PRINCIPAL)</Text>
           <View
             style={{
               borderColor: 'gainsboro',
@@ -62,6 +73,18 @@ const CardForm = ({data}) => {
             }}>
             <Text style={Styles.informationText}>
               {'+' + phoneData.callingCode + ' ' + phoneData.phoneNumber}
+            </Text>
+          </View>
+        </View>
+        <View style={{marginBottom: 15}}>
+          <Text style={Styles.categoryText}>PHONE NUMBER(ALTERNATIVE)</Text>
+          <View
+            style={{
+              borderColor: 'gainsboro',
+              borderBottomWidth: 2.5,
+            }}>
+            <Text style={Styles.informationText}>
+              {'+' + phoneData2.callingCode + ' ' + phoneData2.phoneNumber}
             </Text>
           </View>
         </View>
@@ -128,6 +151,8 @@ const CardForm = ({data}) => {
         </View>
       </ScrollView>
     </View>
+  ) : (
+    <></>
   );
 };
 

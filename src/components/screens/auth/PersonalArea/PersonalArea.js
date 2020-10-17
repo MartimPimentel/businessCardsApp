@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, ActivityIndicator} from 'react-native';
-import CardCreatedArea from '../../features/PersonalArea/CardCreatedArea/CardCreatedArea';
-import EditCardArea from '../../features/PersonalArea/EditCardArea/EditCardArea';
-import NoCardArea from '../../features/PersonalArea/NoCardArea/NoCardArea';
+import {View, ActivityIndicator} from 'react-native';
+import CardCreatedArea from '../../../features/PersonalArea/CardCreatedArea/CardCreatedArea';
+import NoCardArea from '../../../features/PersonalArea/NoCardArea/NoCardArea';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useIsFocused} from '@react-navigation/native';
 const emptyObject = {
   name: '',
   address: '',
+  companyPosition: '',
   companyLogo: '',
   companyName: '',
   email: '',
@@ -16,6 +16,7 @@ const emptyObject = {
   linkedInLink: '',
   observations: '',
   phoneData: {phoneNumber: '', callingCode: '', countryCode: 'PT'},
+  phoneData2: {phoneNumber: '', callingCode: '', countryCode: 'PT'},
   profilePhoto: '',
 };
 const PersonalArea = () => {
@@ -24,12 +25,12 @@ const PersonalArea = () => {
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@PERSONAL_DATA');
-
       setObjData(jsonValue != null ? JSON.parse(jsonValue) : emptyObject);
     } catch (e) {
       // error reading value
     }
   };
+
   useEffect(() => {
     if (isFocused) getData();
   }, [isFocused]);

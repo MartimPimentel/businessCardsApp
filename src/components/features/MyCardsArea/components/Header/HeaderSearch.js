@@ -60,9 +60,11 @@ const HeaderSearch = ({data, handleFilter}) => {
             <View style={Styles.searchBarView}>
               <TouchableOpacity
                 onPress={() => {
+                  handleFilter(data);
                   setSearchBarActivated(false);
-                }}>
-                <LeftArrowIcon style={{marginLeft: 20}} />
+                }}
+                style={Styles.backButtonContainer}>
+                <LeftArrowIcon />
               </TouchableOpacity>
               <SearchBar data={data} onFilter={handleFilter} />
             </View>

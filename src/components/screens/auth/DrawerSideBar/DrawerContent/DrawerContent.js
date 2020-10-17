@@ -1,20 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Platform,
-  Text,
-  ImageBackground,
-  Image,
-  Dimensions,
-} from 'react-native';
+import {View, Text, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import Svg from 'react-native-svg';
 import {
   MyCardsIcon,
   PersonalAreaIcon,
   UnknownUser,
-} from '../../../../assets/icons';
-import {SidebarBackground} from '../../../../assets/backgrounds';
+  LogOutIcon,
+} from '../../../../../assets/icons';
 import Styles from './DrawerContentStyles';
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -35,6 +27,15 @@ const DrawerContent = (props) => {
     } catch (e) {
       // error reading value
     }
+  };
+  const clearKey = async () => {
+    try {
+      await AsyncStorage.removeItem('@AUTH_KEY');
+    } catch (e) {
+      // remove error
+    }
+
+    console.log('Done.');
   };
 
   useEffect(() => {
@@ -106,6 +107,18 @@ const DrawerContent = (props) => {
           <PersonalAreaIcon height={30} width={30} />
           <Text style={Styles.textStyle}>Personal Area</Text>
         </TouchableOpacity>
+      </View>
+      <View style={Styles.logOutContainer}>
+        <TouchableOpacity
+          style={Styles.logOutButton}
+          onPress={() => {
+            clearKey();
+            props.navigation.navigate('NotAuth');
+          }}>
+          <LogOutIcon height={30} width={30} />
+          <Text style={Styles.textStyle}>Log out</Text>
+        </TouchableOpacity>
+        <View style={Styles.logOutSeparator}></View>
       </View>
     </View>
   );
