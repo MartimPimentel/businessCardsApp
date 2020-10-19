@@ -129,7 +129,6 @@ const CardForm = ({
   }, [deleteErrors]);
 
   phoneInput = useRef();
-<<<<<<< HEAD
 
   const checkHttps = (url) => {
     if (url == '') {
@@ -146,9 +145,7 @@ const CardForm = ({
       return url;
     }
   };
-=======
   phoneInput2 = useRef();
->>>>>>> b501c2c8f350b71966b962c01670ee9e855fc1f7
 
   return (
     <View style={Styles.outsideContainer}>

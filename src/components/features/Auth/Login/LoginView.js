@@ -1,7 +1,9 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
+import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
+import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   LockAuth,
   UserAuth,
@@ -10,6 +12,15 @@ import {
 } from '../../../../assets/icons';
 
 const LoginView = () => {
+  const navigation = useNavigation();
+  //change this return with a if statement between register component or login Component
+  const storeData = async (value) => {
+    try {
+      await AsyncStorage.setItem('@AUTH_KEY', value);
+    } catch (e) {
+      // saving error
+    }
+  };
   return (
     <View style={{height: '100%', width: '100%'}}>
       <LinearGradient
@@ -96,12 +107,22 @@ const LoginView = () => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <LogInBtn
+            <TouchableOpacity
+              onPress={() => {
+                storeData('chave_de_entrada');
+                navigation.push('Auth');
+              }}
               width="150%"
               height="150%"
               preserveAspectRatio="meet"
-              style={{marginLeft: '60%', marginBottom: '1.5%'}}
-            />
+              
+              style={{
+                marginLeft: '60%',
+                marginBottom: '1.5%',
+                activeOpacity: 0.01
+              }}>
+              <LogInBtn />
+            </TouchableOpacity>
           </View>
         </View>
         <View
@@ -120,14 +141,15 @@ const LoginView = () => {
             }}>
             Don't have an account yet ?
           </Text>
-          <Text
-            style={{
-              fontFamily: 'Nunito-SemiBold',
-              fontSize: 14,
-              marginLeft: '2%',
-            }}>
-            Sign up{' '}
-          </Text>
+          <TouchableOpacity style={{marginLeft: '7%'}}>
+            <Text
+              style={{
+                fontFamily: 'Nunito-SemiBold',
+                fontSize: 14,
+              }}>
+              Sign up
+            </Text>
+          </TouchableOpacity>
         </View>
       </LinearGradient>
     </View>

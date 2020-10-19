@@ -28,14 +28,11 @@ export {default as AddressIcon} from './AddressIcon.svg';
 export {default as AddIcon} from './AddIcon.svg';
 export {default as DeleteCard} from './DeleteCard.svg';
 export {default as EmailIcon} from './EmailIcon.svg';
-<<<<<<< HEAD
 export {default as UserAuth} from './UserAuth.svg';
 export {default as LockAuth} from './LockAuth.svg';
 export {default as RegisterBtn} from './RegisterBtn.svg';
 export {default as LogInBtn} from './LogInBtn.svg';
-=======
 export {default as LogOutIcon} from './LogOutIcon.svg';
 export {default as AddPhoneIcon} from './AddPhoneIcon.svg';
 export {default as RemovePhoneIcon} from './RemovePhoneIcon.svg';
->>>>>>> b501c2c8f350b71966b962c01670ee9e855fc1f7
 export const UnknownUser = require('./UnknownUser.jpg');
