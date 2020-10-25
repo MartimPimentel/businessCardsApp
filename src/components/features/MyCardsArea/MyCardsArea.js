@@ -16,27 +16,39 @@ const MyCardsArea = () => {
     setCardIndex(i);
   };
   const allData = data;
+  const [overlay, setOverlay] = useState(false);
+
+  useEffect(() => {
+    if (overlay) setOverlay(false);
+  }, [overlay]);
   return (
-    <>
+    <View>
       <HeaderSearch
         data={data}
         handleFilter={(filtered) => {
           filtered != [] ? setFilteredData(filtered) : setFilteredData(allData);
         }}
+        overlayOpened={(value) => {
+          setOverlay(true);
+        }}
       />
-      <Text style={Styles.titleStyles}>My Cards</Text>
+      <View style={{zIndex: overlay ? -99 : -100}}>
+        <Text style={Styles.titleStyles}>My Cards</Text>
 
-      {filteredData[0] ? (
-        <View style={Styles.outsideContainer}>
-          <Swipper data={filteredData} onChangeIndex={handleIndexChange} />
-          <CardForm data={filteredData[cardIndex]} />
-        </View>
-      ) : (
-        <View style={Styles.noInfoContainer}>
-          <Text style={Styles.noInfoTextStyles}>No results to your search</Text>
-        </View>
-      )}
-    </>
+        {filteredData[0] ? (
+          <View style={Styles.outsideContainer}>
+            <Swipper data={filteredData} onChangeIndex={handleIndexChange} />
+            <CardForm data={filteredData[cardIndex]} />
+          </View>
+        ) : (
+          <View style={Styles.noInfoContainer}>
+            <Text style={Styles.noInfoTextStyles}>
+              No results to your search
+            </Text>
+          </View>
+        )}
+      </View>
+    </View>
   );
 };
 export default MyCardsArea;

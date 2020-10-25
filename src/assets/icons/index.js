@@ -31,4 +31,6 @@ export {default as EmailIcon} from './EmailIcon.svg';
 export {default as LogOutIcon} from './LogOutIcon.svg';
 export {default as AddPhoneIcon} from './AddPhoneIcon.svg';
 export {default as RemovePhoneIcon} from './RemovePhoneIcon.svg';
+export {default as ArrowDownIcon} from './ArrowDownIcon.svg';
+export {default as CheckMarkIcon} from './CheckMarkIcon.svg';
 export const UnknownUser = require('./UnknownUser.jpg');

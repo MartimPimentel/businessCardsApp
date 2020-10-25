@@ -50,5 +50,11 @@ export default Styles = StyleSheet.create({
     borderBottomLeftRadius: 39,
     borderBottomRightRadius: 39,
   },
-  backButtonContainer:{marginLeft: 10,height:35,width:40,alignItems:"center",justifyContent:"center"}
+  backButtonContainer: {
+    marginLeft: 10,
+    height: 35,
+    width: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
