@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" width="230" height="228" viewBox="0 0 230 228">
+    <defs>
+        <linearGradient id="linear-gradient" x1="1" y1="0.536" x2="0" y2="0.541" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#a9e2fd"/>
+            <stop offset="1" stop-color="#8ab1f2"/>
+        </linearGradient>
+    </defs>
+    <g id="Group_5087" data-name="Group 5087" transform="translate(-17028 -3794)">
+        <g id="Group_5089" data-name="Group 5089">
+            <ellipse id="Ellipse_399" data-name="Ellipse 399" cx="37" cy="36" rx="37" ry="36" transform="translate(17106 3872)" fill="#6f7896" opacity="0.753"/>
+        </g>
+        <g id="Group_5088" data-name="Group 5088">
+            <circle id="Ellipse_398" data-name="Ellipse 398" cx="36" cy="36" r="36" transform="translate(17107 3872)" fill="url(#linear-gradient)"/>
+        </g>
+        <path id="right-arrow" d="M21.2,5.007a1.117,1.117,0,0,0-1.587,1.571l8.047,8.047H1.111A1.106,1.106,0,0,0,0,15.737a1.118,1.118,0,0,0,1.111,1.127H27.665L19.618,24.9a1.139,1.139,0,0,0,0,1.587,1.112,1.112,0,0,0,1.587,0l9.952-9.952a1.093,1.093,0,0,0,0-1.571Z" transform="translate(17127 3892.326)" fill="#fff"/>
+    </g>
+</svg>

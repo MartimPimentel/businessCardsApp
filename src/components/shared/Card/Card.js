@@ -26,6 +26,7 @@ const Card = ({data}) => {
     linkedInLink,
     email,
   } = data;
+  console.log(profilePhoto);
   return (
     <View style={Styles.outsideContainer}>
       <LinearGradient
@@ -68,10 +69,6 @@ const Card = ({data}) => {
                 </Text>
               </View>
 
-              {/* <View style={Styles.infoView(!!address)}>
-                <AddressIcon />
-                <Text style={Styles.infoText}>{address}</Text>
-              </View> */}
               <View style={Styles.infoView(!!email)}>
                 <EmailIcon />
                 <Text style={[Styles.infoText, {fontSize: 13}]}>{email}</Text>

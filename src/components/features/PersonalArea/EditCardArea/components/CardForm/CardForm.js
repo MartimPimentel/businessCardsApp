@@ -17,7 +17,7 @@ var phoneInput = null;
 var phoneInput2 = null;
 const projectFormSchema = yup.object().shape({
   name: yup.string().required('*Required'),
-  email: yup.string(),
+  email: yup.string().email('*Invalid email address'),
   phoneData: yup
     .object()
     .test('isValidNumber', '*Invalid number', function (value) {
@@ -92,6 +92,15 @@ const CardForm = ({
     !!phoneData2.phoneNumber,
   );
   const onSubmit = (data) => {
+    var instagramUrl = checkHttps(data.instagramLink);
+    data.instagramLink = instagramUrl;
+    var facebookUrl = checkHttps(data.facebookLink);
+    data.facebookLink = facebookUrl;
+    var linkedinUrl = checkHttps(data.linkedInLink);
+    data.linkedInLink = linkedinUrl;
+    console.log(data.instagramLink);
+    console.log(data.facebookLink);
+    console.log(data.linkedInLink);
     redirectSubmittedData(data);
   };
   const onDeleteCard = () => {
@@ -120,6 +129,22 @@ const CardForm = ({
   }, [deleteErrors]);
 
   phoneInput = useRef();
+
+  const checkHttps = (url) => {
+    if (url == '') {
+      return url;
+    }
+    if (!url.startsWith('https://') && !url.startsWith('http://')) {
+      if (url.startsWith('www.')) {
+        return 'https://' + url;
+      } else {
+        url = url.substring(url.indexOf('www.'));
+        return 'https://' + url;
+      }
+    } else {
+      return url;
+    }
+  };
   phoneInput2 = useRef();
 
   return (
@@ -176,7 +201,9 @@ const CardForm = ({
             />
           )}
         />
-        {errors.email && <Text style={{color: 'red'}}>This is required.</Text>}
+        {errors.email && (
+          <Text style={{color: 'red'}}>{errors.email.message}</Text>
+        )}
       </View>
       <View style={{marginBottom: 15}}>
         <Text style={Styles.titleEntries}>PHONE NUMBER(PRINCIPAL)</Text>
