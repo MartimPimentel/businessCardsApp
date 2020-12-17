@@ -4,14 +4,10 @@ import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {
-  LockAuth,
-  UserAuth,
-  RegisterBtn,
-  LogInBtn,
-} from '../../../../assets/icons';
+import Styles from './LoginViewStyles';
+import {LockAuth, UserAuth, LogInBtn} from '../../../../assets/icons';
 
-const LoginView = () => {
+const LoginView = (props) => {
   const navigation = useNavigation();
   //change this return with a if statement between register component or login Component
   const storeData = async (value) => {
@@ -26,41 +22,15 @@ const LoginView = () => {
       <LinearGradient
         style={{width: '100%', height: '100%', justifyContent: 'center'}}
         colors={['#80C8FC', '#5350DB']}>
-        <Text
-          style={{
-            alignSelf: 'center',
-            paddingBottom: '20%',
-            fontFamily: 'Nunito-Bold',
-            fontSize: 49,
-            color: 'white',
-          }}>
-          Log in
-        </Text>
-        <View
-          style={{
-            width: '100%',
-            height: '20%',
-          }}>
-          <View
-            style={{
-              width: '80%',
-              height: '100%',
-              borderBottomRightRadius: 50,
-              borderTopRightRadius: 50,
-              backgroundColor: 'white',
-              marginBottom: '20%',
-            }}>
+        <Text style={Styles.signUpText}>Log in</Text>
+        <View style={Styles.outsideContainer}>
+          <View style={Styles.formContainer}>
             <View
-              style={{
-                height: '50%',
-                width: '100%',
-                borderTopRightRadius: 50,
-                borderBottomWidth: 3,
-                borderColor: '#C9C9C9',
-                alignItems: 'center',
-                flexDirection: 'row',
-              }}>
-              <View style={{width: '10%', height: '35%', marginLeft: '5%'}}>
+              style={[
+                Styles.inputContainer,
+                {borderTopRightRadius: 50, borderBottomWidth: 3},
+              ]}>
+              <View style={Styles.iconsContainer}>
                 <UserAuth
                   width="100%"
                   height="100%"
@@ -69,20 +39,10 @@ const LoginView = () => {
               </View>
               <TextInput
                 placeholder="username"
-                style={{
-                  marginLeft: '15%',
-                  fontSize: 25,
-                  width: '60%',
-                }}></TextInput>
+                style={Styles.textInputStyles}></TextInput>
             </View>
-            <View
-              style={{
-                height: '50%',
-                width: '100%',
-                alignItems: 'center',
-                flexDirection: 'row',
-              }}>
-              <View style={{width: '10%', height: '40%', marginLeft: '5%'}}>
+            <View style={Styles.inputContainer}>
+              <View style={Styles.iconsContainer}>
                 <LockAuth
                   width="100%"
                   height="100%"
@@ -92,63 +52,30 @@ const LoginView = () => {
 
               <TextInput
                 placeholder="password"
-                style={{
-                  marginLeft: '15%',
-                  fontSize: 25,
-                  width: '60%',
-                }}></TextInput>
+                style={Styles.textInputStyles}></TextInput>
             </View>
           </View>
-          <View
-            style={{
-              width: '100%',
-              height: '100%',
-              position: 'absolute',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
+          <View style={Styles.signInButtonContainer}>
             <TouchableOpacity
               onPress={() => {
                 storeData('chave_de_entrada');
                 navigation.push('Auth');
               }}
-              width="150%"
-              height="150%"
-              preserveAspectRatio="meet"
-              
-              style={{
-                marginLeft: '60%',
-                marginBottom: '1.5%',
-                activeOpacity: 0.01
-              }}>
+              style={Styles.signInButtonStyles}>
               <LogInBtn />
             </TouchableOpacity>
           </View>
         </View>
-        <View
-          style={{
-            height: '5%',
-            width: '100%',
-            flexDirection: 'row',
-            marginTop: '2%',
-            marginLeft: '2%',
-          }}>
-          <Text
-            style={{
-              color: 'white',
-              fontFamily: 'Nunito-SemiBold',
-              fontSize: 14,
-            }}>
+        <View style={Styles.changeToRegisterContainer}>
+          <Text style={[Styles.changeToRegisterTextStyles, {color: 'white'}]}>
             Don't have an account yet ?
           </Text>
-          <TouchableOpacity style={{marginLeft: '7%'}}>
-            <Text
-              style={{
-                fontFamily: 'Nunito-SemiBold',
-                fontSize: 14,
-              }}>
-              Sign up
-            </Text>
+          <TouchableOpacity
+            style={{marginLeft: '7%'}}
+            onPress={() => {
+              props.navigation.navigate('Register');
+            }}>
+            <Text style={Styles.changeToRegisterTextStyles}>Sign up</Text>
           </TouchableOpacity>
         </View>
       </LinearGradient>
