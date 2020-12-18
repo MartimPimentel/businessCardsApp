@@ -1,15 +1,17 @@
 import {StyleSheet} from 'react-native';
+import {vw, vh} from 'react-native-viewport-units';
 export default Styles = StyleSheet.create({
   signUpText: {
     alignSelf: 'center',
-    paddingBottom: '20%',
     fontFamily: 'Nunito-Bold',
     fontSize: 49,
+    paddingTop: '15%',
     color: 'white',
   },
   outsideContainer: {
+    marginTop: '22%',
     width: '100%',
-    height: '30%',
+    height: 170 * (vh / vw),
   },
   formContainer: {
     width: '80%',
@@ -19,37 +21,43 @@ export default Styles = StyleSheet.create({
     backgroundColor: 'white',
     marginBottom: '20%',
   },
-  inputContainer: {
-    height: '33%',
-    width: '100%',
-    borderColor: '#C9C9C9',
-    alignItems: 'center',
-    flexDirection: 'row',
+  inputContainer: (error) => {
+    return {
+      height: '25%',
+      width: '100%',
+      borderColor: error ? 'red' : '#C9C9C9',
+      alignItems: 'center',
+      flexDirection: 'row',
+      borderWidth: error ? 3 : 0,
+    };
   },
   iconsContainer: {width: '10%', height: '40%', marginLeft: '5%'},
   textInputStyles: {
     marginLeft: '5%',
     fontSize: 25,
-    width: '80%',
+    width: '75%',
   },
   signInButtonContainer: {
-    width: '100%',
-    height: '100%',
+    top: '35%',
     position: 'absolute',
-    alignItems: 'center',
+    alignSelf: 'center',
     justifyContent: 'center',
-  },
-  signInButtonStyles: {
-    marginLeft: '60%',
-    marginBottom: '1.5%',
+    left: '67%',
   },
   changeToLoginContainer: {
     flexDirection: 'row',
     marginTop: '2%',
     marginLeft: '2%',
+    marginBottom: '5%',
   },
   changeToLoginTextStyles: {
     fontFamily: 'Nunito-SemiBold',
     fontSize: 14,
   },
+  errorContainer: {
+    top: '1%',
+    paddingLeft: '5%',
+    width: '80%',
+  },
+  errorTextStyles: {fontSize: 20, color: 'orange', fontWeight: '800'},
 });
