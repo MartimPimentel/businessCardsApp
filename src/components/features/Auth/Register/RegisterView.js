@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, Keyboard} from 'react-native';
 import {
   ScrollView,
@@ -10,8 +10,12 @@ import Styles from './RegisterViewStyles';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import RegisterForm from './components/Form/RegisterForm';
+import {useIsFocused} from '@react-navigation/native';
+import {CommonActions} from '@react-navigation/native';
 const RegisterView = (props) => {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
+
   const storeData = async (value) => {
     try {
       await AsyncStorage.setItem('@AUTH_KEY', value);
@@ -22,8 +26,15 @@ const RegisterView = (props) => {
   const handleRegister = (data) => {
     console.log(data);
     storeData('chave_de_entrada');
-    navigation.push('Auth');
+
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{name: 'Auth'}],
+      }),
+    );
   };
+  useEffect(() => {}, [isFocused]);
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
@@ -37,7 +48,12 @@ const RegisterView = (props) => {
           <TouchableOpacity
             style={Styles.changeToLoginContainer}
             onPress={() => {
-              props.navigation.navigate('Login');
+              props.navigation.dispatch(
+                CommonActions.reset({
+                  index: 1,
+                  routes: [{name: 'Login'}],
+                }),
+              );
             }}>
             <Text style={[Styles.changeToLoginTextStyles, {color: 'white'}]}>
               Have an account already ?

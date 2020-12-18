@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useEffect} from 'react';
 import {View, Text} from 'react-native';
 import Styles from '../../RegisterViewStyles';
 import {useForm, Controller} from 'react-hook-form';
@@ -24,17 +24,18 @@ const registerSchema = yup.object().shape({
   email: yup.string().email('*Invalid email address').required('*Required'),
 });
 
-const RegisterForm = ({onClickToRegister}) => {
-  const {handleSubmit, errors, control, reset, clearErrors, setValue} = useForm(
-    {
-      resolver: yupResolver(registerSchema),
-      mode: 'onSubmit',
-    },
-  );
+const RegisterForm = ({onClickToRegister, focus}) => {
+  const {handleSubmit, errors, control, reset} = useForm({
+    resolver: yupResolver(registerSchema),
+    mode: 'onSubmit',
+  });
   const onSubmit = (data) => {
     onClickToRegister(data);
   };
   passwordRef = useRef();
+  useEffect(() => {
+    reset();
+  }, [focus]);
   return (
     <>
       <View style={Styles.outsideContainer}>

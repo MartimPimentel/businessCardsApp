@@ -11,6 +11,7 @@ import Styles from './DrawerContentStyles';
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useIsDrawerOpen} from '@react-navigation/drawer';
+import {CommonActions} from '@react-navigation/native';
 
 const DrawerContent = (props) => {
   const isDrawerOpen = useIsDrawerOpen();
@@ -113,7 +114,12 @@ const DrawerContent = (props) => {
           style={Styles.logOutButton}
           onPress={() => {
             clearKey();
-            props.navigation.navigate('NotAuth');
+            props.navigation.dispatch(
+              CommonActions.reset({
+                index: 1,
+                routes: [{name: 'NotAuth'}],
+              }),
+            );
           }}>
           <LogOutIcon height={30} width={30} />
           <Text style={Styles.textStyle}>Log out</Text>

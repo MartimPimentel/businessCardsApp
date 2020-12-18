@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text} from 'react-native';
 import Styles from '../../LoginViewStyles';
 import {useForm, Controller} from 'react-hook-form';
@@ -13,14 +13,17 @@ const loginSchema = yup.object().shape({
   password: yup.string().required('*Required'),
 });
 
-const LoginForm = ({onClickToLogin}) => {
-  const {handleSubmit, errors, control} = useForm({
+const LoginForm = ({onClickToLogin, focus}) => {
+  const {handleSubmit, errors, control, reset} = useForm({
     resolver: yupResolver(loginSchema),
     mode: 'onSubmit',
   });
   const onSubmit = (data) => {
     onClickToLogin(data);
   };
+  useEffect(() => {
+    reset();
+  }, [focus]);
   return (
     <>
       <View style={Styles.outsideContainer}>

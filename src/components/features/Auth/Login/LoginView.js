@@ -1,8 +1,8 @@
-import React from 'react';
-import {View, Text} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, Text, Keyboard} from 'react-native';
 import {
   ScrollView,
-  TextInput,
+  TouchableWithoutFeedback,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
@@ -11,9 +11,13 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Styles from './LoginViewStyles';
 import LoginForm from './components/Form/LoginForm';
 import {vw, vh} from 'react-native-viewport-units';
+import {useIsFocused} from '@react-navigation/native';
+import {CommonActions} from '@react-navigation/native';
+
 const LoginView = (props) => {
   const navigation = useNavigation();
-  //change this return with a if statement between register component or login Component
+  const isFocused = useIsFocused();
+
   const storeData = async (value) => {
     try {
       await AsyncStorage.setItem('@AUTH_KEY', value);
@@ -24,10 +28,17 @@ const LoginView = (props) => {
   const handleLogin = (data) => {
     console.log(data);
     storeData('chave_de_entrada');
-    navigation.push('Auth');
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{name: 'Auth'}],
+      }),
+    );
   };
   return (
-    <View style={{height: '100%', width: '100%'}}>
+    <TouchableWithoutFeedback
+      onPress={() => Keyboard.dismiss()}
+      style={{height: '100%', width: '100%'}}>
       <LinearGradient
         style={{width: '100%', height: '100%', justifyContent: 'center'}}
         colors={['#80C8FC', '#5350DB']}>
@@ -38,7 +49,12 @@ const LoginView = (props) => {
             <TouchableOpacity
               style={Styles.changeToLoginContainer}
               onPress={() => {
-                props.navigation.navigate('Register');
+                navigation.dispatch(
+                  CommonActions.reset({
+                    index: 1,
+                    routes: [{name: 'Register'}],
+                  }),
+                );
               }}>
               <Text style={[Styles.changeToLoginTextStyles, {color: 'white'}]}>
                 Don't have an account yet ?
@@ -51,7 +67,7 @@ const LoginView = (props) => {
           </View>
         </ScrollView>
       </LinearGradient>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
