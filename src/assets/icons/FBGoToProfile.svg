@@ -1,1 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="313" height="78" viewBox="0 0 313 78"><defs><linearGradient id="a" x1="0.008" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#a9e2fd"/><stop offset="1" stop-color="#8ab1f2"/></linearGradient><filter id="b" x="0" y="0" width="313" height="78" filterUnits="userSpaceOnUse"><feOffset dy="6" input="SourceAlpha"/><feGaussianBlur stdDeviation="5" result="c"/><feFlood flood-color="#91bcf5" flood-opacity="0.569"/><feComposite operator="in" in2="c"/><feComposite in="SourceGraphic"/></filter><linearGradient id="d" x1="0.332" y1="0.141" x2="0.585" y2="0.682" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#3457a0"/><stop offset="1" stop-color="#3b5998"/></linearGradient><linearGradient id="e" x1="0.714" y1="0.647" x2="-0.271" y2="-0.03" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#3457a0" stop-opacity="0"/><stop offset="1" stop-color="#1f3f77"/></linearGradient></defs><g transform="translate(15 9)"><g transform="matrix(1, 0, 0, 1, -15, -9)" filter="url(#b)"><rect width="283" height="48" rx="24" transform="translate(15 9)" fill="url(#a)"/></g><text transform="translate(152 30)" fill="#fff" font-size="18" font-family="Nunito-SemiBold, Nunito" font-weight="600"><tspan x="-50.4" y="0">Go to profile</tspan></text><path d="M25.377,30.375a93.347,93.347,0,0,1-19.849,0,5.627,5.627,0,0,1-5-5,93.344,93.344,0,0,1,0-19.849,5.627,5.627,0,0,1,5-5,93.344,93.344,0,0,1,19.849,0,5.627,5.627,0,0,1,5,5,93.344,93.344,0,0,1,0,19.849,5.627,5.627,0,0,1-5,5Zm0,0" transform="translate(20.408 8.408)" fill="url(#d)"/><path d="M55.788,33.739A4.993,4.993,0,0,0,51.353,29.3a82.863,82.863,0,0,0-17.614,0A4.994,4.994,0,0,0,29.3,33.739a82.861,82.861,0,0,0,0,17.613,4.994,4.994,0,0,0,4.436,4.436,82.83,82.83,0,0,0,17.613,0,4.993,4.993,0,0,0,4.436-4.436,82.831,82.831,0,0,0,0-17.613Zm0,0" transform="translate(-6.686 -18.686)" fill="url(#e)"/><path d="M222.6,111.027q2.7-.013,5.4-.183V98.3h3.583l.433-4.509H228V90.924a1.145,1.145,0,0,1,1.145-1.145h2.871V85.27h-4.542a4.875,4.875,0,0,0-4.875,4.876v3.642h-2.624V98.3H222.6Zm0,0" transform="translate(-186.291 -71.715)" fill="#fff"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="283" height="48" viewBox="0 0 283 48">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.008" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#a9e2fd"/>
+      <stop offset="1" stop-color="#8ab1f2"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.332" y1="0.141" x2="0.585" y2="0.682" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#3457a0"/>
+      <stop offset="1" stop-color="#3b5998"/>
+    </linearGradient>
+  </defs>
+  <g id="btn" style="isolation: isolate">
+    <path id="Path_11173" data-name="Path 11173" d="M24,0H259a24,24,0,0,1,0,48H24A24,24,0,0,1,24,0Z" fill="url(#linear-gradient)"/>
+    <text id="Go_to_Profile" data-name="Go to Profile" transform="translate(152 30)" fill="#fff" font-size="18" font-family="Nunito-SemiBold, Nunito" font-weight="600"><tspan x="-50.859" y="0">Go to Profile</tspan></text>
+    <g id="facebook" transform="translate(20.408 8.408)">
+      <path id="Path_11143" data-name="Path 11143" d="M25.377,30.375a93.347,93.347,0,0,1-19.849,0,5.627,5.627,0,0,1-5-5,93.344,93.344,0,0,1,0-19.849,5.627,5.627,0,0,1,5-5,93.344,93.344,0,0,1,19.849,0,5.627,5.627,0,0,1,5,5,93.344,93.344,0,0,1,0,19.849,5.627,5.627,0,0,1-5,5Zm0,0" transform="translate(0)" fill="url(#linear-gradient-2)"/>
+      <path id="Path_11147" data-name="Path 11147" d="M222.6,111.027q2.7-.013,5.4-.183V98.3h3.583l.433-4.509H228V90.924a1.145,1.145,0,0,1,1.145-1.145h2.871V85.27h-4.542a4.875,4.875,0,0,0-4.875,4.876v3.642h-2.624V98.3H222.6Zm0,0" transform="translate(-206.698 -80.123)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

@@ -25,14 +25,16 @@ const CardForm = ({data}) => {
     linkedInLink,
     instagramLink,
   } = !!data ? data : '';
+  console.log(facebookLink, instagramLink, linkedInLink);
   return !!data ? (
     <View
       style={{
-        height: windowHeight <= 600 ? '45%' : '52%',
+        height: windowHeight <= 600 ? '30%' : '35%',
       }}>
       <ScrollView
         style={{
           paddingHorizontal: 30,
+          height: 1000,
         }}>
         <View style={{marginBottom: 15}}>
           <Text style={Styles.categoryText}>NAME</Text>
@@ -118,37 +120,71 @@ const CardForm = ({data}) => {
             <Text style={Styles.informationText}>{observations}</Text>
           </View>
         </View>
-        <View>
-          <Text style={Styles.categoryText}>SOCIAL NETWORKS</Text>
-          <View style={{marginTop: 10}}>
-            <TouchableOpacity
-              onPress={() => {
-                Linking.openURL(facebookLink);
+        {facebookLink || instagramLink || linkedInLink ? (
+          <View>
+            <Text style={Styles.categoryText}>SOCIAL NETWORKS</Text>
+            <View
+              style={{
+                height: 280,
+                alignItems: 'center',
               }}>
-              <FBGoToProfile
-                viewBox={windowWidth <= 350 ? '40 -7 250 95' : ''}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                Linking.openURL(instagramLink);
-              }}>
-              <IGGoToProfile
-                style={{top: windowWidth <= 350 ? -25 : -10, marginTop: 10}}
-                viewBox={windowWidth <= 350 ? '40 -7 250 95' : ''}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                Linking.openURL(linkedInLink);
-              }}>
-              <LIGoToProfile
-                style={{top: windowWidth <= 350 ? -40 : -20, marginTop: 10}}
-                viewBox={windowWidth <= 350 ? '40 0 250 95' : ''}
-              />
-            </TouchableOpacity>
+              <View style={{height: '10%'}}></View>
+              {facebookLink ? (
+                <TouchableOpacity
+                  style={Styles.iconsTouchableContainer}
+                  onPress={() => {
+                    Linking.openURL(facebookLink);
+                  }}>
+                  <View style={Styles.iconsContainer}>
+                    <FBGoToProfile
+                      viewBox={windowWidth <= 350 ? '10 -5 250 55' : ''}
+                    />
+                  </View>
+                </TouchableOpacity>
+              ) : (
+                <></>
+              )}
+
+              {instagramLink ? (
+                <>
+                  <View style={{height: '8%'}}></View>
+                  <TouchableOpacity
+                    style={Styles.iconsTouchableContainer}
+                    onPress={() => {
+                      Linking.openURL(instagramLink);
+                    }}>
+                    <View style={Styles.iconsContainer}>
+                      <IGGoToProfile
+                        viewBox={windowWidth <= 350 ? '10 -5 250 55' : ''}
+                      />
+                    </View>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <></>
+              )}
+              <View style={{height: '8%'}}></View>
+              {linkedInLink ? (
+                <TouchableOpacity
+                  style={Styles.iconsTouchableContainer}
+                  onPress={() => {
+                    Linking.openURL(linkedInLink);
+                  }}>
+                  <View style={Styles.iconsContainer}>
+                    <LIGoToProfile
+                      viewBox={windowWidth <= 350 ? '10 -5 250 55' : ''}
+                    />
+                  </View>
+                </TouchableOpacity>
+              ) : (
+                <></>
+              )}
+              <View style={{height: '8%'}}></View>
+            </View>
           </View>
-        </View>
+        ) : (
+          <></>
+        )}
       </ScrollView>
     </View>
   ) : (

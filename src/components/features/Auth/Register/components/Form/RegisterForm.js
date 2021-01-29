@@ -5,7 +5,13 @@ import {useForm, Controller} from 'react-hook-form';
 import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers';
 import {TouchableOpacity, TextInput} from 'react-native-gesture-handler';
-import {LockAuth, UserAuth, RegisterBtn} from '../../../../../../assets/icons';
+import {
+  LockAuth,
+  UserAuth,
+  RegisterBtn,
+  EmailIcon,
+  ConfirmAuthLock,
+} from '../../../../../../assets/icons';
 import {vw, vh} from 'react-native-viewport-units';
 
 let passwordRef = null;
@@ -69,7 +75,11 @@ const RegisterForm = ({onClickToRegister, focus}) => {
               {borderTopWidth: errors.email && errors.username ? 0 : 3},
             ]}>
             <View style={Styles.iconsContainer}>
-              <LockAuth width="100%" height="100%" preserveAspectRatio="meet" />
+              <EmailIcon
+                width="100%"
+                height="100%"
+                preserveAspectRatio="meet"
+              />
             </View>
 
             <Controller
@@ -124,7 +134,11 @@ const RegisterForm = ({onClickToRegister, focus}) => {
               },
             ]}>
             <View style={Styles.iconsContainer}>
-              <LockAuth width="100%" height="100%" preserveAspectRatio="meet" />
+              <ConfirmAuthLock
+                width="100%"
+                height="100%"
+                preserveAspectRatio="meet"
+              />
             </View>
             <Controller
               control={control}

@@ -9,7 +9,7 @@ import {
   PhoneIcon,
   NameIcon,
   IGLogo,
-  EmailIcon,
+  CardEmailIcon,
 } from '../../../assets/icons';
 import LinearGradient from 'react-native-linear-gradient';
 const Card = ({data}) => {
@@ -26,7 +26,6 @@ const Card = ({data}) => {
     linkedInLink,
     email,
   } = data;
-  console.log(profilePhoto);
   return (
     <View style={Styles.outsideContainer}>
       <LinearGradient
@@ -70,7 +69,7 @@ const Card = ({data}) => {
               </View>
 
               <View style={Styles.infoView(!!email)}>
-                <EmailIcon />
+                <CardEmailIcon />
                 <Text style={[Styles.infoText, {fontSize: 13}]}>{email}</Text>
               </View>
             </View>

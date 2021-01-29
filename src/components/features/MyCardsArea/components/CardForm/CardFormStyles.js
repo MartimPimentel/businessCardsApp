@@ -12,4 +12,12 @@ export default Styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'NunitoSans-Regular',
   },
+  iconsContainer: {
+    height: '47%',
+    width: '85%',
+  },
+  iconsTouchableContainer: {
+    height: 50,
+    width: '86%',
+  },
 });
