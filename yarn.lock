@@ -6180,6 +6180,11 @@ react-native-country-picker-modal@^1.11.0:
     prop-types "15.7.2"
     react-async-hook "3.6.1"
 
+react-native-flip-component@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-flip-component/-/react-native-flip-component-1.0.6.tgz#f4b81fa5015404e6cb24ccb8fbaac557b3d98462"
+  integrity sha512-07yowFx9Ivi3gJ376102QmscTwgdzC5HrllwgKOXve0IIkMce7o/xZfz1NucAQRqXlbDUc24tVXVH7gh5UTh+g==
+
 react-native-gesture-handler@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.8.0.tgz#18f61f51da50320f938957b0ee79bc58f47449dc"

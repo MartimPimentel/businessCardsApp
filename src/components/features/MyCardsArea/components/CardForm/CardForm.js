@@ -25,7 +25,7 @@ const CardForm = ({data}) => {
     linkedInLink,
     instagramLink,
   } = !!data ? data : '';
-  console.log(facebookLink, instagramLink, linkedInLink);
+
   return !!data ? (
     <View
       style={{
