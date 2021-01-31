@@ -108,7 +108,7 @@ export default Styles = StyleSheet.create({
     height: '50%',
     width: '100%',
   },
-  fullInfoView: {top: '5%'},
+  fullInfoView: {top: '5%', width: '140%'},
 
   infoView: (isVisible) => {
     return {
