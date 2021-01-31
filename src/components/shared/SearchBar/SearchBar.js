@@ -35,6 +35,7 @@ const SearchBar = ({data, onFilter, overlayOpened}) => {
         <View
           style={{
             width: '62%',
+            justifyContent: 'center',
           }}>
           <TextInput
             placeholder={placeholder}
