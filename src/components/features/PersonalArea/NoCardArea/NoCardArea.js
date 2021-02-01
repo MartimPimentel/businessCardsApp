@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, Text, Dimensions} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import Styles from './NoCardAreaStyles';
 import Header from './components/Header/NoCardsHeader';
 import {NoCardIcon, AddCardIcon} from '../../../../assets/icons';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 
 const NoCardArea = ({data}) => {

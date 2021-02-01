@@ -23,9 +23,8 @@ export default Styles = StyleSheet.create({
     fontFamily: 'NunitoSans-Regular',
   },
   noInfoContainer: {
-    alignSelf: 'center',
-    height: '50%',
-    justifyContent: 'center',
+    height: '100%',
+    top: '20%',
   },
   noInfoTextStyles: {
     fontFamily: 'Nunito-Regular',
