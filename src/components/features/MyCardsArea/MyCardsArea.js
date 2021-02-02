@@ -9,6 +9,7 @@ import {RemoveCardIcon} from '../../../assets/icons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import FlipComponent from 'react-native-flip-component';
 import DeleteCard from './components/DeleteCard/DeleteCard';
+import FloatingAddButton from '../../shared/FloatingAddButton/FloatingAddButton';
 const MyCardsArea = () => {
   LogBox.ignoreLogs([
     'Warning: Cannot update a component from inside the function body of a different component.',
@@ -30,12 +31,15 @@ const MyCardsArea = () => {
     }
     setFlipped(false);
   };
+  const onHandleAddCard = () => {
+    //TO DO
+  };
 
   useEffect(() => {
     if (overlay) setOverlay(false);
   }, [overlay]);
   return (
-    <View>
+    <View style={{height: '100%'}}>
       <HeaderSearch
         data={data}
         handleFilter={(filtered) => {
@@ -103,6 +107,7 @@ const MyCardsArea = () => {
           </View>
         )}
       </View>
+      <FloatingAddButton onPress={onHandleAddCard} />
     </View>
   );
 };
