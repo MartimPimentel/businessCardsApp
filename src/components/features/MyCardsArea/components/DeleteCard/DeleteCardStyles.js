@@ -48,10 +48,9 @@ export default Styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'white',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   textButtonStyles: {
-    textAlignVertical: 'center',
-    height: '100%',
     color: 'white',
     fontFamily: 'Nunito-Regular',
     fontSize: 18,
