@@ -1,7 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
 import MyCardsArea from '../../../../features/MyCardsArea/MyCardsArea';
 import DrawerContent from '../DrawerContent/DrawerContent';
 import PersonalArea from '../../PersonalArea/PersonalArea';

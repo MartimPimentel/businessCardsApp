@@ -1,6 +1,5 @@
 import React from 'react';
 import {Dimensions, Image, Text, View} from 'react-native';
-const windowHeight = Dimensions.get('window').height;
 import Styles from './CardStyles';
 import {CardDrawRight, CardDrawLeft} from '../../../assets/backgrounds';
 import {
@@ -15,8 +14,7 @@ import LinearGradient from 'react-native-linear-gradient';
 const Card = ({data}) => {
   const {
     phoneData,
-    address,
-    companyPosition,
+    role,
     companyName,
     name,
     profilePhoto,
@@ -61,12 +59,14 @@ const Card = ({data}) => {
                 <Text style={Styles.nameText}>{name}</Text>
               </View>
 
-              <View style={Styles.infoView(!!phoneData.phoneNumber)}>
-                <PhoneIcon />
-                <Text style={Styles.infoText}>
-                  {'+' + phoneData.callingCode + ' ' + phoneData.phoneNumber}
-                </Text>
-              </View>
+              {phoneData && (
+                <View style={Styles.infoView(!!phoneData.phoneNumber)}>
+                  <PhoneIcon />
+                  <Text style={Styles.infoText}>
+                    {'+' + phoneData.callingCode + ' ' + phoneData.phoneNumber}
+                  </Text>
+                </View>
+              )}
 
               <View style={Styles.infoView(!!email)}>
                 <CardEmailIcon />
@@ -80,9 +80,7 @@ const Card = ({data}) => {
                 <Text style={Styles.companyNameText(!!companyName)}>
                   {companyName}
                 </Text>
-                <Text style={Styles.companyPositionText(!!companyPosition)}>
-                  {companyPosition}
-                </Text>
+                <Text style={Styles.roleText(!!role)}>{role}</Text>
               </View>
               <Image
                 source={{

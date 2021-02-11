@@ -90,7 +90,7 @@ export default Styles = StyleSheet.create({
       textAlign: 'center',
     };
   },
-  companyPositionText: (isVisible) => {
+  roleText: (isVisible) => {
     return {
       fontFamily: 'Nunito-Regular',
       alignSelf: 'center',

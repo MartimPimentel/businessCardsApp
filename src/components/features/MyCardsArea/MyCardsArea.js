@@ -11,20 +11,22 @@ import FlipComponent from 'react-native-flip-component';
 import DeleteCard from './components/DeleteCard/DeleteCard';
 import FloatingAddButton from '../../shared/FloatingAddButton/FloatingAddButton';
 import {getReceivedCards} from '../../../shared/api/getReceivedCards';
+
 const MyCardsArea = () => {
-  LogBox.ignoreLogs([
+  /* LogBox.ignoreLogs([
     'Warning: Cannot update a component from inside the function body of a different component.',
-  ]);
+  ]); */
   const [loading, setLoading] = useState(true);
   const [cardIndex, setCardIndex] = useState(0);
   const [filteredData, setFilteredData] = useState(data);
   const [isFlipped, setFlipped] = useState(false);
+  const [overlay, setOverlay] = useState(false);
 
   const handleIndexChange = (i) => {
     setCardIndex(i);
   };
   const allData = data;
-  const [overlay, setOverlay] = useState(false);
+
   const handleDeleteDecison = (response) => {
     if (response == 'yes') {
       let newData = [...filteredData];
@@ -108,14 +110,8 @@ const MyCardsArea = () => {
                 <CardForm data={filteredData[cardIndex]} />
               </View>
             ) : (
-              /* <View style={Styles.outsideContainer}>
-            <Swipper data={filteredData} onChangeIndex={handleIndexChange} />
-            <CardForm data={filteredData[cardIndex]} />
-          </View> */
               <View style={Styles.noInfoContainer}>
-                <Text style={Styles.noInfoTextStyles}>
-                  No results to your search
-                </Text>
+                <Text style={Styles.noInfoTextStyles}>No cards available</Text>
               </View>
             )}
           </View>

@@ -13,7 +13,7 @@ const filterData = (filterBy, query, data) => {
 };
 const categories = [
   {value: 'Name', objectName: 'name'},
-  {value: 'Position', objectName: 'companyPosition'},
+  {value: 'Position', objectName: 'role'},
   {value: 'Company', objectName: 'companyName'},
 ];
 const SearchBar = ({data, onFilter, overlayOpened}) => {

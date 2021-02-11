@@ -10,7 +10,7 @@ import Styles from './EditCardAreaStyles';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useNavigation, useRoute, useIsFocused} from '@react-navigation/native';
 
-const EditCardArea = ({data}) => {
+const EditCardArea = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const isFocused = useIsFocused();

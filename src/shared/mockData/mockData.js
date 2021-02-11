@@ -3,13 +3,13 @@ import {logo1} from './photosBase64/logo1';
 export const data = [
   {
     name: 'Bill Gates',
-    companyPosition: 'CEO & Co-Founder',
+    role: 'CEO & Co-Founder',
     phoneData: {
       phoneNumber: '2027953213',
       callingCode: '1',
       countryCode: 'US',
     },
-    phoneData2: {
+    alternativePhoneData: {
       phoneNumber: '2027953200',
       callingCode: '1',
       countryCode: 'US',
@@ -26,13 +26,13 @@ export const data = [
   },
   {
     name: 'Martim Bello',
-    companyPosition: 'Panusca',
+    role: 'Panusca',
     phoneData: {
       phoneNumber: '917720666',
       callingCode: '351',
       countryCode: 'PT',
     },
-    phoneData2: {
+    alternativePhoneData: {
       phoneNumber: '917700000',
       callingCode: '351',
       countryCode: 'PT',

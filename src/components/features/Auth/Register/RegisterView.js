@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, Text, Keyboard} from 'react-native';
+import {Text, Keyboard} from 'react-native';
 import {
   ScrollView,
   TouchableOpacity,
@@ -12,6 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 import RegisterForm from './components/Form/RegisterForm';
 import {useIsFocused} from '@react-navigation/native';
 import {CommonActions} from '@react-navigation/native';
+
 const RegisterView = (props) => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {View, Text, Keyboard} from 'react-native';
 import {
   ScrollView,
@@ -11,12 +11,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Styles from './LoginViewStyles';
 import LoginForm from './components/Form/LoginForm';
 import {vw, vh} from 'react-native-viewport-units';
-import {useIsFocused} from '@react-navigation/native';
 import {CommonActions} from '@react-navigation/native';
 
-const LoginView = (props) => {
+const LoginView = () => {
   const navigation = useNavigation();
-  const isFocused = useIsFocused();
 
   const storeData = async (value) => {
     try {

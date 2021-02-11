@@ -1,0 +1,15 @@
+export const nullCard = {
+  name: null,
+  address: null,
+  role: null,
+  companyLogo: null,
+  companyName: null,
+  email: null,
+  facebookLink: null,
+  instagramLink: null,
+  linkedInLink: null,
+  observations: null,
+  phoneData: null,
+  alternativePhoneData: null,
+  profilePhoto: null,
+};

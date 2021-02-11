@@ -12,38 +12,15 @@ import {
 } from '../../../../../../assets/icons';
 import PhotoPicker from '../../../../../shared/PhotoPicker/PhotoPicker';
 import PhoneInput from 'react-native-phone-number-input';
+import {
+  checkHttps,
+  formSchema,
+  insertDefaultCard,
+} from './functions/cardFunctions';
+import {nullCard} from '../../../../../../shared/consts';
 
 var phoneInput = null;
 var phoneInput2 = null;
-const projectFormSchema = yup.object().shape({
-  name: yup.string().required('*Required'),
-  email: yup.string().email('*Invalid email address'),
-  phoneData: yup
-    .object()
-    .test('isValidNumber', '*Invalid number', function (value) {
-      return (
-        value.phoneNumber == '' ||
-        phoneInput.current.isValidNumber(value.callingCode + value.phoneNumber)
-      );
-    })
-    .test('checkField2', '*Must fill this field first', function (value) {
-      return !(value.phoneNumber == '' && !!this.parent.phoneData2.phoneNumber);
-    }),
-  phoneData2: yup
-    .object()
-    .test('isValidNumber', '*Invalid number', function (value) {
-      return (
-        value.phoneNumber == '' ||
-        phoneInput2.current.isValidNumber(value.callingCode + value.phoneNumber)
-      );
-    }),
-  address: yup.string(),
-  companyName: yup.string(),
-  linkedInLink: yup.string(),
-  facebookLink: yup.string(),
-  instagramLink: yup.string(),
-  companyPosition: yup.string(),
-});
 
 const CardForm = ({
   onClickToSave,
@@ -52,45 +29,21 @@ const CardForm = ({
   onClickToDelete,
   deleteErrors,
 }) => {
-  const {
-    name,
-    companyPosition,
-    address,
-    companyLogo,
-    companyName,
-    email,
-    facebookLink,
-    instagramLink,
-    linkedInLink,
-    observations,
-    phoneData,
-    profilePhoto,
-    phoneData2,
-  } = data;
+  phoneInput = useRef();
+  phoneInput2 = useRef();
+  const projectFormSchema = formSchema(phoneInput, phoneInput2);
   const {handleSubmit, errors, control, reset, clearErrors, setValue} = useForm(
     {
       resolver: yupResolver(projectFormSchema),
       mode: 'onChange',
-      defaultValues: {
-        name: name,
-        companyPosition: companyPosition,
-        address: address,
-        companyLogo: companyLogo,
-        companyName: companyName,
-        email: email,
-        facebookLink: facebookLink,
-        instagramLink: instagramLink,
-        linkedInLink: linkedInLink,
-        observations: observations,
-        phoneData: phoneData,
-        phoneData2: phoneData2,
-        profilePhoto: profilePhoto,
-      },
+      defaultValues: insertDefaultCard(data),
     },
   );
   const [click2AddPhoneNum, setClick2AddPhoneNum] = useState(
-    !!phoneData2.phoneNumber,
+    data.alternativePhoneData && !!data.alternativePhoneData.phoneNumber,
   );
+
+  const [isEditable, setIsEditable] = useState(false);
   const onSubmit = (data) => {
     var instagramUrl = checkHttps(data.instagramLink);
     data.instagramLink = instagramUrl;
@@ -98,27 +51,10 @@ const CardForm = ({
     data.facebookLink = facebookUrl;
     var linkedinUrl = checkHttps(data.linkedInLink);
     data.linkedInLink = linkedinUrl;
-    console.log(data.instagramLink);
-    console.log(data.facebookLink);
-    console.log(data.linkedInLink);
     redirectSubmittedData(data);
   };
   const onDeleteCard = () => {
-    reset({
-      name: '',
-      address: '',
-      companyPosition: '',
-      companyLogo: '',
-      companyName: '',
-      email: '',
-      facebookLink: '',
-      instagramLink: '',
-      linkedInLink: '',
-      observations: '',
-      phoneData: '',
-      phoneData2: '',
-      profilePhoto: '',
-    });
+    reset(nullCard);
     onClickToDelete();
   };
   useEffect(() => {
@@ -127,25 +63,12 @@ const CardForm = ({
   useEffect(() => {
     clearErrors();
   }, [deleteErrors]);
-
-  phoneInput = useRef();
-
-  const checkHttps = (url) => {
-    if (url == '') {
-      return url;
-    }
-    if (!url.startsWith('https://') && !url.startsWith('http://')) {
-      if (url.startsWith('www.')) {
-        return 'https://' + url;
-      } else {
-        url = url.substring(url.indexOf('www.'));
-        return 'https://' + url;
-      }
-    } else {
-      return url;
-    }
-  };
-  phoneInput2 = useRef();
+  //bug in android email text fields makes app RN apps crash.Known workaround:
+  useEffect(() => {
+    setTimeout(() => {
+      setIsEditable(true);
+    }, 100);
+  }, []);
 
   return (
     <View style={Styles.outsideContainer}>
@@ -160,7 +83,7 @@ const CardForm = ({
                 onChange={(image) => {
                   onChange(image);
                 }}
-                data={profilePhoto}
+                data={data.profilePhoto}
                 croppingCircular
               />
             )}
@@ -193,6 +116,7 @@ const CardForm = ({
           name="email"
           render={({onChange, onBlur, value}) => (
             <TextInput
+              editable={isEditable}
               style={Styles.textInputStyles}
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
@@ -214,8 +138,8 @@ const CardForm = ({
             <PhoneInput
               containerStyle={{marginTop: 10}}
               ref={phoneInput}
-              defaultValue={value.phoneNumber}
-              defaultCode={phoneData.countryCode}
+              defaultValue={value ? value.phoneNumber : null}
+              defaultCode={value ? value.countryCode : 'PT'}
               onChangeText={(number) => {
                 onChange({
                   countryCode: phoneInput.current.getCountryCode(),
@@ -246,13 +170,13 @@ const CardForm = ({
         <Text style={Styles.titleEntries}>PHONE NUMBER(ALTERNATIVE)</Text>
         <Controller
           control={control}
-          name="phoneData2"
+          name="alternativePhoneData"
           render={({onChange, onBlur, value}) => (
             <PhoneInput
               containerStyle={{marginTop: 10}}
               ref={phoneInput2}
-              defaultValue={value.phoneNumber}
-              defaultCode={phoneData.countryCode}
+              defaultValue={value ? value.phoneNumber : null}
+              defaultCode={value ? value.countryCode : 'PT'}
               onChangeText={(number) => {
                 onChange({
                   countryCode: phoneInput.current.getCountryCode(),
@@ -264,19 +188,18 @@ const CardForm = ({
             />
           )}
         />
-        {errors.phoneData2 && (
-          <Text style={{color: 'red'}}>{errors.phoneData2.message}</Text>
+        {errors.alternativePhoneData && (
+          <Text style={{color: 'red'}}>
+            {errors.alternativePhoneData.message}
+          </Text>
         )}
       </View>
       <TouchableOpacity
         style={Styles.removeAddContainer(click2AddPhoneNum)}
         onPress={() => {
           setClick2AddPhoneNum(false);
-          setValue('phoneData2', {
-            callingCode: '',
-            countryCode: 'PT',
-            phoneNumber: '',
-          });
+          setValue('alternativePhoneData', null);
+          if (phoneInput2.current) phoneInput2.current.state['number'] = '';
           clearErrors('phoneData');
         }}>
         <RemovePhoneIcon />
@@ -322,7 +245,7 @@ const CardForm = ({
         <Text style={Styles.titleEntries}>COMPANY POSITION</Text>
         <Controller
           control={control}
-          name="companyPosition"
+          name="role"
           render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
@@ -332,9 +255,7 @@ const CardForm = ({
             />
           )}
         />
-        {errors.companyPosition && (
-          <Text style={{color: 'red'}}>This is required.</Text>
-        )}
+        {errors.role && <Text style={{color: 'red'}}>This is required.</Text>}
       </View>
       <View style={Styles.separatorPhotos}>
         <View
@@ -351,7 +272,7 @@ const CardForm = ({
                 onChange={(image) => {
                   onChange(image);
                 }}
-                data={companyLogo}
+                data={data.companyLogo}
               />
             )}
           />
@@ -437,12 +358,14 @@ const CardForm = ({
           />
         </View>
       </View>
-      <View style={{marginBottom: 15}}>
-        <Text style={Styles.titleEntries}>DELETE CARD</Text>
-        <TouchableOpacity onPress={onDeleteCard}>
-          <DeleteCard style={{alignSelf: 'center', marginTop: 10}} />
-        </TouchableOpacity>
-      </View>
+      {data.name && (
+        <View style={{marginBottom: 15}}>
+          <Text style={Styles.titleEntries}>DELETE CARD</Text>
+          <TouchableOpacity onPress={onDeleteCard}>
+            <DeleteCard style={{alignSelf: 'center', marginTop: 10}} />
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
