@@ -1,15 +1,14 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import Styles from './QRCodeModalStyles';
-import QRCode from 'react-native-qrcode-svg';
+import Styles from './ModalStyles';
 import LinearGradient from 'react-native-linear-gradient';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const QRCodeModal = ({content, setQrcodeVisible}) => {
+const Modal = ({setQrcodeVisible, component}) => {
   return (
     <View style={Styles.modalContainer}>
       <View style={Styles.modalBackground}>
-        <QRCode size={200} value={content} />
+        {component}
         <TouchableOpacity
           title="close"
           style={Styles.closeButtonContainer}
@@ -26,4 +25,4 @@ const QRCodeModal = ({content, setQrcodeVisible}) => {
     </View>
   );
 };
-export default QRCodeModal;
+export default Modal;
