@@ -44,31 +44,12 @@ const DrawerContent = (props) => {
   }, [isDrawerOpen]);
 
   return (
-    <View
-      style={{
-        left: -25,
-        width: '110%',
-        borderTopRightRadius: 29,
-        borderBottomRightRadius: 29,
-      }}>
+    <View style={Styles.globalContainer}>
       <View style={Styles.backgroundContainer}>
         <LinearGradient
-          style={{
-            width: '100%',
-            height: '100%',
-            borderBottomRightRadius: 39,
-
-            borderTopRightRadius: 39,
-          }}
+          style={Styles.linearGradientStyles}
           colors={['#A9E2FD', '#8AB1F2']}>
-          <View
-            style={{
-              backgroundColor: 'white',
-              opacity: 0.25,
-              height: '20%',
-              width: '100%',
-              borderTopRightRadius: 39,
-            }}></View>
+          <View style={Styles.topBackground} />
         </LinearGradient>
       </View>
       <View style={Styles.userProfileContainer}>
@@ -93,18 +74,18 @@ const DrawerContent = (props) => {
             setIsMyCardSelected(true);
             props.navigation.navigate('MyCards');
           }}>
-          <View style={Styles.seletecTag(isMyCardsSelected)}></View>
+          <View style={Styles.seletecTag(isMyCardsSelected)} />
           <MyCardsIcon height={30} width={30} />
           <Text style={Styles.textStyle}>My Cards</Text>
         </TouchableOpacity>
-        <View style={Styles.separatorStyle}></View>
+        <View style={Styles.separatorStyle} />
         <TouchableOpacity
           style={Styles.personalAreaStyle(!isMyCardsSelected)}
           onPress={() => {
             setIsMyCardSelected(false);
             props.navigation.navigate('PersonalArea');
           }}>
-          <View style={Styles.seletecTag(!isMyCardsSelected)}></View>
+          <View style={Styles.seletecTag(!isMyCardsSelected)} />
           <PersonalAreaIcon height={30} width={30} />
           <Text style={Styles.textStyle}>Personal Area</Text>
         </TouchableOpacity>
@@ -124,7 +105,7 @@ const DrawerContent = (props) => {
           <LogOutIcon height={30} width={30} />
           <Text style={Styles.textStyle}>Log out</Text>
         </TouchableOpacity>
-        <View style={Styles.logOutSeparator}></View>
+        <View style={Styles.logOutSeparator} />
       </View>
     </View>
   );

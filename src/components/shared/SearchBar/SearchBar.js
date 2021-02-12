@@ -12,14 +12,14 @@ const filterData = (filterBy, query, data) => {
   });
 };
 const categories = [
-  {value: 'Name', objectName: 'name'},
-  {value: 'Position', objectName: 'role'},
-  {value: 'Company', objectName: 'companyName'},
+  {stringName: 'Name', objectName: 'name'},
+  {stringName: 'Position', objectName: 'role'},
+  {stringName: 'Company', objectName: 'companyName'},
 ];
 const SearchBar = ({data, onFilter, overlayOpened}) => {
   const placeholder = 'Search Cards';
   const [selectedCategory, setSelectedCategory] = useState({
-    value: 'Name',
+    stringName: 'Name',
     objectName: 'name',
   });
   return (

@@ -1,5 +1,4 @@
-import {Dimensions, Platform, StyleSheet} from 'react-native';
-const windowHeight = Dimensions.get('window').height;
+import {StyleSheet} from 'react-native';
 export default Styles = StyleSheet.create({
   outsideContainer: {
     height: '100%',
@@ -23,8 +22,8 @@ export default Styles = StyleSheet.create({
     fontFamily: 'NunitoSans-Regular',
   },
   noInfoContainer: {
-    height: '100%',
-    top: '20%',
+    height: '80%',
+    justifyContent: 'center',
   },
   noInfoTextStyles: {
     fontFamily: 'Nunito-Regular',

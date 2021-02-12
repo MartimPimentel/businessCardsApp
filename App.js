@@ -1,11 +1,12 @@
 import 'react-native-gesture-handler';
 import React, {useEffect, useState} from 'react';
 import DrawerNavigator from './src/components/screens/auth/DrawerSideBar/DrawerNavigator/DrawerNavigator';
-import {ActivityIndicator, StatusBar, View} from 'react-native';
+import {StatusBar} from 'react-native';
 import NotAuth from './src/components/screens/notAuth/NotAuth';
 import {NavigationContainer} from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {createStackNavigator} from '@react-navigation/stack';
+import Spinner from './src/components/shared/Spinner/Spinner';
 const Stack = createStackNavigator();
 export default function App() {
   const [hasAuthKey, setHasAuthKey] = useState(false);
@@ -28,15 +29,7 @@ export default function App() {
     });
   }, []);
   return loading ? (
-    <View
-      style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '100%',
-      }}>
-      <ActivityIndicator size={100} color="#8AB1F2" />
-    </View>
+    <Spinner />
   ) : (
     <>
       <StatusBar backgroundColor="#A9E2FD" />

@@ -4,18 +4,15 @@ import Styles from './CardCreatedAreaStyles';
 import PersonalAreaHeader from './components/Header/PersonalAreaHeader';
 import Card from '../../../shared/Card/Card';
 import {QRCodeIcon, NFCIcon} from '../../../../assets/icons';
-import QRCode from 'react-native-qrcode-svg';
-import LinearGradient from 'react-native-linear-gradient';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import QRCodeModal from './components/QRCodeModal.js/QRCodeModal';
+
 const CardCreatedArea = ({data}) => {
   const [qrcodeVisible, setQrcodeVisible] = useState(false);
   return (
     <View style={{height: '100%'}}>
       <PersonalAreaHeader data={data} disabled={qrcodeVisible} />
-      <View
-        style={{
-          marginTop: 20,
-        }}>
+      <View style={{marginTop: 20}}>
         <View style={Styles.textBox}>
           <Text style={Styles.titleTexts}>Personal Area</Text>
         </View>
@@ -24,25 +21,7 @@ const CardCreatedArea = ({data}) => {
         </View>
       </View>
 
-      {qrcodeVisible && (
-        <View style={Styles.modalContainer}>
-          <View style={Styles.modalBackground}>
-            <QRCode size={200} value="PUT SERVER INFO HERE" />
-            <TouchableOpacity
-              title="close"
-              style={Styles.closeButtonContainer}
-              onPress={() => {
-                setQrcodeVisible(false);
-              }}>
-              <LinearGradient
-                style={Styles.closeButtonBackground}
-                colors={['#A9E2FD', '#8AB1F2']}>
-                <Text style={{textAlign: 'center', color: 'white'}}>Close</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          </View>
-        </View>
-      )}
+      {qrcodeVisible && <QRCodeModal setQrcodeVisible={setQrcodeVisible} />}
 
       <View style={Styles.divider}>
         <View style={Styles.outsideContainer}>

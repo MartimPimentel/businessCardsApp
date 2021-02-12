@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, LogBox, ActivityIndicator} from 'react-native';
+import {View, Text} from 'react-native';
 import Swipper from './components/Swipper/Swipper';
 import Styles from './MyCardAreaStyles';
 import HeaderSearch from './components/Header/HeaderSearch';
@@ -11,7 +11,7 @@ import FlipComponent from 'react-native-flip-component';
 import DeleteCard from './components/DeleteCard/DeleteCard';
 import FloatingAddButton from '../../shared/FloatingAddButton/FloatingAddButton';
 import {getReceivedCards} from '../../../shared/api/getReceivedCards';
-
+import Spinner from '../../shared/Spinner/Spinner';
 const MyCardsArea = () => {
   /* LogBox.ignoreLogs([
     'Warning: Cannot update a component from inside the function body of a different component.',
@@ -59,8 +59,9 @@ const MyCardsArea = () => {
           setOverlay(true);
         }}
       />
+
       {loading ? (
-        <ActivityIndicator size={100} color="#8AB1F2" style={{flex: 1}} />
+        <Spinner />
       ) : (
         <>
           <View style={{zIndex: overlay ? -99 : -100}}>

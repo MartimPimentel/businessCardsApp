@@ -11,7 +11,7 @@ import {DrawerActions, useNavigation} from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 
-const NoCardsHeader = ({data}) => {
+const NoCardsHeader = () => {
   const navigation = useNavigation();
   return (
     <View style={Styles.header}>
@@ -28,7 +28,7 @@ const NoCardsHeader = ({data}) => {
             <CardsIcon />
             <TouchableOpacity
               style={Styles.rightIcon}
-              onPress={() => navigation.navigate('EditCardArea', data)}>
+              onPress={() => navigation.navigate('EditCardArea')}>
               <AddIcon height="50%" width="50%" />
             </TouchableOpacity>
           </View>

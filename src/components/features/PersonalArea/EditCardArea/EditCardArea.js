@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {View, Text, Keyboard, ActivityIndicator} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, Keyboard} from 'react-native';
 import {
   TouchableWithoutFeedback,
   ScrollView,
@@ -9,6 +9,8 @@ import CardForm from './components/CardForm/CardForm';
 import Styles from './EditCardAreaStyles';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useNavigation, useRoute, useIsFocused} from '@react-navigation/native';
+import Spinner from '../../../shared/Spinner/Spinner';
+import {nullCard} from '../../../../shared/consts';
 
 const EditCardArea = () => {
   const navigation = useNavigation();
@@ -42,48 +44,35 @@ const EditCardArea = () => {
 
   const handleDeleteCard = () => {
     clearData();
+    route.params = nullCard;
     navigation.navigate('PersonalArea');
   };
-  return (
-    <>
-      {isFocused ? (
-        <TouchableWithoutFeedback
-          onPress={() => Keyboard.dismiss()}
-          style={{height: '100%', width: '100%'}}>
-          <HeaderEdit
-            onClickToSaveData={() => {
-              setPressedSave(pressedSave != undefined ? !pressedSave : true);
-            }}
+  return isFocused ? (
+    <TouchableWithoutFeedback
+      onPress={() => Keyboard.dismiss()}
+      style={{height: '100%', width: '100%'}}>
+      <HeaderEdit
+        onClickToSaveData={() => {
+          setPressedSave(pressedSave != undefined ? !pressedSave : true);
+        }}
+      />
+
+      <ScrollView showsVerticalScrollIndicator={false} style={{marginTop: 10}}>
+        <View style={Styles.outsideContainer}>
+          <Text style={Styles.titleStyles}>Edit My Card</Text>
+
+          <CardForm
+            onClickToSave={pressedSave}
+            redirectSubmittedData={saveCardData}
+            data={route.params}
+            onClickToDelete={handleDeleteCard}
+            deleteErrors={isFocused}
           />
-
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={{marginTop: 10}}>
-            <View style={Styles.outsideContainer}>
-              <Text style={Styles.titleStyles}>Edit My Card</Text>
-
-              <CardForm
-                onClickToSave={pressedSave}
-                redirectSubmittedData={saveCardData}
-                data={route.params}
-                onClickToDelete={handleDeleteCard}
-                deleteErrors={isFocused}
-              />
-            </View>
-          </ScrollView>
-        </TouchableWithoutFeedback>
-      ) : (
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-            height: '100%',
-          }}>
-          <ActivityIndicator size={100} color="#8AB1F2" />
         </View>
-      )}
-    </>
+      </ScrollView>
+    </TouchableWithoutFeedback>
+  ) : (
+    <Spinner />
   );
 };
 export default EditCardArea;

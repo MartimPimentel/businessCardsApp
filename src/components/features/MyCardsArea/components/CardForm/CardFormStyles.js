@@ -20,4 +20,12 @@ export default Styles = StyleSheet.create({
     height: 50,
     width: '86%',
   },
+  headerContainer: {
+    borderColor: 'gainsboro',
+    borderBottomWidth: 2.5,
+  },
+  linksContainer: {
+    height: 280,
+    alignItems: 'center',
+  },
 });

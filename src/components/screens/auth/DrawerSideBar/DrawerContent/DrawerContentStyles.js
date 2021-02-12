@@ -100,4 +100,23 @@ export default Styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderBottomColor: 'white',
   },
+  globalContainer: {
+    left: -25,
+    width: '110%',
+    borderTopRightRadius: 29,
+    borderBottomRightRadius: 29,
+  },
+  linearGradientStyles: {
+    width: '100%',
+    height: '100%',
+    borderBottomRightRadius: 39,
+    borderTopRightRadius: 39,
+  },
+  topBackground: {
+    backgroundColor: 'white',
+    opacity: 0.25,
+    height: '20%',
+    width: '100%',
+    borderTopRightRadius: 39,
+  },
 });

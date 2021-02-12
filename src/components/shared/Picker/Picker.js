@@ -20,10 +20,10 @@ const Picker = ({data, onChange, inicialIndex = 0, overlayOpened}) => {
         <ArrowDownIcon style={{alignSelf: 'center'}} />
         <Text style={Styles.openOverlayText}>Search by</Text>
       </TouchableOpacity>
-      {isOpen ? (
+      {isOpen && (
         <FlatList
           data={data}
-          keyExtractor={(item) => item.value}
+          keyExtractor={(item) => item.stringName}
           renderItem={({item}) => (
             <Item
               isSelected={selectedItem == item}
@@ -32,13 +32,11 @@ const Picker = ({data, onChange, inicialIndex = 0, overlayOpened}) => {
                 setSelectedItem(item);
                 onChange(item);
               }}
-              value={item.value}
+              value={item.stringName}
             />
           )}
           style={Styles.flatListStyles}
         />
-      ) : (
-        <></>
       )}
     </View>
   );

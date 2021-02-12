@@ -5,7 +5,7 @@ import Styles from './PhotoPickerStyles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 
-const PhotoPicker = ({onChange, data,croppingCircular=false}) => {
+const PhotoPicker = ({onChange, data, croppingCircular = false}) => {
   const [imageTaken, setImageTaken] = useState(data);
 
   const pickFromGallery = () => {
@@ -69,14 +69,9 @@ const PhotoPicker = ({onChange, data,croppingCircular=false}) => {
       });
   };
   return (
-    <View style={Styles.photoContainer}>
+    <View>
       {imageTaken ? (
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            width: '100%',
-          }}>
+        <View style={Styles.rowContainer}>
           <Image
             style={Styles.photoStyles(croppingCircular)}
             source={{
@@ -89,10 +84,7 @@ const PhotoPicker = ({onChange, data,croppingCircular=false}) => {
                 setImageTaken(null);
                 onChange(null);
               }}
-              style={{
-                width: '50%',
-                alignSelf: 'center',
-              }}>
+              style={Styles.deleteButtonContainer}>
               <LinearGradient
                 style={Styles.deleteImageButton}
                 colors={['#A9E2FD', '#8AB1F2']}>
@@ -104,11 +96,7 @@ const PhotoPicker = ({onChange, data,croppingCircular=false}) => {
           </View>
         </View>
       ) : (
-        <View
-          style={{
-            flexDirection: 'row',
-            width: '100%',
-          }}>
+        <View style={Styles.rowContainer}>
           <TouchableOpacity
             onPress={() => {
               pickFromGallery();

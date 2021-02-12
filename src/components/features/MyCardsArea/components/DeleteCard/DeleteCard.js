@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import Styles from './DeleteCardStyles';
-import {CardDrawRight, CardDrawLeft} from '../../../../../assets/backgrounds';
 import LinearGradient from 'react-native-linear-gradient';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 const DeleteCard = ({handleDeleteDecison}) => {

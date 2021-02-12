@@ -17,13 +17,13 @@ const HeaderSearch = ({data, handleFilter, overlayOpened}) => {
 
   const [searchBarActivated, setSearchBarActivated] = useState(false);
 
-  if (!searchBarActivated) {
-    return (
-      <View style={Styles.header}>
-        <SafeAreaView style={Styles.safeAreaView}>
-          <LinearGradient
-            style={Styles.background}
-            colors={['#A9E2FD', '#8AB1F2']}>
+  return (
+    <View style={Styles.header}>
+      <SafeAreaView style={Styles.safeAreaView}>
+        <LinearGradient
+          style={Styles.background}
+          colors={['#A9E2FD', '#8AB1F2']}>
+          {!searchBarActivated ? (
             <View style={Styles.icons}>
               <TouchableOpacity
                 style={Styles.leftIcon}
@@ -46,17 +46,7 @@ const HeaderSearch = ({data, handleFilter, overlayOpened}) => {
                 </TouchableOpacity>
               </View>
             </View>
-          </LinearGradient>
-        </SafeAreaView>
-      </View>
-    );
-  } else {
-    return (
-      <View style={Styles.header}>
-        <SafeAreaView style={Styles.safeAreaView}>
-          <LinearGradient
-            style={Styles.background}
-            colors={['#A9E2FD', '#8AB1F2']}>
+          ) : (
             <View style={Styles.searchBarView}>
               <TouchableOpacity
                 onPress={() => {
@@ -72,11 +62,11 @@ const HeaderSearch = ({data, handleFilter, overlayOpened}) => {
                 overlayOpened={overlayOpened}
               />
             </View>
-          </LinearGradient>
-        </SafeAreaView>
-      </View>
-    );
-  }
+          )}
+        </LinearGradient>
+      </SafeAreaView>
+    </View>
+  );
 };
 
 export default HeaderSearch;

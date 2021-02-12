@@ -11,19 +11,8 @@ import {
   CardEmailIcon,
 } from '../../../assets/icons';
 import LinearGradient from 'react-native-linear-gradient';
+
 const Card = ({data}) => {
-  const {
-    phoneData,
-    role,
-    companyName,
-    name,
-    profilePhoto,
-    companyLogo,
-    facebookLink,
-    instagramLink,
-    linkedInLink,
-    email,
-  } = data;
   return (
     <View style={Styles.outsideContainer}>
       <LinearGradient
@@ -46,59 +35,70 @@ const Card = ({data}) => {
             <View style={Styles.imageView}>
               <Image
                 source={{
-                  uri: profilePhoto
-                    ? `data:${profilePhoto.mime};base64,${profilePhoto.data}`
+                  uri: data.profilePhoto
+                    ? `data:${data.profilePhoto.mime};base64,${data.profilePhoto.data}`
                     : null,
                 }}
-                style={Styles.imageProfile(!!profilePhoto)}
+                style={Styles.imageProfile(!!data.profilePhoto)}
               />
             </View>
             <View style={Styles.fullInfoView}>
-              <View style={[Styles.infoView(!!name), {left: -2}]}>
+              <View style={[Styles.infoView(!!data.name), {left: -2}]}>
                 <NameIcon />
-                <Text style={Styles.nameText}>{name}</Text>
+                <Text style={Styles.nameText}>{data.name}</Text>
               </View>
 
-              {phoneData && (
-                <View style={Styles.infoView(!!phoneData.phoneNumber)}>
+              {data.phoneData && (
+                <View style={Styles.infoView(!!data.phoneData.phoneNumber)}>
                   <PhoneIcon />
                   <Text style={Styles.infoText}>
-                    {'+' + phoneData.callingCode + ' ' + phoneData.phoneNumber}
+                    {'+' +
+                      data.phoneData.callingCode +
+                      ' ' +
+                      data.phoneData.phoneNumber}
                   </Text>
                 </View>
               )}
 
-              <View style={Styles.infoView(!!email)}>
+              <View style={Styles.infoView(!!data.email)}>
                 <CardEmailIcon />
-                <Text style={[Styles.infoText, {fontSize: 13}]}>{email}</Text>
+                <Text style={[Styles.infoText, {fontSize: 13}]}>
+                  {data.email}
+                </Text>
               </View>
             </View>
           </View>
           <View style={Styles.rightView}>
             <View style={Styles.companyView}>
               <View style={{height: '100%', width: '100%'}}>
-                <Text style={Styles.companyNameText(!!companyName)}>
-                  {companyName}
+                <Text style={Styles.companyNameText(!!data.companyName)}>
+                  {data.companyName}
                 </Text>
-                <Text style={Styles.roleText(!!role)}>{role}</Text>
+                <Text style={Styles.roleText(!!data.role)}>{data.role}</Text>
               </View>
               <Image
                 source={{
-                  uri: companyLogo
-                    ? `data:${companyLogo.mime};base64,${companyLogo.data}`
+                  uri: data.companyLogo
+                    ? `data:${data.companyLogo.mime};base64,${data.companyLogo.data}`
                     : null,
                 }}
-                style={Styles.imageLogo(!!companyLogo)}
+                style={Styles.imageLogo(!!data.companyLogo)}
               />
             </View>
 
             <View style={Styles.logoView}>
-              <FBLogo style={{display: facebookLink ? 'flex' : 'none'}} />
+              <FBLogo style={{display: data.facebookLink ? 'flex' : 'none'}} />
               <IGLogo
-                style={{marginTop: 5, display: instagramLink ? 'flex' : 'none'}}
+                style={{
+                  marginTop: 5,
+                  display: data.instagramLink ? 'flex' : 'none',
+                }}
               />
               <LILogo
-                style={{marginTop: 5, display: linkedInLink ? 'flex' : 'none'}}
+                style={{
+                  marginTop: 5,
+                  display: data.linkedInLink ? 'flex' : 'none',
+                }}
               />
             </View>
           </View>

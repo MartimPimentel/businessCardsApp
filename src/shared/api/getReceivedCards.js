@@ -13,7 +13,7 @@ import api from './api';
 } */
 export const getReceivedCards = async () => {
   try {
-    const resp = await api.get('/teste');
+    const resp = await api.get('/');
     return resp.data;
   } catch (err) {
     // Handle Error Here

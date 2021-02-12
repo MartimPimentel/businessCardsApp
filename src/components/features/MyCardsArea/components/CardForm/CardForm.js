@@ -1,7 +1,6 @@
 import React from 'react';
 import {ScrollView, View, Text, Dimensions, Linking} from 'react-native';
 import Styles from './CardFormStyles';
-
 import {
   FBGoToProfile,
   IGGoToProfile,
@@ -12,21 +11,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const CardForm = ({data}) => {
-  const {
-    role,
-    phoneData,
-    alternativePhoneData,
-    address,
-    companyName,
-    name,
-    email,
-    observations,
-    facebookLink,
-    linkedInLink,
-    instagramLink,
-  } = !!data ? data : '';
-
-  return !!data ? (
+  return (
     <View
       style={{
         height: windowHeight <= 600 ? '30%' : '45%',
@@ -38,105 +23,74 @@ const CardForm = ({data}) => {
         }}>
         <View style={{marginBottom: 15}}>
           <Text style={Styles.categoryText}>NAME</Text>
-          <View
-            style={{
-              borderColor: 'gainsboro',
-              borderBottomWidth: 2.5,
-            }}>
-            <Text style={Styles.informationText}>{name}</Text>
+          <View style={Styles.headerContainer}>
+            <Text style={Styles.informationText}>{data.name}</Text>
           </View>
         </View>
         <View style={{marginBottom: 15}}>
           <Text style={Styles.categoryText}>COMPANY NAME</Text>
-          <View
-            style={{
-              borderColor: 'gainsboro',
-              borderBottomWidth: 2.5,
-            }}>
-            <Text style={Styles.informationText}>{companyName}</Text>
+          <View style={Styles.headerContainer}>
+            <Text style={Styles.informationText}>{data.companyName}</Text>
           </View>
         </View>
         <View style={{marginBottom: 15}}>
           <Text style={Styles.categoryText}>COMPANY POSITION</Text>
-          <View
-            style={{
-              borderColor: 'gainsboro',
-              borderBottomWidth: 2.5,
-            }}>
-            <Text style={Styles.informationText}>{role}</Text>
+          <View style={Styles.headerContainer}>
+            <Text style={Styles.informationText}>{data.role}</Text>
           </View>
         </View>
         <View style={{marginBottom: 15}}>
           <Text style={Styles.categoryText}>PHONE NUMBER(PRINCIPAL)</Text>
-          <View
-            style={{
-              borderColor: 'gainsboro',
-              borderBottomWidth: 2.5,
-            }}>
+          <View style={Styles.headerContainer}>
             <Text style={Styles.informationText}>
-              {'+' + phoneData.callingCode + ' ' + phoneData.phoneNumber}
+              {'+' +
+                data.phoneData.callingCode +
+                ' ' +
+                data.phoneData.phoneNumber}
             </Text>
           </View>
         </View>
         <View style={{marginBottom: 15}}>
           <Text style={Styles.categoryText}>PHONE NUMBER(ALTERNATIVE)</Text>
-          <View
-            style={{
-              borderColor: 'gainsboro',
-              borderBottomWidth: 2.5,
-            }}>
+          <View style={Styles.headerContainer}>
             <Text style={Styles.informationText}>
               {'+' +
-                alternativePhoneData.callingCode +
+                data.alternativePhoneData.callingCode +
                 ' ' +
-                alternativePhoneData.phoneNumber}
+                data.alternativePhoneData.phoneNumber}
             </Text>
           </View>
         </View>
         <View style={{marginBottom: 15}}>
           <Text style={Styles.categoryText}>EMAIL</Text>
-          <View
-            style={{
-              borderColor: 'gainsboro',
-              borderBottomWidth: 2.5,
-            }}>
-            <Text style={Styles.informationText}>{email}</Text>
+          <View style={Styles.headerContainer}>
+            <Text style={Styles.informationText}>{data.email}</Text>
           </View>
         </View>
         <View style={{marginBottom: 15}}>
           <Text style={Styles.categoryText}>ADDRESS</Text>
-          <View
-            style={{
-              borderColor: 'gainsboro',
-              borderBottomWidth: 2.5,
-            }}>
-            <Text style={Styles.informationText}>{address}</Text>
+          <View style={Styles.headerContainer}>
+            <Text style={Styles.informationText}>{data.address}</Text>
           </View>
         </View>
         <View style={{marginBottom: 15}}>
           <Text style={Styles.categoryText}>OBSERVATIONS</Text>
-          <View
-            style={{
-              borderColor: 'gainsboro',
-              borderBottomWidth: 2.5,
-            }}>
-            <Text style={Styles.informationText}>{observations}</Text>
+          <View style={Styles.headerContainer}>
+            <Text style={Styles.informationText}>{data.observations}</Text>
           </View>
         </View>
-        {facebookLink || instagramLink || linkedInLink ? (
+        {(!!data.facebookLink ||
+          !!data.instagramLink ||
+          !!data.linkedInLink) && (
           <View>
             <Text style={Styles.categoryText}>SOCIAL NETWORKS</Text>
-            <View
-              style={{
-                height: 280,
-                alignItems: 'center',
-              }}>
+            <View style={Styles.linksContainer}>
               <View style={{height: '10%'}}></View>
-              {facebookLink ? (
+              {!!data.facebookLink && (
                 <TouchableOpacity
                   style={Styles.iconsTouchableContainer}
                   onPress={() => {
-                    Linking.openURL(facebookLink);
+                    Linking.openURL(data.facebookLink);
                   }}>
                   <View style={Styles.iconsContainer}>
                     <FBGoToProfile
@@ -144,17 +98,15 @@ const CardForm = ({data}) => {
                     />
                   </View>
                 </TouchableOpacity>
-              ) : (
-                <></>
               )}
 
-              {instagramLink ? (
+              {!!data.instagramLink && (
                 <>
                   <View style={{height: '8%'}}></View>
                   <TouchableOpacity
                     style={Styles.iconsTouchableContainer}
                     onPress={() => {
-                      Linking.openURL(instagramLink);
+                      Linking.openURL(data.instagramLink);
                     }}>
                     <View style={Styles.iconsContainer}>
                       <IGGoToProfile
@@ -163,15 +115,13 @@ const CardForm = ({data}) => {
                     </View>
                   </TouchableOpacity>
                 </>
-              ) : (
-                <></>
               )}
               <View style={{height: '8%'}}></View>
-              {linkedInLink ? (
+              {!!data.linkedInLink && (
                 <TouchableOpacity
                   style={Styles.iconsTouchableContainer}
                   onPress={() => {
-                    Linking.openURL(linkedInLink);
+                    Linking.openURL(data.linkedInLink);
                   }}>
                   <View style={Styles.iconsContainer}>
                     <LIGoToProfile
@@ -179,19 +129,13 @@ const CardForm = ({data}) => {
                     />
                   </View>
                 </TouchableOpacity>
-              ) : (
-                <></>
               )}
               <View style={{height: '8%'}}></View>
             </View>
           </View>
-        ) : (
-          <></>
         )}
       </ScrollView>
     </View>
-  ) : (
-    <></>
   );
 };
 

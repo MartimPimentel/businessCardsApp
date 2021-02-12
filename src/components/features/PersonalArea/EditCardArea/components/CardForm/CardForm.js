@@ -1,8 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, Text, TextInput, Dimensions} from 'react-native';
+import {View, Text, TextInput} from 'react-native';
 import Styles from './CardFormStyles';
 import {useForm, Controller} from 'react-hook-form';
-import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {
@@ -25,7 +24,7 @@ var phoneInput2 = null;
 const CardForm = ({
   onClickToSave,
   redirectSubmittedData,
-  data,
+  data = nullCard,
   onClickToDelete,
   deleteErrors,
 }) => {
@@ -69,7 +68,6 @@ const CardForm = ({
       setIsEditable(true);
     }, 100);
   }, []);
-
   return (
     <View style={Styles.outsideContainer}>
       <View style={Styles.separatorPhotos}>
