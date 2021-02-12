@@ -6,13 +6,12 @@ export default Styles = StyleSheet.create({
     top: '25%',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  modalBackground: {
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 35,
-    paddingBottom: 10,
+    paddingLeft: 35,
+    paddingRight: 35,
+    paddingBottom: 30,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {

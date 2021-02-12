@@ -22,12 +22,12 @@ const CardCreatedArea = ({data}) => {
         </View>
       </View>
 
-      {qrcodeVisible && (
-        <Modal
-          setQrcodeVisible={setQrcodeVisible}
-          component={<QRCode size={200} value={'SERVER INFO'} />}
-        />
-      )}
+      <Modal
+        isVisible={qrcodeVisible}
+        cancelButtonTest="Close"
+        onClose={() => setQrcodeVisible(false)}
+        body={<QRCode size={200} value={'SERVER INFO'} />}
+      />
 
       <View style={Styles.divider}>
         <View style={Styles.outsideContainer}>

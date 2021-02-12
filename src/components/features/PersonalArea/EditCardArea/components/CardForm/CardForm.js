@@ -27,6 +27,7 @@ const CardForm = ({
   data = nullCard,
   onClickToDelete,
   deleteErrors,
+  deleteResponse,
 }) => {
   phoneInput = useRef();
   phoneInput2 = useRef();
@@ -53,7 +54,6 @@ const CardForm = ({
     redirectSubmittedData(data);
   };
   const onDeleteCard = () => {
-    reset(nullCard);
     onClickToDelete();
   };
   useEffect(() => {
@@ -62,6 +62,9 @@ const CardForm = ({
   useEffect(() => {
     clearErrors();
   }, [deleteErrors]);
+  useEffect(() => {
+    if (deleteResponse) reset(nullCard);
+  }, [deleteResponse]);
   //bug in android email text fields makes app RN apps crash.Known workaround:
   useEffect(() => {
     setTimeout(() => {
