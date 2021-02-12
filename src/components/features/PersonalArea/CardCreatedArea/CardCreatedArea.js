@@ -5,7 +5,7 @@ import PersonalAreaHeader from './components/Header/PersonalAreaHeader';
 import Card from '../../../shared/Card/Card';
 import {QRCodeIcon, NFCIcon} from '../../../../assets/icons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import QRCodeModal from './components/QRCodeModal.js/QRCodeModal';
+import QRCodeModal from './components/QRCodeModal/QRCodeModal';
 
 const CardCreatedArea = ({data}) => {
   const [qrcodeVisible, setQrcodeVisible] = useState(false);
