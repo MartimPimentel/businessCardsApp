@@ -16,7 +16,6 @@ import {vw, vh} from 'react-native-viewport-units';
 
 let passwordRef = null;
 const registerSchema = yup.object().shape({
-  username: yup.string().required('*Required'),
   password: yup.string().required('*Required'),
   confirmPassword: yup
     .string()
@@ -30,49 +29,30 @@ const registerSchema = yup.object().shape({
   email: yup.string().email('*Invalid email address').required('*Required'),
 });
 
-const RegisterForm = ({onClickToRegister, focus}) => {
-  const {handleSubmit, errors, control, reset} = useForm({
+const RegisterForm = ({onClickToRegister, focus, errorMessage}) => {
+  const {handleSubmit, errors, control, reset, setError} = useForm({
     resolver: yupResolver(registerSchema),
     mode: 'onSubmit',
   });
   const onSubmit = (data) => {
-    onClickToRegister(data);
+    onClickToRegister({email: data.email, userPassword: data.password});
   };
   passwordRef = useRef();
   useEffect(() => {
     reset();
   }, [focus]);
+  useEffect(() => {
+    if (errorMessage)
+      setError('email', {type: 'required', message: errorMessage});
+  }, [errorMessage]);
   return (
     <>
       <View style={Styles.outsideContainer}>
         <View style={Styles.formContainer}>
           <View
             style={[
-              Styles.inputContainer(errors.username),
-              {borderTopRightRadius: 50},
-            ]}>
-            <View style={Styles.iconsContainer}>
-              <UserAuth width="100%" height="100%" preserveAspectRatio="meet" />
-            </View>
-            <Controller
-              control={control}
-              render={({onChange, onBlur, value}) => (
-                <TextInput
-                  placeholder="username"
-                  style={Styles.textInputStyles}
-                  onBlur={onBlur}
-                  onChangeText={(value) => onChange(value)}
-                  value={value}
-                />
-              )}
-              name="username"
-              defaultValue=""
-            />
-          </View>
-          <View
-            style={[
               Styles.inputContainer(errors.email),
-              {borderTopWidth: errors.email && errors.username ? 0 : 3},
+              {borderTopRightRadius: 50},
             ]}>
             <View style={Styles.iconsContainer}>
               <EmailIcon
@@ -101,7 +81,7 @@ const RegisterForm = ({onClickToRegister, focus}) => {
           <View
             style={[
               Styles.inputContainer(errors.password),
-              {borderTopWidth: errors.password && errors.email ? 0 : 3},
+              {borderTopWidth: errors.email ? 0 : 3},
             ]}>
             <View style={Styles.iconsContainer}>
               <LockAuth width="100%" height="100%" preserveAspectRatio="meet" />

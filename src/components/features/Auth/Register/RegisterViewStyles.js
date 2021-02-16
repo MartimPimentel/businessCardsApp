@@ -5,13 +5,13 @@ export default Styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: 'Nunito-Bold',
     fontSize: 49,
-    paddingTop: '15%',
+    paddingTop: '20%',
     color: 'white',
   },
   outsideContainer: {
-    marginTop: '22%',
+    marginTop: '30%',
     width: '100%',
-    height: 170 * (vh / vw),
+    height: 140 * (vh / vw),
   },
   formContainer: {
     width: '80%',
@@ -23,7 +23,7 @@ export default Styles = StyleSheet.create({
   },
   inputContainer: (error) => {
     return {
-      height: '25%',
+      height: '33.5%',
       width: '100%',
       borderColor: error ? 'red' : '#C9C9C9',
       alignItems: 'center',
@@ -38,7 +38,7 @@ export default Styles = StyleSheet.create({
     width: '75%',
   },
   signInButtonContainer: {
-    top: '35%',
+    top: '33.3%',
     position: 'absolute',
     alignSelf: 'center',
     justifyContent: 'center',

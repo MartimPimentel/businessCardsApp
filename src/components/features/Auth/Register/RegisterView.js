@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, Keyboard} from 'react-native';
 import {
   ScrollView,
@@ -12,11 +12,12 @@ import {useNavigation} from '@react-navigation/native';
 import RegisterForm from './components/Form/RegisterForm';
 import {useIsFocused} from '@react-navigation/native';
 import {CommonActions} from '@react-navigation/native';
-
+import {createUser} from '../../../../shared/api/createUser';
+import Modal from '../../../shared/Modal/Modal';
 const RegisterView = (props) => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-
+  const [error, setError] = useState(null);
   const storeData = async (value) => {
     try {
       await AsyncStorage.setItem('@AUTH_KEY', value);
@@ -25,15 +26,26 @@ const RegisterView = (props) => {
     }
   };
   const handleRegister = (data) => {
-    console.log(data);
-    storeData('chave_de_entrada');
+    //console.log(data);
+    createUser(data)
+      .then((res) => {
+        console.log(res.data);
+        setError(null);
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [{name: 'Login'}],
+          }),
+        );
+      })
+      .catch((error) => {
+        const errors = JSON.parse(error.request.response);
 
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [{name: 'Auth'}],
-      }),
-    );
+        setError(errors);
+
+        console.log(error.request.response.message);
+      });
+    /* storeData('chave_de_entrada'); */
   };
   useEffect(() => {}, [isFocused]);
   return (
@@ -45,7 +57,27 @@ const RegisterView = (props) => {
         colors={['#80C8FC', '#5350DB']}>
         <Text style={Styles.signUpText}>Sign up</Text>
         <ScrollView>
-          <RegisterForm onClickToRegister={handleRegister} />
+          <Modal
+            isVisible={error && error.error != 'Signup-001'}
+            cancelButtonTest="Ok"
+            onClose={() => setQrcodeVisible(false)}
+            body={
+              error ? (
+                <>
+                  <Text>{error.message}</Text>
+                  <Text>Please try again.</Text>
+                </>
+              ) : (
+                <></>
+              )
+            }
+          />
+          <RegisterForm
+            onClickToRegister={handleRegister}
+            errorMessage={
+              error && error.error == 'Signup-001' ? error.message : null
+            }
+          />
           <TouchableOpacity
             style={Styles.changeToLoginContainer}
             onPress={() => {
