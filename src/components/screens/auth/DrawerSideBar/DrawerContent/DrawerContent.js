@@ -12,6 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useIsDrawerOpen} from '@react-navigation/drawer';
 import {CommonActions} from '@react-navigation/native';
+import SInfo from 'react-native-sensitive-info';
 
 const DrawerContent = (props) => {
   const isDrawerOpen = useIsDrawerOpen();
@@ -29,14 +30,16 @@ const DrawerContent = (props) => {
       // error reading value
     }
   };
-  const clearKey = async () => {
+  const deleteToken = async () => {
     try {
-      await AsyncStorage.removeItem('@AUTH_KEY');
+      await SInfo.deleteItem('token', {
+        sharedPreferencesName: 'bussinessCards',
+        keychainService: 'bussinessCards',
+      });
+      console.log('Done.');
     } catch (e) {
-      // remove error
+      console.log(e);
     }
-
-    console.log('Done.');
   };
 
   useEffect(() => {
@@ -94,7 +97,7 @@ const DrawerContent = (props) => {
         <TouchableOpacity
           style={Styles.logOutButton}
           onPress={() => {
-            clearKey();
+            deleteToken();
             props.navigation.dispatch(
               CommonActions.reset({
                 index: 1,

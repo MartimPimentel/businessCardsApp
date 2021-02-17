@@ -18,13 +18,7 @@ const RegisterView = (props) => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const [error, setError] = useState(null);
-  const storeData = async (value) => {
-    try {
-      await AsyncStorage.setItem('@AUTH_KEY', value);
-    } catch (e) {
-      // saving error
-    }
-  };
+
   const handleRegister = (data) => {
     //console.log(data);
     createUser(data)

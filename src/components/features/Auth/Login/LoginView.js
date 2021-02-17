@@ -14,22 +14,25 @@ import {vw, vh} from 'react-native-viewport-units';
 import {CommonActions} from '@react-navigation/native';
 import {login} from '../../../../shared/api/login';
 import Modal from '../../../shared/Modal/Modal';
+import SInfo from 'react-native-sensitive-info';
+
+const storeData = async (token) => {
+  await SInfo.setItem('token', token, {
+    sharedPreferencesName: 'bussinessCards',
+    keychainService: 'bussinessCards',
+  });
+};
 
 const LoginView = () => {
   const navigation = useNavigation();
   const [error, setError] = useState(null);
-  const storeData = async (value) => {
-    try {
-      await AsyncStorage.setItem('@AUTH_KEY', value);
-    } catch (e) {
-      // saving error
-    }
-  };
+
   const handleLogin = (data) => {
     login(data)
       .then((res) => {
         console.log(res.data);
         setError(null);
+        storeData(res.data.token);
         navigation.dispatch(
           CommonActions.reset({
             index: 1,

@@ -7,25 +7,30 @@ import {NavigationContainer} from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {createStackNavigator} from '@react-navigation/stack';
 import Spinner from './src/components/shared/Spinner/Spinner';
+import SInfo from 'react-native-sensitive-info';
+
 const Stack = createStackNavigator();
 export default function App() {
   const [hasAuthKey, setHasAuthKey] = useState(false);
   const [loading, setLoading] = useState(true);
+
   const getData = async () => {
     try {
-      const key = await AsyncStorage.getItem('@AUTH_KEY');
+      const key = await SInfo.getItem('token', {
+        sharedPreferencesName: 'bussinessCards',
+        keychainService: 'bussinessCards',
+      });
       setHasAuthKey(key != null);
-
-      return key;
+      console.log('key: ' + key);
     } catch (e) {
-      // error reading value
+      console.log(e);
+      setHasAuthKey(null);
     }
   };
   useEffect(() => {
     setLoading(true);
-    getData().then((key) => {
+    getData().then(() => {
       setLoading(false);
-      console.log(key);
     });
   }, []);
   return loading ? (
