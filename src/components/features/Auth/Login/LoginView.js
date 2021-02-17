@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, Keyboard} from 'react-native';
 import {
   ScrollView,
@@ -12,10 +12,12 @@ import Styles from './LoginViewStyles';
 import LoginForm from './components/Form/LoginForm';
 import {vw, vh} from 'react-native-viewport-units';
 import {CommonActions} from '@react-navigation/native';
+import {login} from '../../../../shared/api/login';
+import Modal from '../../../shared/Modal/Modal';
 
 const LoginView = () => {
   const navigation = useNavigation();
-
+  const [error, setError] = useState(null);
   const storeData = async (value) => {
     try {
       await AsyncStorage.setItem('@AUTH_KEY', value);
@@ -24,15 +26,24 @@ const LoginView = () => {
     }
   };
   const handleLogin = (data) => {
-    console.log(data);
-    storeData('chave_de_entrada');
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [{name: 'Auth'}],
-      }),
-    );
+    login(data)
+      .then((res) => {
+        console.log(res.data);
+        setError(null);
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [{name: 'Auth'}],
+          }),
+        );
+      })
+      .catch((error) => {
+        const errors = JSON.parse(error.request.response);
+        console.log(errors);
+        setError(errors);
+      });
   };
+
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
@@ -41,8 +52,28 @@ const LoginView = () => {
         style={{width: '100%', height: '100%', justifyContent: 'center'}}
         colors={['#80C8FC', '#5350DB']}>
         <Text style={Styles.signUpText}>Log in</Text>
+
         <ScrollView>
-          <LoginForm onClickToLogin={handleLogin} />
+          <LoginForm onClickToLogin={handleLogin} dbError={error} />
+          <Modal
+            isVisible={
+              error &&
+              error.error != 'Credentials-001' &&
+              error.error != 'Credentials-002'
+            }
+            cancelButtonTest="Ok"
+            headerStyles={{width: '60%', height: '80%', top: '10%'}}
+            onClose={() => setError(null)}
+            header={<Text style={{fontSize: 25}}>Error</Text>}
+            body={
+              error && (
+                <>
+                  <Text>{error.message}</Text>
+                  <Text>Please try again.</Text>
+                </>
+              )
+            }
+          />
           <View style={{width: 150 * (vh / vw)}}>
             <TouchableOpacity
               style={Styles.changeToLoginContainer}

@@ -12,6 +12,7 @@ const Modal = ({
   actionButtonText,
   cancelButtonTest,
   onAction,
+  headerStyles,
 }) => {
   const [visibility, setVisibilty] = useState(isVisible);
   useEffect(() => {
@@ -19,7 +20,7 @@ const Modal = ({
   }, [isVisible]);
   return (
     visibility && (
-      <View style={Styles.modalContainer}>
+      <View style={[Styles.modalContainer, headerStyles]}>
         <View style={{marginTop: '5%'}}>{header}</View>
         <View style={{marginTop: '10%'}}>{body}</View>
 

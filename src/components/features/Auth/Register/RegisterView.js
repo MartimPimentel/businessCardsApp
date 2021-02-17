@@ -60,15 +60,13 @@ const RegisterView = (props) => {
           <Modal
             isVisible={error && error.error != 'Signup-001'}
             cancelButtonTest="Ok"
-            onClose={() => setQrcodeVisible(false)}
+            onClose={() => setError(null)}
             body={
-              error ? (
+              error && (
                 <>
                   <Text>{error.message}</Text>
                   <Text>Please try again.</Text>
                 </>
-              ) : (
-                <></>
               )
             }
           />

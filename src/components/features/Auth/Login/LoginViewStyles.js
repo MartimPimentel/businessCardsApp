@@ -28,7 +28,7 @@ export default Styles = StyleSheet.create({
       borderColor: error ? 'red' : '#C9C9C9',
       alignItems: 'center',
       flexDirection: 'row',
-      borderWidth: error ? 3 : 0,
+      borderWidth: error ? 2 : 0,
     };
   },
   iconsContainer: {width: '10%', height: '40%', marginLeft: '5%'},
@@ -59,5 +59,22 @@ export default Styles = StyleSheet.create({
     paddingLeft: '5%',
     width: '80%',
   },
-  errorTextStyles: {fontSize: 20, color: 'orange', fontWeight: '800'},
+  errorTextStyles: {
+    fontSize: 19,
+    color: 'orange',
+    fontWeight: 'normal',
+    alignSelf: 'center',
+  },
+  warningContainer: {
+    height: '60%',
+    width: '10%',
+    alignSelf: 'center',
+    right: '10%',
+  },
+  individualContainer: {
+    flexDirection: 'row',
+    height: 30,
+    width: '80%',
+    left: '5%',
+  },
 });

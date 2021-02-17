@@ -40,4 +40,5 @@ export {default as CheckMarkIcon} from './CheckMarkIcon.svg';
 export {default as ConfirmAuthLock} from './ConfirmAuthLock.svg';
 export {default as CardEmailIcon} from './CardEmailIcon.svg';
 export {default as RemoveCardIcon} from './RemoveCardIcon.svg';
+export {default as ErrorsWarning} from './ErrorsWarning.svg';
 export const UnknownUser = require('./UnknownUser.jpg');
