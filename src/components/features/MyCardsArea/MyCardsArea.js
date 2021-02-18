@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, Text} from 'react-native';
 import Swipper from './components/Swipper/Swipper';
 import Styles from './MyCardAreaStyles';
@@ -10,22 +10,29 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import FlipComponent from 'react-native-flip-component';
 import DeleteCard from './components/DeleteCard/DeleteCard';
 import FloatingAddButton from '../../shared/FloatingAddButton/FloatingAddButton';
-import {getReceivedCards} from '../../../shared/api/getReceivedCards';
+import {sharedCards} from '../../../shared/api/sharedCards';
 import Spinner from '../../shared/Spinner/Spinner';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import Modal from '../../shared/Modal/Modal';
+import {deleteToken} from '../../../shared/functions/functions';
+import {CommonActions} from '@react-navigation/native';
 const MyCardsArea = () => {
   /* LogBox.ignoreLogs([
     'Warning: Cannot update a component from inside the function body of a different component.',
   ]); */
+  const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const [loading, setLoading] = useState(true);
   const [cardIndex, setCardIndex] = useState(0);
-  const [filteredData, setFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState([]);
   const [isFlipped, setFlipped] = useState(false);
   const [overlay, setOverlay] = useState(false);
+  const [dbError, setError] = useState(null);
 
   const handleIndexChange = (i) => {
     setCardIndex(i);
   };
-  const allData = data;
+  let allData = [];
 
   const handleDeleteDecison = (response) => {
     if (response == 'yes') {
@@ -38,13 +45,48 @@ const MyCardsArea = () => {
   const onHandleAddCard = () => {
     //TO DO
   };
-  useEffect(() => {
+  const getCards = () => {
     setLoading(true);
-    const smallData = getReceivedCards().then((res) => {
-      //setFilteredData(res);
-      setLoading(false);
-    });
+    setError(null);
+    sharedCards()
+      .then((res) => {
+        console.log(res.data);
+        allData = res.data;
+        setFilteredData(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        const errors = JSON.parse(error.request.response);
+        console.log(errors);
+        if (!!errors.error.match('Token')) {
+          setLoading(false);
+          deleteToken()
+            .then(() => {
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 1,
+                  routes: [{name: 'NotAuth'}],
+                }),
+              );
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else {
+          setLoading(false);
+          setError(errors);
+        }
+      });
+  };
+  useEffect(() => {
+    getCards();
   }, []);
+  useEffect(() => {
+    if (isFocused) {
+      setFilteredData(allData);
+      setCardIndex(-1);
+    }
+  }, [isFocused]);
   useEffect(() => {
     if (overlay) setOverlay(false);
   }, [overlay]);
@@ -62,6 +104,25 @@ const MyCardsArea = () => {
 
       {loading ? (
         <Spinner />
+      ) : dbError ? (
+        <Modal
+          cancelButtonTest="Reload"
+          isVisible={dbError}
+          onClose={() => {
+            setError(null);
+            getCards();
+          }}
+          header={
+            <Text style={{fontFamily: 'Nunito-Regular', fontSize: 20}}>
+              Error
+            </Text>
+          }
+          body={
+            <Text style={{fontSize: 15, textAlign: 'center', letterSpacing: 1}}>
+              {dbError && dbError.message}
+            </Text>
+          }
+        />
       ) : (
         <>
           <View style={{zIndex: overlay ? -99 : -100}}>
@@ -96,6 +157,7 @@ const MyCardsArea = () => {
                   frontView={
                     <View>
                       <Swipper
+                        index={cardIndex}
                         data={filteredData}
                         onChangeIndex={handleIndexChange}
                       />
@@ -108,7 +170,9 @@ const MyCardsArea = () => {
                     </View>
                   }
                 />
-                <CardForm data={filteredData[cardIndex]} />
+                <CardForm
+                  data={filteredData[cardIndex == -1 ? 0 : cardIndex]}
+                />
               </View>
             ) : (
               <View style={Styles.noInfoContainer}>

@@ -4,11 +4,18 @@ import SwiperFlatList from 'react-native-swiper-flatlist';
 import Card from '../../../../shared/Card/Card';
 const windowHeight = Dimensions.get('window').height;
 export const {width} = Dimensions.get('window');
-const Swipper = ({data, onChangeIndex}) => {
+const Swipper = ({data, onChangeIndex, index}) => {
   const swipperRef = useRef();
   useEffect(() => {
     swipperRef.current.goToFirstIndex();
+    onChangeIndex(0);
   }, [data]);
+  useEffect(() => {
+    if (index == -1) {
+      swipperRef.current.goToFirstIndex();
+      onChangeIndex(0);
+    }
+  }, [index]);
   return (
     <View style={{height: windowHeight <= 600 ? 210 : 250}}>
       <SwiperFlatList

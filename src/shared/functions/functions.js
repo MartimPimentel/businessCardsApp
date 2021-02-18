@@ -12,3 +12,10 @@ export const getToken = async () => {
     return null;
   }
 };
+
+export const deleteToken = async () => {
+  return await SInfo.deleteItem('token', {
+    sharedPreferencesName: 'bussinessCards',
+    keychainService: 'bussinessCards',
+  });
+};

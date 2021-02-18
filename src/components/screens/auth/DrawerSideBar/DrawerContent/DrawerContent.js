@@ -12,7 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useIsDrawerOpen} from '@react-navigation/drawer';
 import {CommonActions} from '@react-navigation/native';
-import SInfo from 'react-native-sensitive-info';
+import {deleteToken} from '../../../../../shared/functions/functions';
 
 const DrawerContent = (props) => {
   const isDrawerOpen = useIsDrawerOpen();
@@ -28,17 +28,6 @@ const DrawerContent = (props) => {
       setProfilePhoto(profilePhoto);
     } catch (e) {
       // error reading value
-    }
-  };
-  const deleteToken = async () => {
-    try {
-      await SInfo.deleteItem('token', {
-        sharedPreferencesName: 'bussinessCards',
-        keychainService: 'bussinessCards',
-      });
-      console.log('Done.');
-    } catch (e) {
-      console.log(e);
     }
   };
 
@@ -97,13 +86,18 @@ const DrawerContent = (props) => {
         <TouchableOpacity
           style={Styles.logOutButton}
           onPress={() => {
-            deleteToken();
-            props.navigation.dispatch(
-              CommonActions.reset({
-                index: 1,
-                routes: [{name: 'NotAuth'}],
-              }),
-            );
+            deleteToken()
+              .then(() => {
+                props.navigation.dispatch(
+                  CommonActions.reset({
+                    index: 1,
+                    routes: [{name: 'NotAuth'}],
+                  }),
+                );
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           }}>
           <LogOutIcon height={30} width={30} />
           <Text style={Styles.textStyle}>Log out</Text>
