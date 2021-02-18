@@ -12,6 +12,8 @@ import {useNavigation, useRoute, useIsFocused} from '@react-navigation/native';
 import Spinner from '../../../shared/Spinner/Spinner';
 import {nullCard} from '../../../../shared/consts';
 import Modal from '../../../shared/Modal/Modal';
+import SInfo from 'react-native-sensitive-info';
+import createCard from '../../../../shared/api/createCard';
 
 const EditCardArea = () => {
   const navigation = useNavigation();
@@ -20,27 +22,37 @@ const EditCardArea = () => {
   const [pressedSave, setPressedSave] = useState(undefined);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteModalResponse, setDeleteModalResponse] = useState(false);
-  const storeData = async (value) => {
-    try {
-      const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem('@PERSONAL_DATA', jsonValue);
-    } catch (e) {
-      // saving error
-    }
-  };
-  const clearData = async () => {
-    try {
-      await AsyncStorage.clear();
-    } catch (e) {
-      // clear error
-    }
 
+  const saveRequest = () => {};
+
+  const storeData = async (value) => {
+    const jsonValue = JSON.stringify(value);
+    await SInfo.setItem('personalCard', jsonValue, {
+      sharedPreferencesName: 'bussinessCards',
+      keychainService: 'bussinessCards',
+    });
+  };
+
+  const clearData = async () => {
+    await SInfo.deleteItem('personalCard', {
+      sharedPreferencesName: 'bussinessCards',
+      keychainService: 'bussinessCards',
+    });
     console.log('Done.');
   };
 
   const saveCardData = (data) => {
     console.log('Saved data:', data);
     storeData(data);
+
+    /* createCard(data)
+    .then((res) => {​​
+      console.log(res.status);
+    }​​)
+    .catch((error) => {​​
+      const errors = JSON.parse(error.request.response);
+      console.log(errors);
+    }​​); */
 
     navigation.navigate('PersonalArea');
   };

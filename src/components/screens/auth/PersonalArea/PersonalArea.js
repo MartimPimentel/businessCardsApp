@@ -4,16 +4,17 @@ import NoCardArea from '../../../features/PersonalArea/NoCardArea/NoCardArea';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useIsFocused} from '@react-navigation/native';
 import Spinner from '../../../shared/Spinner/Spinner';
+import SInfo from 'react-native-sensitive-info';
+
 const PersonalArea = () => {
   const isFocused = useIsFocused();
   const [personalCard, setPersonalCard] = useState(null);
   const getData = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('@PERSONAL_DATA');
-      setPersonalCard(jsonValue ? JSON.parse(jsonValue) : null);
-    } catch (e) {
-      // error reading value
-    }
+    const jsonValue = await SInfo.getItem('personalCard', {
+      sharedPreferencesName: 'bussinessCards',
+      keychainService: 'bussinessCards',
+    });
+    setPersonalCard(jsonValue ? JSON.parse(jsonValue) : null);
   };
 
   useEffect(() => {
