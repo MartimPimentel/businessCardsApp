@@ -21,59 +21,61 @@ const CardForm = ({data}) => {
           paddingHorizontal: 30,
           height: 1000,
         }}>
-        <View style={{marginBottom: 15}}>
+        <View style={Styles.fieldContainer(!!data.name)}>
           <Text style={Styles.categoryText}>NAME</Text>
           <View style={Styles.headerContainer}>
             <Text style={Styles.informationText}>{data.name}</Text>
           </View>
         </View>
-        <View style={{marginBottom: 15}}>
+        <View style={Styles.fieldContainer(!!data.companyName)}>
           <Text style={Styles.categoryText}>COMPANY NAME</Text>
           <View style={Styles.headerContainer}>
             <Text style={Styles.informationText}>{data.companyName}</Text>
           </View>
         </View>
-        <View style={{marginBottom: 15}}>
+        <View style={Styles.fieldContainer(!!data.role)}>
           <Text style={Styles.categoryText}>COMPANY POSITION</Text>
           <View style={Styles.headerContainer}>
             <Text style={Styles.informationText}>{data.role}</Text>
           </View>
         </View>
-        <View style={{marginBottom: 15}}>
+        <View style={Styles.fieldContainer(!!data.phoneData)}>
           <Text style={Styles.categoryText}>PHONE NUMBER(PRINCIPAL)</Text>
           <View style={Styles.headerContainer}>
             <Text style={Styles.informationText}>
-              {'+' +
-                data.phoneData.callingCode +
-                ' ' +
-                data.phoneData.phoneNumber}
+              {!!data.phoneData &&
+                '+' +
+                  data.phoneData.callingCode +
+                  ' ' +
+                  data.phoneData.phoneNumber}
             </Text>
           </View>
         </View>
-        <View style={{marginBottom: 15}}>
+        <View style={Styles.fieldContainer(!!data.alternativePhoneData)}>
           <Text style={Styles.categoryText}>PHONE NUMBER(ALTERNATIVE)</Text>
           <View style={Styles.headerContainer}>
             <Text style={Styles.informationText}>
-              {'+' +
-                data.alternativePhoneData.callingCode +
-                ' ' +
-                data.alternativePhoneData.phoneNumber}
+              {!!data.alternativePhoneData &&
+                '+' +
+                  data.alternativePhoneData.callingCode +
+                  ' ' +
+                  data.alternativePhoneData.phoneNumber}
             </Text>
           </View>
         </View>
-        <View style={{marginBottom: 15}}>
+        <View style={Styles.fieldContainer(!!data.email)}>
           <Text style={Styles.categoryText}>EMAIL</Text>
           <View style={Styles.headerContainer}>
             <Text style={Styles.informationText}>{data.email}</Text>
           </View>
         </View>
-        <View style={{marginBottom: 15}}>
+        <View style={Styles.fieldContainer(!!data.address)}>
           <Text style={Styles.categoryText}>ADDRESS</Text>
           <View style={Styles.headerContainer}>
             <Text style={Styles.informationText}>{data.address}</Text>
           </View>
         </View>
-        <View style={{marginBottom: 15}}>
+        <View style={Styles.fieldContainer(!!data.observations)}>
           <Text style={Styles.categoryText}>OBSERVATIONS</Text>
           <View style={Styles.headerContainer}>
             <Text style={Styles.informationText}>{data.observations}</Text>

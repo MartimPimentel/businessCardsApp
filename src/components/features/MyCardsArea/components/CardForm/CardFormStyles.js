@@ -28,4 +28,7 @@ export default Styles = StyleSheet.create({
     height: 280,
     alignItems: 'center',
   },
+  fieldContainer: (fieldExists) => {
+    return {marginBottom: 15, display: fieldExists ? 'flex' : 'none'};
+  },
 });
