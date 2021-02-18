@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {createStackNavigator} from '@react-navigation/stack';
 import Spinner from './src/components/shared/Spinner/Spinner';
 import {getToken} from './src/shared/functions/functions';
+const base64url = require('base64url');
 const Stack = createStackNavigator();
 export default function App() {
   const [hasAuthKey, setHasAuthKey] = useState(false);
@@ -16,7 +17,18 @@ export default function App() {
   useEffect(() => {
     setLoading(true);
     getToken().then((res) => {
-      setHasAuthKey(res != null);
+      if (res != null) {
+        const splitted = res.split('.')[1];
+        //Expires one day before exp date
+        const expDate = JSON.parse(base64url.decode(splitted)).exp - 86400;
+        if (expDate < Math.round(Date.now() / 1000)) {
+          setHasAuthKey(false);
+        } else {
+          setHasAuthKey(true);
+        }
+      } else {
+        setHasAuthKey(false);
+      }
       setLoading(false);
     });
   }, []);
