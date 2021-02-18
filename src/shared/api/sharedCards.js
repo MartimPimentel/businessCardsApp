@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import api from './api';
+import {getToken} from '../functions/functions';
 
 /* export async function getReceivedCards() {
   try {
@@ -11,7 +12,7 @@ import api from './api';
     console.log(error);
   }s
 } */
-export const getReceivedCards = async () => {
+/* export const getReceivedCards = async () => {
   try {
     const resp = await api.get('/');
     return resp.data;
@@ -19,4 +20,9 @@ export const getReceivedCards = async () => {
     // Handle Error Here
     console.error(err);
   }
+}; */
+export const sharedCards = async () => {
+  return await getToken().then(async (token) => {
+    return await api.post('/sharedCards', {}, {headers: {Token: token}});
+  });
 };
