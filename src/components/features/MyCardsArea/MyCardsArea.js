@@ -12,12 +12,15 @@ import DeleteCard from './components/DeleteCard/DeleteCard';
 import FloatingAddButton from '../../shared/FloatingAddButton/FloatingAddButton';
 import {sharedCards} from '../../../shared/api/sharedCards';
 import Spinner from '../../shared/Spinner/Spinner';
-import {useIsFocused} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import Modal from '../../shared/Modal/Modal';
+import {deleteToken} from '../../../shared/functions/functions';
+import {CommonActions} from '@react-navigation/native';
 const MyCardsArea = () => {
   /* LogBox.ignoreLogs([
     'Warning: Cannot update a component from inside the function body of a different component.',
   ]); */
+  const navigation = useNavigation();
   const isFocused = useIsFocused();
   const [loading, setLoading] = useState(true);
   const [cardIndex, setCardIndex] = useState(0);
@@ -55,8 +58,24 @@ const MyCardsArea = () => {
       .catch((error) => {
         const errors = JSON.parse(error.request.response);
         console.log(errors);
-        setLoading(false);
-        setError(errors);
+        if (!!errors.error.match('Token')) {
+          setLoading(false);
+          deleteToken()
+            .then(() => {
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 1,
+                  routes: [{name: 'NotAuth'}],
+                }),
+              );
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else {
+          setLoading(false);
+          setError(errors);
+        }
       });
   };
   useEffect(() => {
