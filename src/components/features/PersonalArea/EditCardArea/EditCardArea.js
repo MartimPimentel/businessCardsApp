@@ -45,14 +45,14 @@ const EditCardArea = () => {
     console.log('Saved data:', data);
     storeData(data);
 
-    /* createCard(data)
-    .then((res) => {​​
-      console.log(res.status);
-    }​​)
-    .catch((error) => {​​
-      const errors = JSON.parse(error.request.response);
-      console.log(errors);
-    }​​); */
+    createCard(data)
+      .then((res) => {
+        console.log(res.status);
+      })
+      .catch((error) => {
+        const errors = JSON.parse(error.request.response);
+        console.log(errors);
+      });
 
     navigation.navigate('PersonalArea');
   };
