@@ -20,7 +20,7 @@ import {
 import Modal from '../../shared/Modal/Modal';
 import {deleteToken, parseData} from '../../../shared/functions/functions';
 import SInfo from 'react-native-sensitive-info';
-
+import {deleteSharedCard} from '../../../shared/api/deleteSharedCard';
 const storeData = async (data) => {
   await SInfo.setItem('sharedCards', JSON.stringify(data), {
     sharedPreferencesName: 'bussinessCards',
@@ -63,9 +63,31 @@ const MyCardsArea = () => {
 
   const handleDeleteDecison = (response) => {
     if (response == 'yes') {
+      setCardIndex(-1);
       let newData = [...filteredData];
+      const sharedUserId = filteredData[cardIndex].userId;
       newData.splice(cardIndex, 1);
       setFilteredData(newData);
+      deleteSharedCard(sharedUserId).catch((error) => {
+        const errors = JSON.parse(error.request.response);
+        console.log(errors);
+        if (!!errors.error.match('Token')) {
+          deleteToken()
+            .then(() => {
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 1,
+                  routes: [{name: 'NotAuth'}],
+                }),
+              );
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else {
+          setError(errors);
+        }
+      });
     }
     setFlipped(false);
   };
