@@ -12,10 +12,37 @@ import DeleteCard from './components/DeleteCard/DeleteCard';
 import FloatingAddButton from '../../shared/FloatingAddButton/FloatingAddButton';
 import {sharedCards} from '../../../shared/api/sharedCards';
 import Spinner from '../../shared/Spinner/Spinner';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {
+  useIsFocused,
+  useNavigation,
+  CommonActions,
+} from '@react-navigation/native';
 import Modal from '../../shared/Modal/Modal';
-import {deleteToken} from '../../../shared/functions/functions';
-import {CommonActions} from '@react-navigation/native';
+import {deleteToken, parseData} from '../../../shared/functions/functions';
+import SInfo from 'react-native-sensitive-info';
+import {deleteSharedCard} from '../../../shared/api/deleteSharedCard';
+const storeData = async (data) => {
+  await SInfo.setItem('sharedCards', JSON.stringify(data), {
+    sharedPreferencesName: 'bussinessCards',
+    keychainService: 'bussinessCards',
+  });
+};
+
+//use when offline
+const getStoredCards = async () => {
+  try {
+    const cards = await SInfo.getItem('sharedCards', {
+      sharedPreferencesName: 'bussinessCards',
+      keychainService: 'bussinessCards',
+    });
+    if (cards) return JSON.parse(cards);
+    return null;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+
 const MyCardsArea = () => {
   /* LogBox.ignoreLogs([
     'Warning: Cannot update a component from inside the function body of a different component.',
@@ -28,7 +55,7 @@ const MyCardsArea = () => {
   const [isFlipped, setFlipped] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [dbError, setError] = useState(null);
-
+  const [isOpened, setIsOpened] = useState(false);
   const handleIndexChange = (i) => {
     setCardIndex(i);
   };
@@ -36,9 +63,31 @@ const MyCardsArea = () => {
 
   const handleDeleteDecison = (response) => {
     if (response == 'yes') {
+      setCardIndex(-1);
       let newData = [...filteredData];
+      const sharedUserId = filteredData[cardIndex].userId;
       newData.splice(cardIndex, 1);
       setFilteredData(newData);
+      deleteSharedCard(sharedUserId).catch((error) => {
+        const errors = JSON.parse(error.request.response);
+        console.log(errors);
+        if (!!errors.error.match('Token')) {
+          deleteToken()
+            .then(() => {
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 1,
+                  routes: [{name: 'NotAuth'}],
+                }),
+              );
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else {
+          setError(errors);
+        }
+      });
     }
     setFlipped(false);
   };
@@ -50,9 +99,9 @@ const MyCardsArea = () => {
     setError(null);
     sharedCards()
       .then((res) => {
-        console.log(res.data);
-        allData = res.data;
-        setFilteredData(res.data);
+        allData = parseData(res.data);
+        storeData(allData);
+        setFilteredData(allData);
         setLoading(false);
       })
       .catch((error) => {
@@ -80,10 +129,10 @@ const MyCardsArea = () => {
   };
   useEffect(() => {
     getCards();
+    setIsOpened(true);
   }, []);
   useEffect(() => {
-    if (isFocused) {
-      setFilteredData(allData);
+    if (isFocused && isOpened) {
       setCardIndex(-1);
     }
   }, [isFocused]);

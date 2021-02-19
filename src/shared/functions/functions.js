@@ -19,3 +19,21 @@ export const deleteToken = async () => {
     keychainService: 'bussinessCards',
   });
 };
+
+export const parseData = (data) => {
+  const keys = [
+    'phoneData',
+    'alternativePhoneData',
+    'companyLogo',
+    'profilePhoto',
+  ];
+  const parsedData = [...data];
+  parsedData.forEach((card, idx) => {
+    keys.forEach((key) => {
+      if (card[key]) {
+        parsedData[idx][key] = JSON.parse(card[key]);
+      }
+    });
+  });
+  return parsedData;
+};
