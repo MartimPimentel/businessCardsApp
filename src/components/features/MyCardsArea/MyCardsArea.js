@@ -14,7 +14,7 @@ import {sharedCards} from '../../../shared/api/sharedCards';
 import Spinner from '../../shared/Spinner/Spinner';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import Modal from '../../shared/Modal/Modal';
-import {deleteToken} from '../../../shared/functions/functions';
+import {deleteToken, parseData} from '../../../shared/functions/functions';
 import {CommonActions} from '@react-navigation/native';
 const MyCardsArea = () => {
   /* LogBox.ignoreLogs([
@@ -50,9 +50,8 @@ const MyCardsArea = () => {
     setError(null);
     sharedCards()
       .then((res) => {
-        console.log(res.data);
-        allData = res.data;
-        setFilteredData(res.data);
+        allData = parseData(res.data);
+        setFilteredData(allData);
         setLoading(false);
       })
       .catch((error) => {
