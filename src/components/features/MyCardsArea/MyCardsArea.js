@@ -12,10 +12,37 @@ import DeleteCard from './components/DeleteCard/DeleteCard';
 import FloatingAddButton from '../../shared/FloatingAddButton/FloatingAddButton';
 import {sharedCards} from '../../../shared/api/sharedCards';
 import Spinner from '../../shared/Spinner/Spinner';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {
+  useIsFocused,
+  useNavigation,
+  CommonActions,
+} from '@react-navigation/native';
 import Modal from '../../shared/Modal/Modal';
 import {deleteToken, parseData} from '../../../shared/functions/functions';
-import {CommonActions} from '@react-navigation/native';
+import SInfo from 'react-native-sensitive-info';
+
+const storeData = async (data) => {
+  await SInfo.setItem('sharedCards', JSON.stringify(data), {
+    sharedPreferencesName: 'bussinessCards',
+    keychainService: 'bussinessCards',
+  });
+};
+
+//use when offline
+const getStoredCards = async () => {
+  try {
+    const cards = await SInfo.getItem('sharedCards', {
+      sharedPreferencesName: 'bussinessCards',
+      keychainService: 'bussinessCards',
+    });
+    if (cards) return JSON.parse(cards);
+    return null;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+
 const MyCardsArea = () => {
   /* LogBox.ignoreLogs([
     'Warning: Cannot update a component from inside the function body of a different component.',
@@ -28,7 +55,7 @@ const MyCardsArea = () => {
   const [isFlipped, setFlipped] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [dbError, setError] = useState(null);
-
+  const [isOpened, setIsOpened] = useState(false);
   const handleIndexChange = (i) => {
     setCardIndex(i);
   };
@@ -51,6 +78,7 @@ const MyCardsArea = () => {
     sharedCards()
       .then((res) => {
         allData = parseData(res.data);
+        storeData(allData);
         setFilteredData(allData);
         setLoading(false);
       })
@@ -79,10 +107,10 @@ const MyCardsArea = () => {
   };
   useEffect(() => {
     getCards();
+    setIsOpened(true);
   }, []);
   useEffect(() => {
-    if (isFocused) {
-      setFilteredData(allData);
+    if (isFocused && isOpened) {
       setCardIndex(-1);
     }
   }, [isFocused]);
