@@ -13,7 +13,9 @@ import Spinner from '../../../shared/Spinner/Spinner';
 import {nullCard} from '../../../../shared/consts';
 import Modal from '../../../shared/Modal/Modal';
 import SInfo from 'react-native-sensitive-info';
-import createCard from '../../../../shared/api/createCard';
+import {createCard} from '../../../../shared/api/createCard';
+import {deleteCard} from '../../../../shared/api/deleteCard';
+import {editCard} from '../../../../shared/api/editCard';
 
 const EditCardArea = () => {
   const navigation = useNavigation();
@@ -23,7 +25,8 @@ const EditCardArea = () => {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteModalResponse, setDeleteModalResponse] = useState(false);
 
-  const saveRequest = () => {};
+  const [loading, setLoading] = useState(true);
+  const [dbError, setError] = useState(null);
 
   const storeData = async (value) => {
     const jsonValue = JSON.stringify(value);
@@ -42,18 +45,33 @@ const EditCardArea = () => {
   };
 
   const saveCardData = (data) => {
-    console.log('Saved data:', data);
+    console.log(data);
     storeData(data);
-
-    createCard(data)
-      .then((res) => {
-        console.log(res.status);
-      })
-      .catch((error) => {
-        const errors = JSON.parse(error.request.response);
-        console.log(errors);
-      });
-
+    setLoading(true);
+    setError(null);
+    if (route.params == nullCard) {
+      createCard(data)
+        .then((res) => {
+          console.log('RES:', res.status);
+        })
+        .catch((error) => {
+          console.log(error.request.response);
+          const errors = JSON.parse(error.request.response);
+          console.log(errors);
+          setError(errors);
+        });
+    } else {
+      editCard(data)
+        .then((res) => {
+          console.log('RES:', res.status);
+        })
+        .catch((error) => {
+          console.log(error.request.response);
+          const errors = JSON.parse(error.request.response);
+          console.log(errors);
+          setError(errors);
+        });
+    }
     navigation.navigate('PersonalArea');
   };
 
@@ -61,6 +79,20 @@ const EditCardArea = () => {
     setDeleteModalResponse(true);
     clearData();
     route.params = nullCard;
+
+    setLoading(true);
+    setError(null);
+    deleteCard()
+      .then((res) => {
+        console.log('RES:', res.status);
+      })
+      .catch((error) => {
+        //console.log(error.request.response);
+        const errors = JSON.parse(error.request.response);
+        console.log(errors);
+        setError(errors);
+      });
+
     navigation.navigate('PersonalArea');
   };
   return isFocused ? (
@@ -76,7 +108,6 @@ const EditCardArea = () => {
       <ScrollView showsVerticalScrollIndicator={false} style={{marginTop: 10}}>
         <View style={Styles.outsideContainer}>
           <Text style={Styles.titleStyles}>Edit My Card</Text>
-
           <CardForm
             deleteResponse={deleteModalResponse}
             onClickToSave={pressedSave}
