@@ -5,14 +5,8 @@ export default Styles = StyleSheet.create({
     position: 'absolute',
     right: 15,
     bottom: 50,
-    width: 65,
-    height: 65,
+    alignItems: 'center',
   },
-  circleSize: {width: 65, height: 65, borderRadius: 65 / 2},
-  plusStyles: {
-    fontSize: 50,
-    fontFamily: 'Nunito-Bold',
-    color: 'white',
-    bottom: 5,
-  },
+  choiceButtonSize: {width: 50, height: 50, borderRadius: 50 / 2},
+  actionButtonSize: {width: 60, height: 60, borderRadius: 60 / 2},
 });

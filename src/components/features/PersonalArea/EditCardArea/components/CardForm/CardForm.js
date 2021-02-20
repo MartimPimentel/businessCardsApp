@@ -71,6 +71,7 @@ const CardForm = ({
       setIsEditable(true);
     }, 100);
   }, []);
+
   return (
     <View style={Styles.outsideContainer}>
       <View style={Styles.separatorPhotos}>
@@ -79,6 +80,7 @@ const CardForm = ({
           <Controller
             control={control}
             name="profilePhoto"
+            defaultValue={data.profilePhoto}
             render={({onChange, onBlur, value}) => (
               <PhotoPicker
                 onChange={(image) => {
@@ -96,6 +98,7 @@ const CardForm = ({
         <Controller
           control={control}
           name="name"
+          defaultValue={data.name}
           render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
@@ -115,6 +118,7 @@ const CardForm = ({
         <Controller
           control={control}
           name="email"
+          defaultValue={data.email}
           render={({onChange, onBlur, value}) => (
             <TextInput
               editable={isEditable}
@@ -135,6 +139,7 @@ const CardForm = ({
         <Controller
           control={control}
           name="phoneData"
+          defaultValue={data.phoneData}
           render={({onChange, onBlur, value}) => (
             <PhoneInput
               containerStyle={{marginTop: 10}}
@@ -171,6 +176,7 @@ const CardForm = ({
         <Text style={Styles.titleEntries}>PHONE NUMBER(ALTERNATIVE)</Text>
         <Controller
           control={control}
+          defaultValue={data.alternativePhoneData}
           name="alternativePhoneData"
           render={({onChange, onBlur, value}) => (
             <PhoneInput
@@ -211,6 +217,7 @@ const CardForm = ({
         <Controller
           control={control}
           name="address"
+          defaultValue={data.address}
           render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
@@ -228,6 +235,7 @@ const CardForm = ({
         <Text style={Styles.titleEntries}>COMPANY NAME</Text>
         <Controller
           control={control}
+          defaultValue={data.companyName}
           name="companyName"
           render={({onChange, onBlur, value}) => (
             <TextInput
@@ -247,6 +255,7 @@ const CardForm = ({
         <Controller
           control={control}
           name="role"
+          defaultValue={data.role}
           render={({onChange, onBlur, value}) => (
             <TextInput
               style={Styles.textInputStyles}
@@ -268,6 +277,7 @@ const CardForm = ({
           <Controller
             control={control}
             name="companyLogo"
+            defaultValue={data.companyLogo}
             render={({onChange, onBlur, value}) => (
               <PhotoPicker
                 onChange={(image) => {
@@ -284,6 +294,7 @@ const CardForm = ({
         <Controller
           control={control}
           name="observations"
+          defaultValue={data.observations}
           render={({onChange, onBlur, value}) => (
             <TextInput
               style={[
@@ -316,6 +327,7 @@ const CardForm = ({
           <Controller
             control={control}
             name="linkedInLink"
+            defaultValue={data.linkedInLink}
             render={({onChange, onBlur, value}) => (
               <TextInput
                 style={Styles.textInputStyles}
@@ -332,6 +344,7 @@ const CardForm = ({
           <Controller
             control={control}
             name="facebookLink"
+            defaultValue={data.facebookLink}
             render={({onChange, onBlur, value}) => (
               <TextInput
                 style={Styles.textInputStyles}
@@ -348,6 +361,7 @@ const CardForm = ({
           <Controller
             control={control}
             name="instagramLink"
+            defaultValue={data.instagramLink}
             render={({onChange, onBlur, value}) => (
               <TextInput
                 style={Styles.textInputStyles}

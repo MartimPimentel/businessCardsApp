@@ -1043,6 +1043,13 @@
   dependencies:
     deep-assign "^3.0.0"
 
+"@react-native-community/async-storage@^1.6.1":
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/async-storage/-/async-storage-1.12.1.tgz#25f821b4f6b13abe005ad67e47c6f1cee9f27b24"
+  integrity sha512-70WGaH3PKYASi4BThuEEKMkyAgE9k7VytBqmgPRx3MzJx9/MkspwqJGmn3QLCgHLIFUgF1pit2mWICbRJ3T3lg==
+  dependencies:
+    deep-assign "^3.0.0"
+
 "@react-native-community/cli-debugger-ui@^4.9.0":
   version "4.9.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-4.9.0.tgz#4177764ba69243c97aa26829d59d9501acb2bd71"
@@ -6257,6 +6264,13 @@ react-is@^16.12.0, react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1, react-
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-native-camera@^3.42.2:
+  version "3.42.2"
+  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-3.42.2.tgz#df0f9d0d4d7dd317abf1f474b245508121818b20"
+  integrity sha512-sqeVZiHP3hDdSVlVTM62Nry9+Enff06IqicK2bth+NKWPccwOHw4QXLMf7M5rpGFAIfbSGCcy0U1r+biv6R6rw==
+  dependencies:
+    prop-types "^15.6.2"
+
 react-native-country-picker-modal@^1.11.0:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/react-native-country-picker-modal/-/react-native-country-picker-modal-1.11.0.tgz#14056cbbd83477549aa9b5449570fff4ef3c7d5d"
@@ -6299,6 +6313,16 @@ react-native-linear-gradient@^2.5.6:
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
   integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
 
+react-native-permissions@^2.0.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-2.2.2.tgz#3d2a63f6b7d6be52fc86e30f77412a9566283028"
+  integrity sha512-ihf4shQDSX5Oo9ChQXb9kr13mmyyNem5MaEvOpr3dCjhBOBWyEMztXm9/uPK1Qg5PsNpaYLa1KpcPZDCw87LXg==
+
+react-native-permissions@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-3.0.0.tgz#d9d107700741d41f8392f202f35a61f481fb0e68"
+  integrity sha512-zBvf+o3NhgKmBk1I06GzZXaDfc9SUyO4M5TMcaCF1pwG1h4sI+XAv3gWSbryl6WnaZQc1zA+g7SocSoYcpJN5g==
+
 react-native-phone-number-input@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/react-native-phone-number-input/-/react-native-phone-number-input-1.0.5.tgz#863c28f5c85deb5bf6c774e290f958f5594894dd"
@@ -6306,6 +6330,15 @@ react-native-phone-number-input@^1.0.5:
   dependencies:
     google-libphonenumber "^3.2.10"
     react-native-country-picker-modal "^1.11.0"
+
+react-native-qrcode-scanner@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/react-native-qrcode-scanner/-/react-native-qrcode-scanner-1.5.3.tgz#90ed1cc342af4399dcd07454966127ac6a9bfdaf"
+  integrity sha512-JvjUH1+qR1rz0SDFyr0jXZZKC4B5rgZ+4yQrDsHl1jIYcyq5UZBcz2XrDYYeb6+yddvoJXFCgrHMxzhTSPbUnw==
+  dependencies:
+    "@react-native-community/async-storage" "^1.6.1"
+    prop-types "^15.5.10"
+    react-native-permissions "^2.0.2"
 
 react-native-qrcode-svg@^6.0.6:
   version "6.0.6"

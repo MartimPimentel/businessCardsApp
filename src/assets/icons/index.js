@@ -41,4 +41,7 @@ export {default as ConfirmAuthLock} from './ConfirmAuthLock.svg';
 export {default as CardEmailIcon} from './CardEmailIcon.svg';
 export {default as RemoveCardIcon} from './RemoveCardIcon.svg';
 export {default as ErrorsWarning} from './ErrorsWarning.svg';
+export {default as LinkIcon} from './LinkIcon.svg';
+export {default as PlusIcon} from './PlusIcon.svg';
+export {default as CloseIcon} from './CloseIcon.svg';
 export const UnknownUser = require('./UnknownUser.jpg');
