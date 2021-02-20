@@ -91,7 +91,10 @@ const MyCardsArea = () => {
     }
     setFlipped(false);
   };
-  const onHandleAddCard = () => {
+  const onHandleAddCardQRCode = () => {
+    //TO DO
+  };
+  const onHandleAddCardLink = () => {
     //TO DO
   };
   const getCards = () => {
@@ -229,7 +232,10 @@ const MyCardsArea = () => {
               </View>
             )}
           </View>
-          <FloatingAddButton onPress={onHandleAddCard} />
+          <FloatingAddButton
+            handleQRCode={onHandleAddCardQRCode}
+            handleLink={onHandleAddCardLink}
+          />
         </>
       )}
     </View>
