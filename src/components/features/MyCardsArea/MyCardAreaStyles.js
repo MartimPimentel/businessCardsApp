@@ -30,4 +30,11 @@ export default Styles = StyleSheet.create({
     fontSize: 20,
     alignSelf: 'center',
   },
+  closeScannerContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 70,
+    height: 40,
+    borderRadius: 10,
+  },
 });

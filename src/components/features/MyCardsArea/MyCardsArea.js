@@ -21,6 +21,10 @@ import Modal from '../../shared/Modal/Modal';
 import {deleteToken, parseData} from '../../../shared/functions/functions';
 import SInfo from 'react-native-sensitive-info';
 import {deleteSharedCard} from '../../../shared/api/deleteSharedCard';
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import {RNCamera} from 'react-native-camera';
+import LinearGradient from 'react-native-linear-gradient';
+
 const storeData = async (data) => {
   await SInfo.setItem('sharedCards', JSON.stringify(data), {
     sharedPreferencesName: 'bussinessCards',
@@ -56,6 +60,7 @@ const MyCardsArea = () => {
   const [overlay, setOverlay] = useState(false);
   const [dbError, setError] = useState(null);
   const [isOpened, setIsOpened] = useState(false);
+  const [openScanner, setOpenScanner] = useState(false);
   const handleIndexChange = (i) => {
     setCardIndex(i);
   };
@@ -91,7 +96,8 @@ const MyCardsArea = () => {
     }
     setFlipped(false);
   };
-  const onHandleAddCardQRCode = () => {
+  const onHandleAddCardQRCode = ({data}) => {
+    setOpenScanner(false);
     //TO DO
   };
   const onHandleAddCardLink = () => {
@@ -233,9 +239,30 @@ const MyCardsArea = () => {
             )}
           </View>
           <FloatingAddButton
-            handleQRCode={onHandleAddCardQRCode}
+            handleQRCode={() => setOpenScanner(true)}
             handleLink={onHandleAddCardLink}
           />
+          {openScanner && (
+            <View style={{position: 'absolute'}}>
+              <QRCodeScanner
+                onRead={onHandleAddCardQRCode}
+                flashMode={RNCamera.Constants.FlashMode.auto}
+                showMarker
+                markerStyle={{borderColor: '#A9E2FD'}}
+                bottomContent={
+                  <TouchableOpacity
+                    style={{top: 10}}
+                    onPress={() => setOpenScanner(false)}>
+                    <LinearGradient
+                      style={Styles.closeScannerContainer}
+                      colors={['#A9E2FD', '#8AB1F2']}>
+                      <Text style={{color: 'white'}}>Close</Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                }
+              />
+            </View>
+          )}
         </>
       )}
     </View>
