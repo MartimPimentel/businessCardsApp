@@ -15,6 +15,7 @@ import {CommonActions} from '@react-navigation/native';
 import {login} from '../../../../shared/api/login';
 import Modal from '../../../shared/Modal/Modal';
 import SInfo from 'react-native-sensitive-info';
+import {useNetInfo} from '@react-native-community/netinfo';
 
 const storeData = async (token) => {
   await SInfo.setItem('token', token, {
@@ -24,27 +25,34 @@ const storeData = async (token) => {
 };
 
 const LoginView = () => {
+  const netInfo = useNetInfo();
   const navigation = useNavigation();
   const [error, setError] = useState(null);
 
   const handleLogin = (data) => {
-    login(data)
-      .then((res) => {
-        console.log(res.data);
-        setError(null);
-        storeData(res.data.token);
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 1,
-            routes: [{name: 'Auth'}],
-          }),
-        );
-      })
-      .catch((error) => {
-        const errors = JSON.parse(error.request.response);
-        console.log(errors);
-        setError(errors);
+    if (netInfo.isConnected) {
+      login(data)
+        .then((res) => {
+          console.log(res.data);
+          setError(null);
+          storeData(res.data.token);
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [{name: 'Auth'}],
+            }),
+          );
+        })
+        .catch((error) => {
+          const errors = JSON.parse(error.request.response);
+          console.log(errors);
+          setError(errors);
+        });
+    } else {
+      setError({
+        message: 'You are currently offline. Go online to be able to login.',
       });
+    }
   };
 
   return (
@@ -72,7 +80,7 @@ const LoginView = () => {
               error && (
                 <>
                   <Text>{error.message}</Text>
-                  <Text>Please try again.</Text>
+                  {error.error && <Text>Please try again.</Text>}
                 </>
               )
             }
