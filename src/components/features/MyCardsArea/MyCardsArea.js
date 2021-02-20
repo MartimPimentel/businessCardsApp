@@ -4,7 +4,6 @@ import Swipper from './components/Swipper/Swipper';
 import Styles from './MyCardAreaStyles';
 import HeaderSearch from './components/Header/HeaderSearch';
 import CardForm from './components/CardForm/CardForm';
-import {data} from '../../../shared/mockData/mockData';
 import {RemoveCardIcon} from '../../../assets/icons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import FlipComponent from 'react-native-flip-component';
@@ -24,12 +23,17 @@ import {deleteSharedCard} from '../../../shared/api/deleteSharedCard';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
 import LinearGradient from 'react-native-linear-gradient';
+import {addSharedCard} from '../../../shared/api/addSharedCard';
 
 const storeData = async (data) => {
-  await SInfo.setItem('sharedCards', JSON.stringify(data), {
-    sharedPreferencesName: 'bussinessCards',
-    keychainService: 'bussinessCards',
-  });
+  try {
+    await SInfo.setItem('sharedCards', JSON.stringify(data), {
+      sharedPreferencesName: 'bussinessCards',
+      keychainService: 'bussinessCards',
+    });
+  } catch (e) {
+    console.log('ERROR->', e);
+  }
 };
 
 //use when offline
@@ -61,18 +65,25 @@ const MyCardsArea = () => {
   const [dbError, setError] = useState(null);
   const [isOpened, setIsOpened] = useState(false);
   const [openScanner, setOpenScanner] = useState(false);
+  const [allData, setAllData] = useState([]);
+  const [searchBarOpened, setSearchBarOpened] = useState(false);
   const handleIndexChange = (i) => {
     setCardIndex(i);
   };
-  let allData = [];
 
   const handleDeleteDecison = (response) => {
+    setFlipped(false);
     if (response == 'yes') {
+      setSearchBarOpened(false);
       setCardIndex(-1);
-      let newData = [...filteredData];
+      let newData = [...allData];
       const sharedUserId = filteredData[cardIndex].userId;
-      newData.splice(cardIndex, 1);
+      newData = newData.filter((card) => {
+        return card.userId != sharedUserId;
+      });
       setFilteredData(newData);
+      setAllData(newData);
+      storeData(newData);
       deleteSharedCard(sharedUserId).catch((error) => {
         const errors = JSON.parse(error.request.response);
         console.log(errors);
@@ -94,11 +105,43 @@ const MyCardsArea = () => {
         }
       });
     }
-    setFlipped(false);
   };
   const onHandleAddCardQRCode = ({data}) => {
     setOpenScanner(false);
-    //TO DO
+    setSearchBarOpened(false);
+    setLoading(true);
+    addSharedCard(data)
+      .then((res) => {
+        const newCard = parseData([res.data]);
+        let sharedCopy = [...allData];
+        sharedCopy.push(newCard[0]);
+        setAllData(sharedCopy);
+        storeData(sharedCopy);
+        setFilteredData(sharedCopy);
+        setLoading(false);
+      })
+      .catch((error) => {
+        const errors = JSON.parse(error.request.response);
+        console.log(errors);
+        if (!!errors.error.match('Token')) {
+          setLoading(false);
+          deleteToken()
+            .then(() => {
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 1,
+                  routes: [{name: 'NotAuth'}],
+                }),
+              );
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else {
+          setLoading(false);
+          setError(errors);
+        }
+      });
   };
   const onHandleAddCardLink = () => {
     //TO DO
@@ -108,9 +151,10 @@ const MyCardsArea = () => {
     setError(null);
     sharedCards()
       .then((res) => {
-        allData = parseData(res.data);
-        storeData(allData);
-        setFilteredData(allData);
+        const parsedData = parseData(res.data);
+        setAllData(parsedData);
+        storeData(parsedData);
+        setFilteredData(parsedData);
         setLoading(false);
       })
       .catch((error) => {
@@ -148,10 +192,13 @@ const MyCardsArea = () => {
   useEffect(() => {
     if (overlay) setOverlay(false);
   }, [overlay]);
+
   return (
     <View style={{height: '100%'}}>
       <HeaderSearch
-        data={data}
+        openSearchBar={searchBarOpened}
+        onChangeHeader={(value) => setSearchBarOpened(value)}
+        data={allData}
         handleFilter={(filtered) => {
           filtered != [] ? setFilteredData(filtered) : setFilteredData(allData);
         }}
