@@ -7,6 +7,7 @@ import Spinner from '../../../shared/Spinner/Spinner';
 import SInfo from 'react-native-sensitive-info';
 import {parseData} from '../../../../shared/functions/functions';
 import {getCard} from '../../../../shared/api/getCard';
+import {set} from 'react-native-reanimated';
 
 const PersonalArea = () => {
   const isFocused = useIsFocused();
@@ -22,39 +23,23 @@ const PersonalArea = () => {
   };
 
   const getData = async () => {
-    getCard()
-      .then((res) => {
-        console.log(res.data);
-        let value = parseData([res.data])[0];
-        storeData(value);
-        if (value.length != 0 || value.length == undefined) {
-          setPersonalCard(value);
-        } else {
-          setPersonalCard(null);
-        }
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log('Failed');
-        //const errors = JSON.parse(error.request.response);
-        console.log(error);
-        //setError(errors);
-      });
+    const card = await SInfo.getItem('personalCard', {
+      sharedPreferencesName: 'bussinessCards',
+      keychainService: 'bussinessCards',
+    });
+
+    if (card) setPersonalCard(JSON.parse(card));
+    else setPersonalCard(null);
   };
   useEffect(() => {
     if (isFocused) {
-      setLoading(true);
       getData();
     }
   }, [isFocused]);
-  return !loading ? (
-    personalCard ? (
-      <CardCreatedArea data={personalCard} />
-    ) : (
-      <NoCardArea />
-    )
+  return personalCard ? (
+    <CardCreatedArea data={personalCard} />
   ) : (
-    <Spinner />
+    <NoCardArea />
   );
 };
 export default PersonalArea;
