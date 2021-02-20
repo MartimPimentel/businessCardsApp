@@ -67,6 +67,7 @@ const CardForm = ({
   }, [deleteResponse]);
   //bug in android email text fields makes app RN apps crash.Known workaround:
   useEffect(() => {
+    reset(insertDefaultCard(data));
     setTimeout(() => {
       setIsEditable(true);
     }, 100);
