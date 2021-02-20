@@ -5,7 +5,6 @@ export const getToken = async () => {
       sharedPreferencesName: 'bussinessCards',
       keychainService: 'bussinessCards',
     });
-    console.log('key: ' + key);
     return key;
   } catch (e) {
     console.log(e);

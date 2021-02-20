@@ -45,14 +45,13 @@ const EditCardArea = () => {
   };
 
   const saveCardData = (data) => {
-    console.log(data);
     storeData(data);
     setLoading(true);
     setError(null);
-    if (route.params == nullCard) {
+    if (route.params == undefined) {
       createCard(data)
         .then((res) => {
-          console.log('RES:', res.status);
+          navigation.navigate('PersonalArea');
         })
         .catch((error) => {
           console.log(error.request.response);
@@ -61,30 +60,31 @@ const EditCardArea = () => {
           setError(errors);
         });
     } else {
+      storeData(data);
       editCard(data)
         .then((res) => {
-          console.log('RES:', res.status);
+          navigation.navigate('PersonalArea');
         })
         .catch((error) => {
-          console.log(error.request.response);
+          console.log(error.request);
           const errors = JSON.parse(error.request.response);
           console.log(errors);
           setError(errors);
         });
     }
-    navigation.navigate('PersonalArea');
   };
 
   const handleDeleteCard = () => {
     setDeleteModalResponse(true);
     clearData();
-    route.params = nullCard;
+    route.params = undefined;
 
     setLoading(true);
     setError(null);
     deleteCard()
       .then((res) => {
         console.log('RES:', res.status);
+        navigation.navigate('PersonalArea');
       })
       .catch((error) => {
         //console.log(error.request.response);
@@ -92,8 +92,6 @@ const EditCardArea = () => {
         console.log(errors);
         setError(errors);
       });
-
-    navigation.navigate('PersonalArea');
   };
   return isFocused ? (
     <TouchableWithoutFeedback

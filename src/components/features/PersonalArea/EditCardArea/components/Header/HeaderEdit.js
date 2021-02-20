@@ -21,7 +21,7 @@ const HeaderEdit = ({onClickToSaveData}) => {
           <View style={Styles.icons}>
             <TouchableOpacity
               style={Styles.leftIcon}
-              onPress={() => navigation.goBack()}>
+              onPress={() => navigation.navigate('PersonalArea')}>
               <LeftArrowIcon height="50%" width="50%" />
             </TouchableOpacity>
             <CardsIcon />

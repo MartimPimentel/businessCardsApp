@@ -30,7 +30,7 @@ const NoCardArea = () => {
         <TouchableOpacity
           style={Styles.icon}
           onPress={() => {
-            navigation.navigate('EditCardArea');
+            navigation.navigate('EditCardArea', undefined);
           }}>
           <AddCardIcon />
         </TouchableOpacity>
