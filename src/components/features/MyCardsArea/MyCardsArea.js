@@ -24,6 +24,7 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
 import LinearGradient from 'react-native-linear-gradient';
 import {addSharedCard} from '../../../shared/api/addSharedCard';
+import {useNetInfo} from '@react-native-community/netinfo';
 
 const storeData = async (data) => {
   try {
@@ -55,6 +56,7 @@ const MyCardsArea = () => {
   /* LogBox.ignoreLogs([
     'Warning: Cannot update a component from inside the function body of a different component.',
   ]); */
+  const netInfo = useNetInfo();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const [loading, setLoading] = useState(true);
@@ -73,36 +75,43 @@ const MyCardsArea = () => {
 
   const handleDeleteDecison = (response) => {
     setFlipped(false);
-    if (response == 'yes') {
-      setSearchBarOpened(false);
-      setCardIndex(-1);
-      let newData = [...allData];
-      const sharedUserId = filteredData[cardIndex].userId;
-      newData = newData.filter((card) => {
-        return card.userId != sharedUserId;
-      });
-      setFilteredData(newData);
-      setAllData(newData);
-      storeData(newData);
-      deleteSharedCard(sharedUserId).catch((error) => {
-        const errors = JSON.parse(error.request.response);
-        console.log(errors);
-        if (!!errors.error.match('Token')) {
-          deleteToken()
-            .then(() => {
-              navigation.dispatch(
-                CommonActions.reset({
-                  index: 1,
-                  routes: [{name: 'NotAuth'}],
-                }),
-              );
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        } else {
-          setError(errors);
-        }
+    if (netInfo.isConnected) {
+      if (response == 'yes') {
+        setSearchBarOpened(false);
+        setCardIndex(-1);
+        let newData = [...allData];
+        const sharedUserId = filteredData[cardIndex].userId;
+        newData = newData.filter((card) => {
+          return card.userId != sharedUserId;
+        });
+        setFilteredData(newData);
+        setAllData(newData);
+        storeData(newData);
+        deleteSharedCard(sharedUserId).catch((error) => {
+          const errors = JSON.parse(error.request.response);
+          console.log(errors);
+          if (!!errors.error.match('Token')) {
+            deleteToken()
+              .then(() => {
+                navigation.dispatch(
+                  CommonActions.reset({
+                    index: 1,
+                    routes: [{name: 'NotAuth'}],
+                  }),
+                );
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          } else {
+            setError(errors);
+          }
+        });
+      }
+    } else {
+      setError({
+        message:
+          'You are currently offline. Go online do be able do delete a card.',
       });
     }
   };
@@ -181,7 +190,23 @@ const MyCardsArea = () => {
       });
   };
   useEffect(() => {
-    getCards();
+    if (netInfo.isConnected) {
+      getCards();
+    } else {
+      setLoading(true);
+      setError(null);
+      getStoredCards()
+        .then((cards) => {
+          setAllData(cards);
+          storeData(cards);
+          setFilteredData(cards);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setError(err);
+          setLoading(false);
+        });
+    }
     setIsOpened(true);
   }, []);
   useEffect(() => {
@@ -211,11 +236,11 @@ const MyCardsArea = () => {
         <Spinner />
       ) : dbError ? (
         <Modal
-          cancelButtonTest="Reload"
+          cancelButtonTest={netInfo.isConnected ? 'Reload' : 'Ok'}
           isVisible={dbError}
           onClose={() => {
             setError(null);
-            getCards();
+            if (netInfo.isConnected) getCards();
           }}
           header={
             <Text style={{fontFamily: 'Nunito-Regular', fontSize: 20}}>
@@ -286,7 +311,16 @@ const MyCardsArea = () => {
             )}
           </View>
           <FloatingAddButton
-            handleQRCode={() => setOpenScanner(true)}
+            handleQRCode={() => {
+              if (netInfo.isConnected) {
+                setOpenScanner(true);
+              } else {
+                setError({
+                  message:
+                    'You are currently offline. Go online to be able do add new cards.',
+                });
+              }
+            }}
             handleLink={onHandleAddCardLink}
           />
           {openScanner && (
