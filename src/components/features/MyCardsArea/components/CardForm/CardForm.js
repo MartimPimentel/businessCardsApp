@@ -1,5 +1,12 @@
 import React from 'react';
-import {ScrollView, View, Text, Dimensions, Linking} from 'react-native';
+import {
+  ScrollView,
+  View,
+  Text,
+  Dimensions,
+  Linking,
+  Platform,
+} from 'react-native';
 import Styles from './CardFormStyles';
 import {
   FBGoToProfile,
@@ -11,6 +18,27 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const CardForm = ({data}) => {
+  const openLink = (link) => {
+    Linking.canOpenURL(link)
+      .then((supported) => {
+        if (!supported) {
+          console.log('Link is not available');
+        } else {
+          return Linking.openURL(link);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+  const openPhoneNumber = (callingCode, phoneNumber) => {
+    let requestNumber = '';
+    if (Platform.OS !== 'android') {
+      requestNumber = 'telprompt:+';
+    } else {
+      requestNumber = 'tel:+';
+    }
+    requestNumber = requestNumber + callingCode + ' ' + phoneNumber;
+    openLink(requestNumber);
+  };
   return (
     <View
       style={{
@@ -42,31 +70,61 @@ const CardForm = ({data}) => {
         <View style={Styles.fieldContainer(!!data.phoneData)}>
           <Text style={Styles.categoryText}>PHONE NUMBER(PRINCIPAL)</Text>
           <View style={Styles.headerContainer}>
-            <Text style={Styles.informationText}>
-              {!!data.phoneData &&
-                '+' +
-                  data.phoneData.callingCode +
-                  ' ' +
-                  data.phoneData.phoneNumber}
-            </Text>
+            <View style={{width: '50%'}}>
+              <TouchableOpacity>
+                <Text
+                  onPress={() =>
+                    openPhoneNumber(
+                      data.phoneData.callingCode,
+                      data.phoneData.phoneNumber,
+                    )
+                  }
+                  style={Styles.informationText}>
+                  {!!data.phoneData &&
+                    '+' +
+                      data.phoneData.callingCode +
+                      ' ' +
+                      data.phoneData.phoneNumber}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
         <View style={Styles.fieldContainer(!!data.alternativePhoneData)}>
           <Text style={Styles.categoryText}>PHONE NUMBER(ALTERNATIVE)</Text>
           <View style={Styles.headerContainer}>
-            <Text style={Styles.informationText}>
-              {!!data.alternativePhoneData &&
-                '+' +
-                  data.alternativePhoneData.callingCode +
-                  ' ' +
-                  data.alternativePhoneData.phoneNumber}
-            </Text>
+            <View style={{width: '50%'}}>
+              <TouchableOpacity>
+                <Text
+                  onPress={() =>
+                    openPhoneNumber(
+                      data.alternativePhoneData.callingCode,
+                      data.alternativePhoneData.phoneNumber,
+                    )
+                  }
+                  style={Styles.informationText}>
+                  {!!data.alternativePhoneData &&
+                    '+' +
+                      data.alternativePhoneData.callingCode +
+                      ' ' +
+                      data.alternativePhoneData.phoneNumber}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
         <View style={Styles.fieldContainer(!!data.email)}>
           <Text style={Styles.categoryText}>EMAIL</Text>
           <View style={Styles.headerContainer}>
-            <Text style={Styles.informationText}>{data.email}</Text>
+            <TouchableOpacity>
+              <Text
+                onPress={() => {
+                  openLink('mailto:' + data.email);
+                }}
+                style={Styles.informationText}>
+                {data.email}
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={Styles.fieldContainer(!!data.address)}>
