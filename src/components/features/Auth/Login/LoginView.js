@@ -7,7 +7,6 @@ import {
 } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
-import AsyncStorage from '@react-native-community/async-storage';
 import Styles from './LoginViewStyles';
 import LoginForm from './components/Form/LoginForm';
 import {vw, vh} from 'react-native-viewport-units';

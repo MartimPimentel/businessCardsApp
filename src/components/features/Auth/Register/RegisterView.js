@@ -7,7 +7,6 @@ import {
 } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Styles from './RegisterViewStyles';
-import AsyncStorage from '@react-native-community/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import RegisterForm from './components/Form/RegisterForm';
 import {useIsFocused} from '@react-navigation/native';

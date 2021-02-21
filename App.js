@@ -4,7 +4,6 @@ import DrawerNavigator from './src/components/screens/auth/DrawerSideBar/DrawerN
 import {StatusBar} from 'react-native';
 import NotAuth from './src/components/screens/notAuth/NotAuth';
 import {NavigationContainer} from '@react-navigation/native';
-import AsyncStorage from '@react-native-community/async-storage';
 import {createStackNavigator} from '@react-navigation/stack';
 import Spinner from './src/components/shared/Spinner/Spinner';
 import {getToken} from './src/shared/functions/functions';
