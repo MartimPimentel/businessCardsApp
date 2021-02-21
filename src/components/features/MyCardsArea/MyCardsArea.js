@@ -65,7 +65,6 @@ const MyCardsArea = () => {
   const [isFlipped, setFlipped] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [dbError, setError] = useState(null);
-  const [isOpened, setIsOpened] = useState(false);
   const [openScanner, setOpenScanner] = useState(false);
   const [allData, setAllData] = useState([]);
   const [searchBarOpened, setSearchBarOpened] = useState(false);
@@ -190,30 +189,31 @@ const MyCardsArea = () => {
       });
   };
   useEffect(() => {
-    if (netInfo.isConnected) {
-      getCards();
-    } else {
-      setLoading(true);
-      setError(null);
-      getStoredCards()
-        .then((cards) => {
-          setAllData(cards);
-          storeData(cards);
-          setFilteredData(cards);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setError(err);
-          setLoading(false);
-        });
-    }
-    setIsOpened(true);
-  }, []);
-  useEffect(() => {
-    if (isFocused && isOpened) {
+    if (isFocused) {
       setCardIndex(-1);
     }
   }, [isFocused]);
+  useEffect(() => {
+    if (netInfo.isConnected != null) {
+      if (netInfo.isConnected) {
+        getCards();
+      } else {
+        setLoading(true);
+        setError(null);
+        getStoredCards()
+          .then((cards) => {
+            setAllData(cards);
+            storeData(cards);
+            setFilteredData(cards);
+            setLoading(false);
+          })
+          .catch((err) => {
+            setError(err);
+            setLoading(false);
+          });
+      }
+    }
+  }, [netInfo.isConnected]);
   useEffect(() => {
     if (overlay) setOverlay(false);
   }, [overlay]);
@@ -266,7 +266,7 @@ const MyCardsArea = () => {
               <View style={{marginLeft: '40%'}}>
                 <Text style={Styles.titleStyles}>My Cards</Text>
               </View>
-              {!isFlipped && filteredData[0] && (
+              {!isFlipped && filteredData && filteredData[0] && (
                 <View style={{marginLeft: '22%'}}>
                   <TouchableOpacity
                     style={{width: 30}}
@@ -279,7 +279,7 @@ const MyCardsArea = () => {
               )}
             </View>
 
-            {filteredData[0] ? (
+            {filteredData && filteredData[0] ? (
               <View style={Styles.outsideContainer}>
                 <FlipComponent
                   useNativeDriver={true}
