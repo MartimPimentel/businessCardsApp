@@ -7,39 +7,46 @@ import {
 } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Styles from './RegisterViewStyles';
-import AsyncStorage from '@react-native-community/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import RegisterForm from './components/Form/RegisterForm';
 import {useIsFocused} from '@react-navigation/native';
 import {CommonActions} from '@react-navigation/native';
 import {createUser} from '../../../../shared/api/createUser';
 import Modal from '../../../shared/Modal/Modal';
+import {useNetInfo} from '@react-native-community/netinfo';
+
 const RegisterView = (props) => {
+  const netInfo = useNetInfo();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const [error, setError] = useState(null);
 
   const handleRegister = (data) => {
     //console.log(data);
-    createUser(data)
-      .then((res) => {
-        console.log(res.data);
-        setError(null);
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 1,
-            routes: [{name: 'Login'}],
-          }),
-        );
-      })
-      .catch((error) => {
-        const errors = JSON.parse(error.request.response);
+    if (netInfo.isConnected) {
+      createUser(data)
+        .then((res) => {
+          console.log(res.data);
+          setError(null);
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [{name: 'Login'}],
+            }),
+          );
+        })
+        .catch((error) => {
+          const errors = JSON.parse(error.request.response);
 
-        setError(errors);
+          setError(errors);
 
-        console.log(error.request.response.message);
+          console.log(error.request.response.message);
+        });
+    } else {
+      setError({
+        message: 'You are currently offline. Go online to be able to login.',
       });
-    /* storeData('chave_de_entrada'); */
+    }
   };
   useEffect(() => {}, [isFocused]);
   return (
@@ -50,24 +57,26 @@ const RegisterView = (props) => {
         style={{width: '100%', height: '100%', justifyContent: 'center'}}
         colors={['#80C8FC', '#5350DB']}>
         <Text style={Styles.signUpText}>Sign up</Text>
+
         <ScrollView>
-          <Modal
-            isVisible={error && error.error != 'Signup-001'}
-            cancelButtonTest="Ok"
-            onClose={() => setError(null)}
-            body={
-              error && (
-                <>
-                  <Text>{error.message}</Text>
-                  <Text>Please try again.</Text>
-                </>
-              )
-            }
-          />
           <RegisterForm
             onClickToRegister={handleRegister}
             errorMessage={
               error && error.error == 'Signup-001' ? error.message : null
+            }
+          />
+          <Modal
+            isVisible={error && error.error != 'Signup-001'}
+            cancelButtonTest="Ok"
+            onClose={() => setError(null)}
+            header={<Text style={{fontSize: 25}}>Error</Text>}
+            body={
+              error && (
+                <>
+                  <Text>{error.message}</Text>
+                  {error.error && <Text>Please try again.</Text>}
+                </>
+              )
             }
           />
           <TouchableOpacity

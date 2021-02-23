@@ -4,7 +4,6 @@ import Swipper from './components/Swipper/Swipper';
 import Styles from './MyCardAreaStyles';
 import HeaderSearch from './components/Header/HeaderSearch';
 import CardForm from './components/CardForm/CardForm';
-import {data} from '../../../shared/mockData/mockData';
 import {RemoveCardIcon} from '../../../assets/icons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import FlipComponent from 'react-native-flip-component';
@@ -24,12 +23,18 @@ import {deleteSharedCard} from '../../../shared/api/deleteSharedCard';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
 import LinearGradient from 'react-native-linear-gradient';
+import {addSharedCard} from '../../../shared/api/addSharedCard';
+import {useNetInfo} from '@react-native-community/netinfo';
 
 const storeData = async (data) => {
-  await SInfo.setItem('sharedCards', JSON.stringify(data), {
-    sharedPreferencesName: 'bussinessCards',
-    keychainService: 'bussinessCards',
-  });
+  try {
+    await SInfo.setItem('sharedCards', JSON.stringify(data), {
+      sharedPreferencesName: 'bussinessCards',
+      keychainService: 'bussinessCards',
+    });
+  } catch (e) {
+    console.log('ERROR->', e);
+  }
 };
 
 //use when offline
@@ -51,6 +56,7 @@ const MyCardsArea = () => {
   /* LogBox.ignoreLogs([
     'Warning: Cannot update a component from inside the function body of a different component.',
   ]); */
+  const netInfo = useNetInfo();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const [loading, setLoading] = useState(true);
@@ -59,24 +65,74 @@ const MyCardsArea = () => {
   const [isFlipped, setFlipped] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [dbError, setError] = useState(null);
-  const [isOpened, setIsOpened] = useState(false);
   const [openScanner, setOpenScanner] = useState(false);
+  const [allData, setAllData] = useState([]);
+  const [searchBarOpened, setSearchBarOpened] = useState(false);
   const handleIndexChange = (i) => {
     setCardIndex(i);
   };
-  let allData = [];
 
   const handleDeleteDecison = (response) => {
-    if (response == 'yes') {
-      setCardIndex(-1);
-      let newData = [...filteredData];
-      const sharedUserId = filteredData[cardIndex].userId;
-      newData.splice(cardIndex, 1);
-      setFilteredData(newData);
-      deleteSharedCard(sharedUserId).catch((error) => {
+    setFlipped(false);
+    if (netInfo.isConnected) {
+      if (response == 'yes') {
+        setSearchBarOpened(false);
+        setCardIndex(-1);
+        let newData = [...allData];
+        const sharedUserId = filteredData[cardIndex].userId;
+        newData = newData.filter((card) => {
+          return card.userId != sharedUserId;
+        });
+        setFilteredData(newData);
+        setAllData(newData);
+        storeData(newData);
+        deleteSharedCard(sharedUserId).catch((error) => {
+          const errors = JSON.parse(error.request.response);
+          console.log(errors);
+          if (!!errors.error.match('Token')) {
+            deleteToken()
+              .then(() => {
+                navigation.dispatch(
+                  CommonActions.reset({
+                    index: 1,
+                    routes: [{name: 'NotAuth'}],
+                  }),
+                );
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          } else {
+            setError(errors);
+          }
+        });
+      }
+    } else {
+      setError({
+        message:
+          'You are currently offline. Go online do be able do delete a card.',
+      });
+    }
+  };
+  const onHandleAddCardQRCode = ({data}) => {
+    setOpenScanner(false);
+    setSearchBarOpened(false);
+    setLoading(true);
+    addSharedCard(data)
+      .then((res) => {
+        const newCard = parseData([res.data]);
+        let sharedCopy = [...allData];
+        sharedCopy.push(newCard[0]);
+        setAllData(sharedCopy);
+        storeData(sharedCopy);
+        setFilteredData(sharedCopy);
+        setLoading(false);
+      })
+      .catch((error) => {
         const errors = JSON.parse(error.request.response);
         console.log(errors);
         if (!!errors.error.match('Token')) {
+          setLoading(false);
           deleteToken()
             .then(() => {
               navigation.dispatch(
@@ -90,15 +146,10 @@ const MyCardsArea = () => {
               console.log(error);
             });
         } else {
+          setLoading(false);
           setError(errors);
         }
       });
-    }
-    setFlipped(false);
-  };
-  const onHandleAddCardQRCode = ({data}) => {
-    setOpenScanner(false);
-    //TO DO
   };
   const onHandleAddCardLink = () => {
     //TO DO
@@ -108,9 +159,10 @@ const MyCardsArea = () => {
     setError(null);
     sharedCards()
       .then((res) => {
-        allData = parseData(res.data);
-        storeData(allData);
-        setFilteredData(allData);
+        const parsedData = parseData(res.data);
+        setAllData(parsedData);
+        storeData(parsedData);
+        setFilteredData(parsedData);
         setLoading(false);
       })
       .catch((error) => {
@@ -137,21 +189,41 @@ const MyCardsArea = () => {
       });
   };
   useEffect(() => {
-    getCards();
-    setIsOpened(true);
-  }, []);
-  useEffect(() => {
-    if (isFocused && isOpened) {
+    if (isFocused) {
       setCardIndex(-1);
     }
   }, [isFocused]);
   useEffect(() => {
+    if (netInfo.isConnected != null) {
+      if (netInfo.isConnected) {
+        getCards();
+      } else {
+        setLoading(true);
+        setError(null);
+        getStoredCards()
+          .then((cards) => {
+            setAllData(cards);
+            storeData(cards);
+            setFilteredData(cards);
+            setLoading(false);
+          })
+          .catch((err) => {
+            setError(err);
+            setLoading(false);
+          });
+      }
+    }
+  }, [netInfo.isConnected]);
+  useEffect(() => {
     if (overlay) setOverlay(false);
   }, [overlay]);
+
   return (
     <View style={{height: '100%'}}>
       <HeaderSearch
-        data={data}
+        openSearchBar={searchBarOpened}
+        onChangeHeader={(value) => setSearchBarOpened(value)}
+        data={allData}
         handleFilter={(filtered) => {
           filtered != [] ? setFilteredData(filtered) : setFilteredData(allData);
         }}
@@ -164,11 +236,11 @@ const MyCardsArea = () => {
         <Spinner />
       ) : dbError ? (
         <Modal
-          cancelButtonTest="Reload"
+          cancelButtonTest={netInfo.isConnected ? 'Reload' : 'Ok'}
           isVisible={dbError}
           onClose={() => {
             setError(null);
-            getCards();
+            if (netInfo.isConnected) getCards();
           }}
           header={
             <Text style={{fontFamily: 'Nunito-Regular', fontSize: 20}}>
@@ -194,7 +266,7 @@ const MyCardsArea = () => {
               <View style={{marginLeft: '40%'}}>
                 <Text style={Styles.titleStyles}>My Cards</Text>
               </View>
-              {!isFlipped && filteredData[0] && (
+              {!isFlipped && filteredData && filteredData[0] && (
                 <View style={{marginLeft: '22%'}}>
                   <TouchableOpacity
                     style={{width: 30}}
@@ -207,7 +279,7 @@ const MyCardsArea = () => {
               )}
             </View>
 
-            {filteredData[0] ? (
+            {filteredData && filteredData[0] ? (
               <View style={Styles.outsideContainer}>
                 <FlipComponent
                   useNativeDriver={true}
@@ -239,7 +311,16 @@ const MyCardsArea = () => {
             )}
           </View>
           <FloatingAddButton
-            handleQRCode={() => setOpenScanner(true)}
+            handleQRCode={() => {
+              if (netInfo.isConnected) {
+                setOpenScanner(true);
+              } else {
+                setError({
+                  message:
+                    'You are currently offline. Go online to be able do add new cards.',
+                });
+              }
+            }}
             handleLink={onHandleAddCardLink}
           />
           {openScanner && (

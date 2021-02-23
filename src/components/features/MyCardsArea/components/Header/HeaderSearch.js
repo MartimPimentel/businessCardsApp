@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView, View} from 'react-native';
 import SearchBar from '../../../../shared/SearchBar/SearchBar';
 import Styles from './HeaderStyles';
@@ -12,11 +12,19 @@ import {DrawerActions, useNavigation} from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 
-const HeaderSearch = ({data, handleFilter, overlayOpened}) => {
+const HeaderSearch = ({
+  data,
+  handleFilter,
+  overlayOpened,
+  openSearchBar,
+  onChangeHeader,
+}) => {
   const navigation = useNavigation();
 
   const [searchBarActivated, setSearchBarActivated] = useState(false);
-
+  useEffect(() => {
+    setSearchBarActivated(openSearchBar);
+  }, [openSearchBar]);
   return (
     <View style={Styles.header}>
       <SafeAreaView style={Styles.safeAreaView}>
@@ -40,6 +48,7 @@ const HeaderSearch = ({data, handleFilter, overlayOpened}) => {
               <View style={Styles.rightIcon}>
                 <TouchableOpacity
                   onPress={() => {
+                    onChangeHeader(true);
                     setSearchBarActivated(true);
                   }}>
                   <SearchIcon />
@@ -51,6 +60,7 @@ const HeaderSearch = ({data, handleFilter, overlayOpened}) => {
               <TouchableOpacity
                 onPress={() => {
                   handleFilter(data);
+                  onChangeHeader(false);
                   setSearchBarActivated(false);
                 }}
                 style={Styles.backButtonContainer}>
