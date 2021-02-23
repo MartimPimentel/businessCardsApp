@@ -37,4 +37,15 @@ export default Styles = StyleSheet.create({
     height: 40,
     borderRadius: 10,
   },
+  actionButtonsContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    justifyContent: 'space-between',
+    paddingBottom: 20,
+  },
+  deleteButtonStyles: {
+    borderWidth: 1,
+    borderRadius: 30,
+    borderColor: '#D5D5D5',
+  },
 });

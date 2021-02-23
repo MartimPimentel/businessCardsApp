@@ -1,11 +1,19 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {View, Text} from 'react-native';
 import Styles from './FloatingAddButtonStyles';
 import {LinkIcon, QRCodeIcon, PlusIcon, CloseIcon} from '../../../assets/icons';
-const FloatingAddButton = ({handleQRCode, handleLink}) => {
+const FloatingAddButton = ({
+  handleQRCode,
+  handleLink,
+  isOpen,
+  onChangeIsOpen,
+}) => {
   const [actionsOpened, setActionsOpened] = useState(false);
+  useEffect(() => {
+    setActionsOpened(isOpen);
+  }, [isOpen]);
   return (
     <View style={Styles.wrapperContainer}>
       {actionsOpened && (
@@ -15,6 +23,7 @@ const FloatingAddButton = ({handleQRCode, handleLink}) => {
             onPress={() => {
               handleLink();
               setActionsOpened(false);
+              onChangeIsOpen(false);
             }}>
             <LinearGradient
               style={[
@@ -36,6 +45,7 @@ const FloatingAddButton = ({handleQRCode, handleLink}) => {
             onPress={() => {
               handleQRCode();
               setActionsOpened(false);
+              onChangeIsOpen(false);
             }}>
             <LinearGradient
               style={[
@@ -54,7 +64,10 @@ const FloatingAddButton = ({handleQRCode, handleLink}) => {
       )}
       <TouchableOpacity
         style={[Styles.actionButtonSize, {elevation: 5, marginTop: 10}]}
-        onPress={() => setActionsOpened(!actionsOpened)}>
+        onPress={() => {
+          setActionsOpened(!actionsOpened);
+          onChangeIsOpen(!actionsOpened);
+        }}>
         <LinearGradient
           style={[
             Styles.actionButtonSize,
