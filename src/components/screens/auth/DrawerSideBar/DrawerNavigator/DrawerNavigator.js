@@ -5,6 +5,7 @@ import MyCardsArea from '../../../../features/MyCardsArea/MyCardsArea';
 import DrawerContent from '../DrawerContent/DrawerContent';
 import PersonalArea from '../../PersonalArea/PersonalArea';
 import EditCardArea from '../../../../features/PersonalArea/EditCardArea/EditCardArea';
+import SettingsArea from '../../../../features/Settings/SettingsArea';
 
 const Drawer = createDrawerNavigator();
 
@@ -16,6 +17,7 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="MyCards" component={MyCardsArea} />
       <Drawer.Screen name="PersonalArea" component={PersonalArea} />
       <Drawer.Screen name="EditCardArea" component={EditCardArea} />
+      <Drawer.Screen name="Settings" component={SettingsArea} />
     </Drawer.Navigator>
   );
 };

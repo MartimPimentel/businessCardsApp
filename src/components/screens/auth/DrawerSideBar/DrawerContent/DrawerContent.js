@@ -6,10 +6,11 @@ import {
   PersonalAreaIcon,
   UnknownUser,
   LogOutIcon,
+  Gear,
 } from '../../../../../assets/icons';
 import Styles from './DrawerContentStyles';
 import LinearGradient from 'react-native-linear-gradient';
-import AsyncStorage from '@react-native-community/async-storage';
+import SInfo from 'react-native-sensitive-info';
 import {useIsDrawerOpen} from '@react-navigation/drawer';
 import {CommonActions} from '@react-navigation/native';
 import {deleteToken} from '../../../../../shared/functions/functions';
@@ -17,11 +18,16 @@ import {deleteToken} from '../../../../../shared/functions/functions';
 const DrawerContent = (props) => {
   const isDrawerOpen = useIsDrawerOpen();
   const [isMyCardsSelected, setIsMyCardSelected] = useState(true);
+  const [isPersonalAreaSelected, setIsPersonalAreaSelected] = useState(false);
+  const [isSettingsSelected, setIsSettignsSelected] = useState(false);
   const [username, setUsername] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
   const getData = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem('@PERSONAL_DATA');
+      const jsonValue = await SInfo.getItem('personalCard', {
+        sharedPreferencesName: 'bussinessCards',
+        keychainService: 'bussinessCards',
+      });
       const {name, profilePhoto} =
         jsonValue != null ? JSON.parse(jsonValue) : '';
       setUsername(name);
@@ -64,6 +70,8 @@ const DrawerContent = (props) => {
           style={Styles.myCardsStyle(isMyCardsSelected)}
           onPress={() => {
             setIsMyCardSelected(true);
+            setIsPersonalAreaSelected(false);
+            setIsSettignsSelected(false);
             props.navigation.navigate('MyCards');
           }}>
           <View style={Styles.seletecTag(isMyCardsSelected)} />
@@ -72,14 +80,29 @@ const DrawerContent = (props) => {
         </TouchableOpacity>
         <View style={Styles.separatorStyle} />
         <TouchableOpacity
-          style={Styles.personalAreaStyle(!isMyCardsSelected)}
+          style={Styles.personalAreaStyle(isPersonalAreaSelected)}
           onPress={() => {
             setIsMyCardSelected(false);
+            setIsPersonalAreaSelected(true);
+            setIsSettignsSelected(false);
             props.navigation.navigate('PersonalArea');
           }}>
-          <View style={Styles.seletecTag(!isMyCardsSelected)} />
+          <View style={Styles.seletecTag(isPersonalAreaSelected)} />
           <PersonalAreaIcon height={30} width={30} />
           <Text style={Styles.textStyle}>Personal Area</Text>
+        </TouchableOpacity>
+        <View style={Styles.separatorStyle} />
+        <TouchableOpacity
+          style={Styles.personalAreaStyle(isSettingsSelected)}
+          onPress={() => {
+            setIsMyCardSelected(false);
+            setIsPersonalAreaSelected(false);
+            setIsSettignsSelected(true);
+            props.navigation.navigate('Settings');
+          }}>
+          <View style={Styles.seletecTag(isSettingsSelected)} />
+          <Gear height={30} width={30} />
+          <Text style={Styles.textStyle}>Settings</Text>
         </TouchableOpacity>
       </View>
       <View style={Styles.logOutContainer}>

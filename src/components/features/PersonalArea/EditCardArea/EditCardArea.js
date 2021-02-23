@@ -7,7 +7,6 @@ import {
 import HeaderEdit from './components/Header/HeaderEdit';
 import CardForm from './components/CardForm/CardForm';
 import Styles from './EditCardAreaStyles';
-import AsyncStorage from '@react-native-community/async-storage';
 import {useNavigation, useRoute, useIsFocused} from '@react-navigation/native';
 import Spinner from '../../../shared/Spinner/Spinner';
 import {nullCard} from '../../../../shared/consts';
