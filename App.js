@@ -6,7 +6,7 @@ import NotAuth from './src/components/screens/notAuth/NotAuth';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Spinner from './src/components/shared/Spinner/Spinner';
-import {getToken} from './src/shared/functions/functions';
+import {getFromStore} from './src/shared/functions/functions';
 import {Provider} from 'react-redux';
 import {configureStore} from './src/shared/store/configureStore';
 import ModalManager from './src/components/shared/Modal/ModalManager';
@@ -20,7 +20,7 @@ export default function App() {
 
   useEffect(() => {
     setLoading(true);
-    getToken().then((res) => {
+    getFromStore('token').then((res) => {
       if (res != null) {
         const splitted = res.split('.')[1];
         //Expires one day before exp date

@@ -13,15 +13,8 @@ import {vw, vh} from 'react-native-viewport-units';
 import {CommonActions} from '@react-navigation/native';
 import {login} from '../../../../shared/api/login';
 import Modal from '../../../shared/Modal/Modal';
-import SInfo from 'react-native-sensitive-info';
 import {useNetInfo} from '@react-native-community/netinfo';
-
-const storeData = async (token) => {
-  await SInfo.setItem('token', token, {
-    sharedPreferencesName: 'bussinessCards',
-    keychainService: 'bussinessCards',
-  });
-};
+import {storeItems} from '../../../../shared/functions/functions';
 
 const LoginView = () => {
   const netInfo = useNetInfo();
@@ -34,7 +27,7 @@ const LoginView = () => {
         .then((res) => {
           console.log(res.data);
           setError(null);
-          storeData(res.data.token);
+          storeItems('token', res.data.token);
           navigation.dispatch(
             CommonActions.reset({
               index: 1,

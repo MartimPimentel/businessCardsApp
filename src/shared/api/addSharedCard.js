@@ -1,8 +1,8 @@
 import api from './api';
-import {getToken} from '../functions/functions';
+import {getFromStore} from '../functions/functions';
 
 export const addSharedCard = async (userIdToAdd) => {
-  return await getToken().then(async (token) => {
+  return await getFromStore('token').then(async (token) => {
     return await api.post(
       '/cardById',
       {},

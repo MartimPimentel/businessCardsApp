@@ -20,7 +20,11 @@ import {
   CommonActions,
 } from '@react-navigation/native';
 import Modal from '../../shared/Modal/Modal';
-import {deleteToken, parseData} from '../../../shared/functions/functions';
+import {
+  deleteToken,
+  parseData,
+  storeItems,
+} from '../../../shared/functions/functions';
 import SInfo from 'react-native-sensitive-info';
 import {deleteSharedCard} from '../../../shared/api/deleteSharedCard';
 import QRCodeScanner from 'react-native-qrcode-scanner';
@@ -28,17 +32,6 @@ import {RNCamera} from 'react-native-camera';
 import LinearGradient from 'react-native-linear-gradient';
 import {addSharedCard} from '../../../shared/api/addSharedCard';
 import {useNetInfo} from '@react-native-community/netinfo';
-
-const storeData = async (data) => {
-  try {
-    await SInfo.setItem('sharedCards', JSON.stringify(data), {
-      sharedPreferencesName: 'bussinessCards',
-      keychainService: 'bussinessCards',
-    });
-  } catch (e) {
-    console.log('ERROR->', e);
-  }
-};
 
 //use when offline
 const getStoredCards = async () => {
@@ -90,7 +83,7 @@ const MyCardsArea = () => {
         });
         setFilteredData(newData);
         setAllData(newData);
-        storeData(newData);
+        storeItems('sharedCards', JSON.stringify(newData));
         deleteSharedCard(sharedUserId).catch((error) => {
           const errors = JSON.parse(error.request.response);
           console.log(errors);
@@ -129,7 +122,7 @@ const MyCardsArea = () => {
         let sharedCopy = [...allData];
         sharedCopy.push(newCard[0]);
         setAllData(sharedCopy);
-        storeData(sharedCopy);
+        storeItems('sharedCards', JSON.stringify(sharedCopy));
         setFilteredData(sharedCopy);
         setLoading(false);
       })
@@ -164,7 +157,7 @@ const MyCardsArea = () => {
       .then((res) => {
         const parsedData = parseData(res.data);
         setAllData(parsedData);
-        storeData(parsedData);
+        storeItems('sharedCards', JSON.stringify(parsedData));
         setFilteredData(parsedData);
         setLoading(false);
       })
@@ -208,7 +201,7 @@ const MyCardsArea = () => {
         getStoredCards()
           .then((cards) => {
             setAllData(cards);
-            storeData(cards);
+            storeItems('sharedCards', JSON.stringify(cards));
             setFilteredData(cards);
             setLoading(false);
           })

@@ -1,15 +1,27 @@
 import SInfo from 'react-native-sensitive-info';
-export const getToken = async () => {
+
+export const getFromStore = async (item) => {
   try {
-    const key = await SInfo.getItem('token', {
+    const retrieved = await SInfo.getItem(item, {
       sharedPreferencesName: 'bussinessCards',
       keychainService: 'bussinessCards',
     });
-    console.log('key: ' + key);
-    return key;
+    console.log('retrieved: ' + retrieved);
+    return retrieved;
   } catch (e) {
     console.log(e);
     return null;
+  }
+};
+
+export const storeItems = async (item, data) => {
+  try {
+    await SInfo.setItem(item, data, {
+      sharedPreferencesName: 'bussinessCards',
+      keychainService: 'bussinessCards',
+    });
+  } catch (e) {
+    console.log('error storing item->', e);
   }
 };
 
