@@ -1,9 +1,11 @@
 import React from 'react';
 import {View} from 'react-native';
 import {useSelector} from 'react-redux';
-import Modal from './Modal';
+import ErrorModal from './ErrorModal';
+import QRCodeModal from './QRCodeModal';
+
 export default function ModalManager() {
-  const modalLookup = {Modal};
+  const modalLookup = {ErrorModal, QRCodeModal};
   const currentModal = useSelector((state) => state.modals);
   let renderedModal;
   if (currentModal) {

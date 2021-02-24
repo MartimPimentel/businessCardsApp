@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, Keyboard} from 'react-native';
 import {
   ScrollView,
@@ -12,15 +12,17 @@ import LoginForm from './components/Form/LoginForm';
 import {vw, vh} from 'react-native-viewport-units';
 import {CommonActions} from '@react-navigation/native';
 import {login} from '../../../../shared/api/login';
-import Modal from '../../../shared/Modal/Modal';
+import ErrorModal from '../../../shared/Modal/ErrorModal';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {storeItems} from '../../../../shared/functions/functions';
+import {asyncActionError} from '../../../../shared/async/asyncReducer';
+import {useDispatch} from 'react-redux';
 
 const LoginView = () => {
   const netInfo = useNetInfo();
   const navigation = useNavigation();
   const [error, setError] = useState(null);
-
+  const dispatch = useDispatch();
   const handleLogin = (data) => {
     if (netInfo.isConnected) {
       login(data)
@@ -41,9 +43,35 @@ const LoginView = () => {
           setError(errors);
         });
     } else {
-      setError({
+      /* setError({
         message: 'You are currently offline. Go online to be able to login.',
-      });
+      }); */
+      dispatch(
+        asyncActionError(
+          {
+            message:
+              'You are currently offline. Go online to be able to login.',
+          },
+          {
+            cancelButtonTest: 'Ok',
+            isVisible: true,
+            onClose: () => {
+              dispatch(asyncActionError(null));
+            },
+            header: (
+              <Text style={{fontFamily: 'Nunito-Regular', fontSize: 20}}>
+                Error
+              </Text>
+            ),
+            body: (
+              <Text
+                style={{fontSize: 15, textAlign: 'center', letterSpacing: 1}}>
+                Error Made
+              </Text>
+            ),
+          },
+        ),
+      );
     }
   };
 
@@ -58,7 +86,7 @@ const LoginView = () => {
 
         <ScrollView>
           <LoginForm onClickToLogin={handleLogin} dbError={error} />
-          <Modal
+          <ErrorModal
             isVisible={
               error &&
               error.error != 'Credentials-001' &&

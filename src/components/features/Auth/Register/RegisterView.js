@@ -12,7 +12,7 @@ import RegisterForm from './components/Form/RegisterForm';
 import {useIsFocused} from '@react-navigation/native';
 import {CommonActions} from '@react-navigation/native';
 import {createUser} from '../../../../shared/api/createUser';
-import Modal from '../../../shared/Modal/Modal';
+import ErrorModal from '../../../shared/Modal/ErrorModal';
 import {useNetInfo} from '@react-native-community/netinfo';
 
 const RegisterView = (props) => {
@@ -65,7 +65,7 @@ const RegisterView = (props) => {
               error && error.error == 'Signup-001' ? error.message : null
             }
           />
-          <Modal
+          <ErrorModal
             isVisible={error && error.error != 'Signup-001'}
             cancelButtonTest="Ok"
             onClose={() => setError(null)}

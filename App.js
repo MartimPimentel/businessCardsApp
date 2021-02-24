@@ -17,7 +17,6 @@ const Stack = createStackNavigator();
 export default function App() {
   const [hasAuthKey, setHasAuthKey] = useState(false);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     setLoading(true);
     getFromStore('token').then((res) => {

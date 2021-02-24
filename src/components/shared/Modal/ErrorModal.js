@@ -4,7 +4,7 @@ import Styles from './ModalStyles';
 import LinearGradient from 'react-native-linear-gradient';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const Modal = ({
+const ErrorModal = ({
   isVisible,
   body,
   header,
@@ -65,4 +65,4 @@ const Modal = ({
     )
   );
 };
-export default Modal;
+export default ErrorModal;

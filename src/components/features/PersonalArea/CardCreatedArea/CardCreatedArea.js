@@ -5,7 +5,7 @@ import PersonalAreaHeader from './components/Header/PersonalAreaHeader';
 import Card from '../../../shared/Card/Card';
 import {QRCodeIcon, NFCIcon} from '../../../../assets/icons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import Modal from '../../../shared/Modal/Modal';
+import QRCodeModal from '../../../shared/Modal/QRCodeModal';
 import QRCode from 'react-native-qrcode-svg';
 
 const CardCreatedArea = ({data}) => {
@@ -22,7 +22,7 @@ const CardCreatedArea = ({data}) => {
         </View>
       </View>
 
-      <Modal
+      <QRCodeModal
         isVisible={qrcodeVisible}
         cancelButtonTest="Close"
         onClose={() => setQrcodeVisible(false)}

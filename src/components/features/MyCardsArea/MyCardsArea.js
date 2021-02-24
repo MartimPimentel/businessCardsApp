@@ -15,7 +15,7 @@ import FloatingAddButton from '../../shared/FloatingAddButton/FloatingAddButton'
 import {sharedCards} from '../../../shared/api/sharedCards';
 import Spinner from '../../shared/Spinner/Spinner';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
-import Modal from '../../shared/Modal/Modal';
+import ErrorModal from '../../shared/Modal/ErrorModal';
 import {
   getFromStore,
   parseData,
@@ -174,7 +174,7 @@ const MyCardsArea = () => {
         {loading ? (
           <Spinner />
         ) : error ? (
-          <Modal
+          <ErrorModal
             cancelButtonTest={netInfo.isConnected ? 'Reload' : 'Ok'}
             isVisible={error && !error?.error.match('Token')}
             onClose={() => {

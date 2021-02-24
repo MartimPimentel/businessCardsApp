@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {useNavigation, useRoute, useIsFocused} from '@react-navigation/native';
 import Spinner from '../../../shared/Spinner/Spinner';
 import {nullCard} from '../../../../shared/consts';
-import Modal from '../../../shared/Modal/Modal';
+import ErrorModal from '../../../shared/Modal/ErrorModal';
 
 const EditCardArea = () => {
   const navigation = useNavigation();
@@ -75,7 +75,7 @@ const EditCardArea = () => {
           />
         </View>
       </ScrollView>
-      <Modal
+      <ErrorModal
         actionButtonText="Delete"
         cancelButtonTest="Cancel"
         isVisible={isDeleteModalOpen}
