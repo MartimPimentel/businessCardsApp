@@ -39,8 +39,8 @@ export default function App() {
     <Spinner />
   ) : (
     <Provider store={store}>
-      <ModalManager />
       <StatusBar backgroundColor="#A9E2FD" />
+
       <NavigationContainer>
         <Stack.Navigator
           headerMode="none"
@@ -49,6 +49,7 @@ export default function App() {
           <Stack.Screen name="Auth" component={DrawerNavigator} />
         </Stack.Navigator>
       </NavigationContainer>
+      <ModalManager />
     </Provider>
   );
 }

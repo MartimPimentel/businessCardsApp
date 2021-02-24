@@ -14,7 +14,13 @@ export function asyncActionFinish() {
 
 export function asyncActionError(error, modalProps) {
   return function (dispatch) {
-    dispatch(openModal({modalType: 'ErrorModal', modalProps: modalProps}));
+    if (error && modalProps)
+      dispatch(
+        openModal({
+          modalType: 'ErrorModal',
+          modalProps: {...modalProps, bodyText: error?.message},
+        }),
+      );
     dispatch({type: ASYNC_ACTION_ERROR, payload: error});
   };
 }

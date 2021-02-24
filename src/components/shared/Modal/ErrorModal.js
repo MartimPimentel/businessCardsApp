@@ -1,68 +1,62 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
+import React from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
 import Styles from './ModalStyles';
 import LinearGradient from 'react-native-linear-gradient';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {closeModal} from './modalReducer';
+import {useDispatch} from 'react-redux';
 
 const ErrorModal = ({
-  isVisible,
-  body,
-  header,
-  onClose,
+  bodyText,
   actionButtonText,
   cancelButtonTest,
   onAction,
+  onClose = () => {},
   headerStyles,
 }) => {
-  const [visibility, setVisibilty] = useState(isVisible);
-  useEffect(() => {
-    setVisibilty(isVisible);
-  }, [isVisible]);
+  const dispatch = useDispatch();
   return (
-    visibility && (
-      <View style={[Styles.modalContainer, headerStyles]}>
-        <View style={{marginTop: '5%'}}>{header}</View>
-        <View style={{marginTop: '10%'}}>{body}</View>
-
-        <View style={{flexDirection: 'row', marginTop: '5%'}}>
-          <TouchableOpacity
-            title="close"
-            style={Styles.closeButtonContainer}
-            onPress={() => {
-              setVisibilty(false);
-              onClose();
-            }}>
-            <LinearGradient
-              style={Styles.closeButtonBackground}
-              colors={['#C8C8C8', '#707070']}>
-              <Text style={{textAlign: 'center', color: 'white'}}>
-                {cancelButtonTest}
-              </Text>
-            </LinearGradient>
-          </TouchableOpacity>
-          {actionButtonText && (
-            <>
-              <View style={{width: '5%'}} />
-              <TouchableOpacity
-                title="action"
-                style={Styles.closeButtonContainer}
-                onPress={() => {
-                  setVisibilty(false);
-                  onAction();
-                }}>
-                <LinearGradient
-                  style={Styles.closeButtonBackground}
-                  colors={['#A9E2FD', '#8AB1F2']}>
-                  <Text style={{textAlign: 'center', color: 'white'}}>
-                    {actionButtonText}
-                  </Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            </>
-          )}
-        </View>
+    <View style={[Styles.modalContainer, headerStyles]}>
+      <Text style={Styles.headerStyles}>Error</Text>
+      <Text style={Styles.bodyStyles}>{bodyText}</Text>
+      <View style={Styles.buttonsContainer}>
+        <TouchableOpacity
+          delayPressIn={0}
+          title="close"
+          style={Styles.closeButtonContainer}
+          onPress={() => {
+            dispatch(closeModal());
+            onClose();
+          }}>
+          <LinearGradient
+            style={Styles.closeButtonBackground}
+            colors={['#C8C8C8', '#707070']}>
+            <Text style={{textAlign: 'center', color: 'white'}}>
+              {cancelButtonTest}
+            </Text>
+          </LinearGradient>
+        </TouchableOpacity>
+        {actionButtonText && (
+          <>
+            <View style={{width: '5%'}} />
+            <TouchableOpacity
+              title="action"
+              style={Styles.closeButtonContainer}
+              onPress={() => {
+                setVisibilty(false);
+                onAction();
+              }}>
+              <LinearGradient
+                style={Styles.closeButtonBackground}
+                colors={['#A9E2FD', '#8AB1F2']}>
+                <Text style={{textAlign: 'center', color: 'white'}}>
+                  {actionButtonText}
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </>
+        )}
       </View>
-    )
+    </View>
   );
 };
 export default ErrorModal;

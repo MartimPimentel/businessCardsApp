@@ -12,6 +12,7 @@ import {
   EmailIcon,
 } from '../../../../../../assets/icons';
 import {vw, vh} from 'react-native-viewport-units';
+import {useSelector} from 'react-redux';
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -21,7 +22,8 @@ const loginSchema = yup.object().shape({
   password: yup.string().required('* Password is required'),
 });
 
-const LoginForm = ({onClickToLogin, focus, dbError}) => {
+const LoginForm = ({onClickToLogin, focus, disabled}) => {
+  const {error} = useSelector((state) => state.async);
   const {handleSubmit, errors, control, reset, setError} = useForm({
     resolver: yupResolver(loginSchema),
     mode: 'onSubmit',
@@ -33,14 +35,14 @@ const LoginForm = ({onClickToLogin, focus, dbError}) => {
     reset();
   }, [focus]);
   useEffect(() => {
-    if (dbError) {
-      if (dbError.error == 'Credentials-001') {
-        setError('email', {type: 'required', message: dbError.message});
-      } else if (dbError.error == 'Credentials-002') {
-        setError('password', {type: 'required', message: dbError.message});
+    if (error) {
+      if (error.error == 'Credentials-001') {
+        setError('email', {type: 'required', message: error.message});
+      } else if (error.error == 'Credentials-002') {
+        setError('password', {type: 'required', message: error.message});
       }
     }
-  }, [dbError]);
+  }, [error]);
   return (
     <>
       <View style={Styles.outsideContainer}>
@@ -61,6 +63,7 @@ const LoginForm = ({onClickToLogin, focus, dbError}) => {
               control={control}
               render={({onChange, onBlur, value}) => (
                 <TextInput
+                  editable={disabled}
                   placeholder="email"
                   style={Styles.textInputStyles}
                   onBlur={onBlur}
@@ -87,6 +90,7 @@ const LoginForm = ({onClickToLogin, focus, dbError}) => {
               control={control}
               render={({onChange, onBlur, value}) => (
                 <TextInput
+                  editable={disabled}
                   placeholder="password"
                   style={Styles.textInputStyles}
                   onBlur={onBlur}

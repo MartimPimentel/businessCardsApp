@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {View, Text, Keyboard} from 'react-native';
 import {
   ScrollView,
@@ -12,23 +12,21 @@ import LoginForm from './components/Form/LoginForm';
 import {vw, vh} from 'react-native-viewport-units';
 import {CommonActions} from '@react-navigation/native';
 import {login} from '../../../../shared/api/login';
-import ErrorModal from '../../../shared/Modal/ErrorModal';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {storeItems} from '../../../../shared/functions/functions';
 import {asyncActionError} from '../../../../shared/async/asyncReducer';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 const LoginView = () => {
   const netInfo = useNetInfo();
   const navigation = useNavigation();
-  const [error, setError] = useState(null);
   const dispatch = useDispatch();
+  const modal = useSelector((state) => state.modals);
   const handleLogin = (data) => {
     if (netInfo.isConnected) {
       login(data)
         .then((res) => {
           console.log(res.data);
-          setError(null);
           storeItems('token', res.data.token);
           navigation.dispatch(
             CommonActions.reset({
@@ -40,12 +38,21 @@ const LoginView = () => {
         .catch((error) => {
           const errors = JSON.parse(error.request.response);
           console.log(errors);
-          setError(errors);
+          dispatch(
+            asyncActionError(
+              errors,
+              !errors?.error.match('Credentials')
+                ? {
+                    cancelButtonTest: 'Ok',
+                    onClose: () => {
+                      dispatch(asyncActionError(null));
+                    },
+                  }
+                : null,
+            ),
+          );
         });
     } else {
-      /* setError({
-        message: 'You are currently offline. Go online to be able to login.',
-      }); */
       dispatch(
         asyncActionError(
           {
@@ -54,21 +61,9 @@ const LoginView = () => {
           },
           {
             cancelButtonTest: 'Ok',
-            isVisible: true,
             onClose: () => {
               dispatch(asyncActionError(null));
             },
-            header: (
-              <Text style={{fontFamily: 'Nunito-Regular', fontSize: 20}}>
-                Error
-              </Text>
-            ),
-            body: (
-              <Text
-                style={{fontSize: 15, textAlign: 'center', letterSpacing: 1}}>
-                Error Made
-              </Text>
-            ),
           },
         ),
       );
@@ -85,26 +80,7 @@ const LoginView = () => {
         <Text style={Styles.signUpText}>Log in</Text>
 
         <ScrollView>
-          <LoginForm onClickToLogin={handleLogin} dbError={error} />
-          <ErrorModal
-            isVisible={
-              error &&
-              error.error != 'Credentials-001' &&
-              error.error != 'Credentials-002'
-            }
-            cancelButtonTest="Ok"
-            headerStyles={{width: '60%', height: '80%', top: '10%'}}
-            onClose={() => setError(null)}
-            header={<Text style={{fontSize: 25}}>Error</Text>}
-            body={
-              error && (
-                <>
-                  <Text>{error.message}</Text>
-                  {error.error && <Text>Please try again.</Text>}
-                </>
-              )
-            }
-          />
+          <LoginForm disabled={!modal} onClickToLogin={handleLogin} />
           <View style={{width: 150 * (vh / vw)}}>
             <TouchableOpacity
               style={Styles.changeToLoginContainer}
