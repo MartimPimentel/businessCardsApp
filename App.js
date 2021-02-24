@@ -7,6 +7,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Spinner from './src/components/shared/Spinner/Spinner';
 import {getToken} from './src/shared/functions/functions';
+import {Provider} from 'react-redux';
+import {configureStore} from './src/shared/store/configureStore';
+import ModalManager from './src/components/shared/Modal/ModalManager';
+
+const store = configureStore();
 const base64url = require('base64url');
 const Stack = createStackNavigator();
 export default function App() {
@@ -34,7 +39,8 @@ export default function App() {
   return loading ? (
     <Spinner />
   ) : (
-    <>
+    <Provider store={store}>
+      <ModalManager />
       <StatusBar backgroundColor="#A9E2FD" />
       <NavigationContainer>
         <Stack.Navigator
@@ -44,6 +50,6 @@ export default function App() {
           <Stack.Screen name="Auth" component={DrawerNavigator} />
         </Stack.Navigator>
       </NavigationContainer>
-    </>
+    </Provider>
   );
 }
