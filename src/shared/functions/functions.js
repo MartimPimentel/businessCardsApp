@@ -1,4 +1,5 @@
 import SInfo from 'react-native-sensitive-info';
+import {CommonActions} from '@react-navigation/native';
 
 export const getFromStore = async (item) => {
   try {
@@ -48,4 +49,27 @@ export const parseData = (data) => {
     });
   });
   return parsedData;
+};
+
+export const parseError = (error, navigation) => {
+  if (!error.request.response) return error;
+  const errors = JSON.parse(error.request.response);
+  let errorMessage = errors;
+  if (!!errors.error.match('Token')) {
+    errorMessage = 'Your authentication has expired. Please login again.';
+    deleteToken()
+      .then(() => {
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [{name: 'NotAuth'}],
+          }),
+        );
+      })
+      .catch((error) => {
+        errorMessage = error;
+        console.log(error);
+      });
+  }
+  return {...errors, message: errorMessage};
 };

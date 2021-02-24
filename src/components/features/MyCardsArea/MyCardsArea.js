@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, Share} from 'react-native';
 import Swipper from './components/Swipper/Swipper';
 import Styles from './MyCardAreaStyles';
@@ -14,57 +14,42 @@ import DeleteCard from './components/DeleteCard/DeleteCard';
 import FloatingAddButton from '../../shared/FloatingAddButton/FloatingAddButton';
 import {sharedCards} from '../../../shared/api/sharedCards';
 import Spinner from '../../shared/Spinner/Spinner';
-import {
-  useIsFocused,
-  useNavigation,
-  CommonActions,
-} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import Modal from '../../shared/Modal/Modal';
 import {
-  deleteToken,
+  getFromStore,
   parseData,
+  parseError,
   storeItems,
 } from '../../../shared/functions/functions';
-import SInfo from 'react-native-sensitive-info';
 import {deleteSharedCard} from '../../../shared/api/deleteSharedCard';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
 import LinearGradient from 'react-native-linear-gradient';
 import {addSharedCard} from '../../../shared/api/addSharedCard';
 import {useNetInfo} from '@react-native-community/netinfo';
-
-//use when offline
-const getStoredCards = async () => {
-  try {
-    const cards = await SInfo.getItem('sharedCards', {
-      sharedPreferencesName: 'bussinessCards',
-      keychainService: 'bussinessCards',
-    });
-    if (cards) return JSON.parse(cards);
-    return null;
-  } catch (e) {
-    console.log(e);
-    return null;
-  }
-};
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  asyncActionError,
+  asyncActionFinish,
+  asyncActionStart,
+} from '../../../shared/async/asyncReducer';
 
 const MyCardsArea = () => {
-  /* LogBox.ignoreLogs([
-    'Warning: Cannot update a component from inside the function body of a different component.',
-  ]); */
+  const dispatch = useDispatch();
   const netInfo = useNetInfo();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-  const [loading, setLoading] = useState(true);
   const [cardIndex, setCardIndex] = useState(0);
   const [filteredData, setFilteredData] = useState([]);
   const [isFlipped, setFlipped] = useState(false);
   const [overlay, setOverlay] = useState(false);
-  const [dbError, setError] = useState(null);
   const [openScanner, setOpenScanner] = useState(false);
   const [allData, setAllData] = useState([]);
   const [searchBarOpened, setSearchBarOpened] = useState(false);
   const [actionsOpened, setActionsOpened] = useState(false);
+
+  const {loading, error} = useSelector((state) => state.async);
 
   const handleIndexChange = (i) => {
     setCardIndex(i);
@@ -84,38 +69,23 @@ const MyCardsArea = () => {
         setFilteredData(newData);
         setAllData(newData);
         storeItems('sharedCards', JSON.stringify(newData));
-        deleteSharedCard(sharedUserId).catch((error) => {
-          const errors = JSON.parse(error.request.response);
-          console.log(errors);
-          if (!!errors.error.match('Token')) {
-            deleteToken()
-              .then(() => {
-                navigation.dispatch(
-                  CommonActions.reset({
-                    index: 1,
-                    routes: [{name: 'NotAuth'}],
-                  }),
-                );
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          } else {
-            setError(errors);
-          }
+        deleteSharedCard(sharedUserId).catch((err) => {
+          parseError(err, navigation);
         });
       }
     } else {
-      setError({
-        message:
-          'You are currently offline. Go online do be able do delete a card.',
-      });
+      dispatch(
+        asyncActionError({
+          message:
+            'You are currently offline. Go online do be able do delete a card.',
+        }),
+      );
     }
   };
   const onHandleAddCardQRCode = ({data}) => {
     setOpenScanner(false);
     setSearchBarOpened(false);
-    setLoading(true);
+    dispatch(asyncActionStart());
     addSharedCard(data)
       .then((res) => {
         const newCard = parseData([res.data]);
@@ -124,64 +94,25 @@ const MyCardsArea = () => {
         setAllData(sharedCopy);
         storeItems('sharedCards', JSON.stringify(sharedCopy));
         setFilteredData(sharedCopy);
-        setLoading(false);
+        dispatch(asyncActionFinish());
       })
-      .catch((error) => {
-        const errors = JSON.parse(error.request.response);
-        console.log(errors);
-        if (!!errors.error.match('Token')) {
-          setLoading(false);
-          deleteToken()
-            .then(() => {
-              navigation.dispatch(
-                CommonActions.reset({
-                  index: 1,
-                  routes: [{name: 'NotAuth'}],
-                }),
-              );
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        } else {
-          setLoading(false);
-          setError(errors);
-        }
+      .catch((err) => {
+        parseError(err, navigation);
       });
   };
   const onHandleAddCardLink = () => {};
   const getCards = () => {
-    setLoading(true);
-    setError(null);
+    dispatch(asyncActionStart());
     sharedCards()
       .then((res) => {
         const parsedData = parseData(res.data);
         setAllData(parsedData);
         storeItems('sharedCards', JSON.stringify(parsedData));
         setFilteredData(parsedData);
-        setLoading(false);
+        dispatch(asyncActionFinish());
       })
-      .catch((error) => {
-        const errors = JSON.parse(error.request.response);
-        console.log(errors);
-        if (!!errors.error.match('Token')) {
-          setLoading(false);
-          deleteToken()
-            .then(() => {
-              navigation.dispatch(
-                CommonActions.reset({
-                  index: 1,
-                  routes: [{name: 'NotAuth'}],
-                }),
-              );
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        } else {
-          setLoading(false);
-          setError(errors);
-        }
+      .catch((err) => {
+        dispatch(asyncActionError(parseError(err, navigation)));
       });
   };
 
@@ -196,18 +127,22 @@ const MyCardsArea = () => {
       if (netInfo.isConnected) {
         getCards();
       } else {
-        setLoading(true);
-        setError(null);
-        getStoredCards()
+        dispatch(asyncActionStart());
+        getFromStore('sharedCards')
           .then((cards) => {
-            setAllData(cards);
-            storeItems('sharedCards', JSON.stringify(cards));
-            setFilteredData(cards);
-            setLoading(false);
+            let parsedCards = cards;
+            if (cards) {
+              parsedCards = JSON.parse(cards);
+              storeItems('sharedCards', JSON.stringify(parsedCards));
+            } else {
+              storeItems('sharedCards', null);
+            }
+            setAllData(parsedCards);
+            setFilteredData(parsedCards);
+            dispatch(asyncActionFinish());
           })
           .catch((err) => {
-            setError(err);
-            setLoading(false);
+            dispatch(asyncActionError(err));
           });
       }
     }
@@ -238,12 +173,12 @@ const MyCardsArea = () => {
 
         {loading ? (
           <Spinner />
-        ) : dbError ? (
+        ) : error ? (
           <Modal
             cancelButtonTest={netInfo.isConnected ? 'Reload' : 'Ok'}
-            isVisible={dbError}
+            isVisible={error && !error?.error.match('Token')}
             onClose={() => {
-              setError(null);
+              dispatch(asyncActionError(null));
               if (netInfo.isConnected) getCards();
             }}
             header={
@@ -254,7 +189,7 @@ const MyCardsArea = () => {
             body={
               <Text
                 style={{fontSize: 15, textAlign: 'center', letterSpacing: 1}}>
-                {dbError && dbError.message}
+                {error?.message}
               </Text>
             }
           />
@@ -332,7 +267,7 @@ const MyCardsArea = () => {
           </>
         )}
       </TouchableWithoutFeedback>
-      {!loading && !dbError && (
+      {!loading && !error && (
         <FloatingAddButton
           isOpen={actionsOpened}
           onChangeIsOpen={(value) => setActionsOpened(value)}
@@ -340,10 +275,12 @@ const MyCardsArea = () => {
             if (netInfo.isConnected) {
               setOpenScanner(true);
             } else {
-              setError({
-                message:
-                  'You are currently offline. Go online to be able do add new cards.',
-              });
+              dispatch(
+                asyncActionError({
+                  message:
+                    'You are currently offline. Go online to be able do add new cards.',
+                }),
+              );
             }
           }}
           handleLink={onHandleAddCardLink}
