@@ -9,25 +9,29 @@ import LinearGradient from 'react-native-linear-gradient';
 import Styles from './RegisterViewStyles';
 import {useNavigation} from '@react-navigation/native';
 import RegisterForm from './components/Form/RegisterForm';
-import {useIsFocused} from '@react-navigation/native';
 import {CommonActions} from '@react-navigation/native';
 import {createUser} from '../../../../shared/api/createUser';
-import ErrorModal from '../../../shared/Modal/ErrorModal';
 import {useNetInfo} from '@react-native-community/netinfo';
+import {
+  asyncActionError,
+  asyncActionFinish,
+  asyncActionStart,
+} from '../../../../shared/async/asyncReducer';
+import {useDispatch} from 'react-redux';
 
 const RegisterView = (props) => {
   const netInfo = useNetInfo();
   const navigation = useNavigation();
-  const isFocused = useIsFocused();
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
 
   const handleRegister = (data) => {
     //console.log(data);
+    dispatch(asyncActionStart());
     if (netInfo.isConnected) {
       createUser(data)
         .then((res) => {
           console.log(res.data);
-          setError(null);
+          dispatch(asyncActionFinish());
           navigation.dispatch(
             CommonActions.reset({
               index: 1,
@@ -37,18 +41,37 @@ const RegisterView = (props) => {
         })
         .catch((error) => {
           const errors = JSON.parse(error.request.response);
-
-          setError(errors);
-
-          console.log(error.request.response.message);
+          dispatch(
+            asyncActionError(
+              errors,
+              !errors?.error.match('Signup-001')
+                ? {
+                    cancelButtonTest: 'Ok',
+                    onClose: () => {
+                      dispatch(asyncActionError(null));
+                    },
+                  }
+                : null,
+            ),
+          );
         });
     } else {
-      setError({
-        message: 'You are currently offline. Go online to be able to login.',
-      });
+      dispatch(
+        asyncActionError(
+          {
+            message:
+              'You are currently offline. Go online to be able to login.',
+          },
+          {
+            cancelButtonTest: 'Ok',
+            onClose: () => {
+              dispatch(asyncActionError(null));
+            },
+          },
+        ),
+      );
     }
   };
-  useEffect(() => {}, [isFocused]);
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
@@ -59,26 +82,7 @@ const RegisterView = (props) => {
         <Text style={Styles.signUpText}>Sign up</Text>
 
         <ScrollView>
-          <RegisterForm
-            onClickToRegister={handleRegister}
-            errorMessage={
-              error && error.error == 'Signup-001' ? error.message : null
-            }
-          />
-          <ErrorModal
-            isVisible={error && error.error != 'Signup-001'}
-            cancelButtonTest="Ok"
-            onClose={() => setError(null)}
-            header={<Text style={{fontSize: 25}}>Error</Text>}
-            body={
-              error && (
-                <>
-                  <Text>{error.message}</Text>
-                  {error.error && <Text>Please try again.</Text>}
-                </>
-              )
-            }
-          />
+          <RegisterForm onClickToRegister={handleRegister} />
           <TouchableOpacity
             style={Styles.changeToLoginContainer}
             onPress={() => {

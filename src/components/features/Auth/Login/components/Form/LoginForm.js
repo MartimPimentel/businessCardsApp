@@ -13,6 +13,7 @@ import {
 } from '../../../../../../assets/icons';
 import {vw, vh} from 'react-native-viewport-units';
 import {useSelector} from 'react-redux';
+import {useIsFocused} from '@react-navigation/native';
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -22,20 +23,22 @@ const loginSchema = yup.object().shape({
   password: yup.string().required('* Password is required'),
 });
 
-const LoginForm = ({onClickToLogin, focus, disabled}) => {
+const LoginForm = ({onClickToLogin, disabled}) => {
   const {error} = useSelector((state) => state.async);
-  const {handleSubmit, errors, control, reset, setError} = useForm({
+  const isFocused = useIsFocused();
+  const {handleSubmit, errors, control, reset, setError, formState} = useForm({
     resolver: yupResolver(loginSchema),
     mode: 'onSubmit',
   });
+  const {isDirty} = formState;
   const onSubmit = (data) => {
     onClickToLogin({email: data.email, userPassword: data.password});
   };
   useEffect(() => {
     reset();
-  }, [focus]);
+  }, [isFocused]);
   useEffect(() => {
-    if (error) {
+    if (isDirty && error) {
       if (error.error == 'Credentials-001') {
         setError('email', {type: 'required', message: error.message});
       } else if (error.error == 'Credentials-002') {

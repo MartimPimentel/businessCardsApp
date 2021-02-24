@@ -13,6 +13,8 @@ import {
   ConfirmAuthLock,
 } from '../../../../../../assets/icons';
 import {vw, vh} from 'react-native-viewport-units';
+import {useSelector} from 'react-redux';
+import {useIsFocused} from '@react-navigation/native';
 
 let passwordRef = null;
 const registerSchema = yup.object().shape({
@@ -29,22 +31,25 @@ const registerSchema = yup.object().shape({
   email: yup.string().email('*Invalid email address').required('*Required'),
 });
 
-const RegisterForm = ({onClickToRegister, focus, errorMessage}) => {
-  const {handleSubmit, errors, control, reset, setError} = useForm({
+const RegisterForm = ({onClickToRegister}) => {
+  const isFocused = useIsFocused();
+  const {error} = useSelector((state) => state.async);
+  const {handleSubmit, errors, control, reset, setError, formState} = useForm({
     resolver: yupResolver(registerSchema),
     mode: 'onSubmit',
   });
+  const {isDirty} = formState;
   const onSubmit = (data) => {
     onClickToRegister({email: data.email, userPassword: data.password});
   };
   passwordRef = useRef();
   useEffect(() => {
     reset();
-  }, [focus]);
+  }, [isFocused]);
   useEffect(() => {
-    if (errorMessage)
-      setError('email', {type: 'required', message: errorMessage});
-  }, [errorMessage]);
+    if (isDirty && error?.error == 'Signup-001')
+      setError('email', {type: 'required', message: error.message});
+  }, [error]);
   return (
     <>
       <View style={Styles.outsideContainer}>

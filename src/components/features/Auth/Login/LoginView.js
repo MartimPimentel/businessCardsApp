@@ -14,7 +14,11 @@ import {CommonActions} from '@react-navigation/native';
 import {login} from '../../../../shared/api/login';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {storeItems} from '../../../../shared/functions/functions';
-import {asyncActionError} from '../../../../shared/async/asyncReducer';
+import {
+  asyncActionError,
+  asyncActionFinish,
+  asyncActionStart,
+} from '../../../../shared/async/asyncReducer';
 import {useDispatch, useSelector} from 'react-redux';
 
 const LoginView = () => {
@@ -23,11 +27,13 @@ const LoginView = () => {
   const dispatch = useDispatch();
   const modal = useSelector((state) => state.modals);
   const handleLogin = (data) => {
+    dispatch(asyncActionStart());
     if (netInfo.isConnected) {
       login(data)
         .then((res) => {
           console.log(res.data);
           storeItems('token', res.data.token);
+          dispatch(asyncActionFinish());
           navigation.dispatch(
             CommonActions.reset({
               index: 1,
