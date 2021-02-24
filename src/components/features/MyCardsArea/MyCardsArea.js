@@ -156,9 +156,7 @@ const MyCardsArea = () => {
         }
       });
   };
-  const onHandleAddCardLink = () => {
-    //TO DO
-  };
+  const onHandleAddCardLink = () => {};
   const getCards = () => {
     setLoading(true);
     setError(null);
