@@ -45,12 +45,11 @@ const CardForm = () => {
     currentCard && (
       <View
         style={{
-          height: windowHeight <= 600 ? '30%' : '45%',
+          height: windowHeight <= 600 ? '30%' : '40%',
         }}>
         <ScrollView
           style={{
             paddingHorizontal: 30,
-            height: 1000,
           }}>
           <View style={Styles.fieldContainer(!!currentCard.name)}>
             <Text style={Styles.categoryText}>NAME</Text>

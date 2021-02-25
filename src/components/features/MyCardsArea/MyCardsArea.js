@@ -96,7 +96,7 @@ const MyCardsArea = () => {
           }}
         />
 
-        <View style={{zIndex: overlay ? -99 : -100}}>
+        <View style={{zIndex: overlay ? -99 : -100, height: '100%'}}>
           <View
             style={{
               flexDirection: 'row',
@@ -114,16 +114,10 @@ const MyCardsArea = () => {
               <FlipComponent
                 useNativeDriver={true}
                 isFlipped={isFlipped}
-                frontView={
-                  <View>
-                    <Swipper />
-                  </View>
-                }
+                frontView={<Swipper />}
                 backView={
-                  <View>
-                    <DeleteCard
-                      handleDeleteDecison={handleDeleteDecison}></DeleteCard>
-                  </View>
+                  <DeleteCard
+                    handleDeleteDecison={handleDeleteDecison}></DeleteCard>
                 }
               />
               <View style={Styles.actionButtonsContainer}>
