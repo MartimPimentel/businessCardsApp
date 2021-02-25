@@ -34,6 +34,7 @@ import {
   asyncActionFinish,
   asyncActionStart,
 } from '../../../shared/async/asyncReducer';
+import {loadCards} from '../../../shared/api/redux/cardsActions';
 
 const MyCardsArea = () => {
   const dispatch = useDispatch();
@@ -41,15 +42,14 @@ const MyCardsArea = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const [cardIndex, setCardIndex] = useState(0);
-  const [filteredData, setFilteredData] = useState([]);
   const [isFlipped, setFlipped] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [openScanner, setOpenScanner] = useState(false);
-  const [allData, setAllData] = useState([]);
   const [searchBarOpened, setSearchBarOpened] = useState(false);
   const [actionsOpened, setActionsOpened] = useState(false);
 
   const {loading, error} = useSelector((state) => state.async);
+  const {cards} = useSelector((state) => state.cards);
 
   const handleIndexChange = (i) => {
     setCardIndex(i);
@@ -61,13 +61,13 @@ const MyCardsArea = () => {
       if (response == 'yes') {
         setSearchBarOpened(false);
         setCardIndex(-1);
-        let newData = [...allData];
-        const sharedUserId = filteredData[cardIndex].userId;
+        //let newData = [...allData];
+        //const sharedUserId = filteredData[cardIndex].userId;
         newData = newData.filter((card) => {
           return card.userId != sharedUserId;
         });
-        setFilteredData(newData);
-        setAllData(newData);
+        //setFilteredData(newData);
+        //setAllData(newData);
         storeItems('sharedCards', JSON.stringify(newData));
         deleteSharedCard(sharedUserId).catch((err) => {
           parseError(err, navigation);
@@ -89,11 +89,11 @@ const MyCardsArea = () => {
     addSharedCard(data)
       .then((res) => {
         const newCard = parseData([res.data]);
-        let sharedCopy = [...allData];
+        //let sharedCopy = [...allData];
         sharedCopy.push(newCard[0]);
-        setAllData(sharedCopy);
+        //setAllData(sharedCopy);
         storeItems('sharedCards', JSON.stringify(sharedCopy));
-        setFilteredData(sharedCopy);
+        //setFilteredData(sharedCopy);
         dispatch(asyncActionFinish());
       })
       .catch((err) => {
@@ -101,20 +101,6 @@ const MyCardsArea = () => {
       });
   };
   const onHandleAddCardLink = () => {};
-  const getCards = () => {
-    dispatch(asyncActionStart());
-    sharedCards()
-      .then((res) => {
-        const parsedData = parseData(res.data);
-        setAllData(parsedData);
-        storeItems('sharedCards', JSON.stringify(parsedData));
-        setFilteredData(parsedData);
-        dispatch(asyncActionFinish());
-      })
-      .catch((err) => {
-        dispatch(asyncActionError(parseError(err, navigation)));
-      });
-  };
 
   useEffect(() => {
     if (isFocused) {
@@ -123,35 +109,15 @@ const MyCardsArea = () => {
   }, [isFocused]);
 
   useEffect(() => {
+    dispatch(asyncActionStart());
     if (netInfo.isConnected != null) {
-      if (netInfo.isConnected) {
-        getCards();
-      } else {
-        dispatch(asyncActionStart());
-        getFromStore('sharedCards')
-          .then((cards) => {
-            let parsedCards = cards;
-            if (cards) {
-              parsedCards = JSON.parse(cards);
-              storeItems('sharedCards', JSON.stringify(parsedCards));
-            } else {
-              storeItems('sharedCards', null);
-            }
-            setAllData(parsedCards);
-            setFilteredData(parsedCards);
-            dispatch(asyncActionFinish());
-          })
-          .catch((err) => {
-            dispatch(asyncActionError(err));
-          });
-      }
+      dispatch(loadCards(navigation));
     }
   }, [netInfo.isConnected]);
 
   useEffect(() => {
     if (overlay) setOverlay(false);
   }, [overlay]);
-
   return (
     <>
       <TouchableWithoutFeedback
@@ -160,11 +126,9 @@ const MyCardsArea = () => {
         <HeaderSearch
           openSearchBar={searchBarOpened}
           onChangeHeader={(value) => setSearchBarOpened(value)}
-          data={allData}
+          data={cards}
           handleFilter={(filtered) => {
-            filtered != []
-              ? setFilteredData(filtered)
-              : setFilteredData(allData);
+            //filtered != [] ? setFilteredData(filtered) : setFilteredData(cards);
           }}
           overlayOpened={(value) => {
             setOverlay(true);
@@ -174,7 +138,9 @@ const MyCardsArea = () => {
         {loading ? (
           <Spinner />
         ) : error ? (
-          <ErrorModal
+          <></>
+        ) : (
+          /* <ErrorModal
             cancelButtonTest={netInfo.isConnected ? 'Reload' : 'Ok'}
             isVisible={error && !error?.error.match('Token')}
             onClose={() => {
@@ -192,8 +158,8 @@ const MyCardsArea = () => {
                 {error?.message}
               </Text>
             }
-          />
-        ) : (
+          /> */
+
           <>
             <View style={{zIndex: overlay ? -99 : -100}}>
               <View
@@ -208,7 +174,7 @@ const MyCardsArea = () => {
                 </View>
               </View>
 
-              {filteredData && filteredData[0] ? (
+              {cards?.length > 0 ? (
                 <View style={Styles.outsideContainer}>
                   <FlipComponent
                     useNativeDriver={true}
@@ -217,7 +183,7 @@ const MyCardsArea = () => {
                       <View>
                         <Swipper
                           index={cardIndex}
-                          data={filteredData}
+                          data={cards}
                           onChangeIndex={handleIndexChange}
                         />
                       </View>
@@ -233,9 +199,7 @@ const MyCardsArea = () => {
                   />
                   <View style={Styles.actionButtonsContainer}>
                     <TouchableOpacity
-                      disabled={
-                        !(!isFlipped && filteredData && filteredData[0])
-                      }
+                      disabled={!(!isFlipped && cards?.length > 0)}
                       style={Styles.deleteButtonStyles}
                       onPress={() => {
                         setFlipped(!isFlipped);
@@ -243,18 +207,14 @@ const MyCardsArea = () => {
                       <RemoveCardIcon />
                     </TouchableOpacity>
                     <TouchableOpacity
-                      disabled={
-                        !(!isFlipped && filteredData && filteredData[0])
-                      }
+                      disabled={!(!isFlipped && cards?.length > 0)}
                       onPress={() => {
-                        Share.share({message: filteredData[cardIndex].userId});
+                        Share.share({message: cards[cardIndex].userId});
                       }}>
                       <ShareGivenCardIcon />
                     </TouchableOpacity>
                   </View>
-                  <CardForm
-                    data={filteredData[cardIndex == -1 ? 0 : cardIndex]}
-                  />
+                  <CardForm data={cards[cardIndex == -1 ? 0 : cardIndex]} />
                 </View>
               ) : (
                 <View style={Styles.noInfoContainer}>

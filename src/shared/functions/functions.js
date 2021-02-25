@@ -7,7 +7,7 @@ export const getFromStore = async (item) => {
       sharedPreferencesName: 'bussinessCards',
       keychainService: 'bussinessCards',
     });
-    console.log('retrieved: ' + retrieved);
+    //console.log('retrieved: ' + retrieved);
     return retrieved;
   } catch (e) {
     console.log(e);
@@ -52,7 +52,7 @@ export const parseData = (data) => {
 };
 
 export const parseError = (error, navigation) => {
-  if (!error.request.response) return error;
+  if (!error?.request?.response) return error;
   const errors = JSON.parse(error.request.response);
   let errorMessage = errors;
   if (!!errors.error.match('Token')) {

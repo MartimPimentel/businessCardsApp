@@ -4,16 +4,34 @@ import {
   asyncActionFinish,
   asyncActionStart,
 } from '../../async/asyncReducer';
+import {sharedCards} from '../sharedCards';
+import {
+  getFromStore,
+  parseData,
+  parseError,
+  storeItems,
+} from '../../functions/functions';
 
-export function loadEvents() {
+export function loadCards(navigation) {
   return async function (dispatch) {
+    const netInfo = false;
     dispatch(asyncActionStart());
     try {
-      const events = []; /* await fetchSampleData(); */
-      dispatch({type: FECTH_CARDS, payload: events});
+      let cards;
+      if (netInfo.isConnected) {
+        cards = await sharedCards();
+        cards = parseData(cards.data);
+      } else {
+        cards = await getFromStore('sharedCards');
+        cards = JSON.parse(cards);
+      }
+
+      if (netInfo.isConnected) storeItems('sharedCards', JSON.stringify(cards));
+      dispatch({type: FECTH_CARDS, payload: cards});
       dispatch(asyncActionFinish());
     } catch (error) {
-      dispatch(asyncActionError(error));
+      console.log(error);
+      dispatch(asyncActionError(parseError(error, navigation)));
     }
   };
 }
