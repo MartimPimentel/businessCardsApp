@@ -146,9 +146,12 @@ const MyCardsArea = () => {
               <CardForm />
             </View>
           ) : (
-            <View style={Styles.noInfoContainer}>
-              <Text style={Styles.noInfoTextStyles}>No cards available</Text>
-            </View>
+            !loading &&
+            netInfo.isConnected != null && (
+              <View style={Styles.noInfoContainer}>
+                <Text style={Styles.noInfoTextStyles}>No cards available</Text>
+              </View>
+            )
           )}
         </View>
       </TouchableWithoutFeedback>
