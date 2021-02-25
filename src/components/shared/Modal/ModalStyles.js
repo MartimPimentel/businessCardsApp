@@ -45,6 +45,12 @@ export default Styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'row',
     marginTop: '5%',
-    marginBottom: '10%',
+    marginBottom: '5%',
+  },
+  textInputTagModalStyles: {
+    height: '20%',
+    borderWidth: 1,
+    borderColor: '#D5D5D5',
+    borderRadius: 20,
   },
 });

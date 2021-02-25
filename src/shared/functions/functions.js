@@ -54,7 +54,7 @@ export const parseData = (data) => {
 export const parseError = (error, navigation) => {
   if (!error?.request?.response) return error;
   const errors = JSON.parse(error.request.response);
-  let errorMessage = errors;
+  let errorMessage = errors.message;
   if (!!errors.error.match('Token')) {
     errorMessage = 'Your authentication has expired. Please login again.';
     deleteToken()

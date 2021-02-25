@@ -27,6 +27,7 @@ import {
   deleteCard,
   loadCards,
 } from '../../../shared/api/redux/cardsActions';
+import {openModal} from '../../shared/Modal/modalReducer';
 
 const MyCardsArea = () => {
   const dispatch = useDispatch();
@@ -66,12 +67,11 @@ const MyCardsArea = () => {
       );
     }
   };
-  const onHandleAddCardQRCode = ({data}) => {
+  const onHandleAddCard = ({data}) => {
     setOpenScanner(false);
     setSearchBarOpened(false);
     dispatch(addCard(data, cards, navigation));
   };
-  const onHandleAddCardLink = () => {};
 
   useEffect(() => {
     dispatch(asyncActionStart());
@@ -153,6 +153,38 @@ const MyCardsArea = () => {
         <FloatingAddButton
           isOpen={actionsOpened}
           onChangeIsOpen={(value) => setActionsOpened(value)}
+          handleLink={() => {
+            if (netInfo.isConnected) {
+              dispatch(
+                openModal({
+                  modalType: 'TagModal',
+                  modalProps: {
+                    headerText: 'Insert the tag',
+                    actionButtonText: 'Add',
+                    cancelButtonTest: 'Cancel',
+                    onAction: (userId) => {
+                      onHandleAddCard({data: userId});
+                    },
+                  },
+                }),
+              );
+            } else {
+              dispatch(
+                asyncActionError(
+                  {
+                    message:
+                      'You are currently offline. Go online to be able do add new cards.',
+                  },
+                  {
+                    cancelButtonTest: 'Ok',
+                    onClose: () => {
+                      dispatch(asyncActionError(null));
+                    },
+                  },
+                ),
+              );
+            }
+          }}
           handleQRCode={() => {
             if (netInfo.isConnected) {
               setOpenScanner(true);
@@ -173,13 +205,12 @@ const MyCardsArea = () => {
               );
             }
           }}
-          handleLink={onHandleAddCardLink}
         />
       )}
       {openScanner && (
         <View style={{position: 'absolute'}}>
           <QRCodeScanner
-            onRead={onHandleAddCardQRCode}
+            onRead={onHandleAddCard}
             flashMode={RNCamera.Constants.FlashMode.auto}
             showMarker
             markerStyle={{borderColor: '#A9E2FD'}}

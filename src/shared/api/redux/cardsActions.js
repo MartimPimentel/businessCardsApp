@@ -45,7 +45,15 @@ export function loadCards(navigation, networkConnection) {
       dispatch(asyncActionFinish());
     } catch (error) {
       console.log(error);
-      dispatch(asyncActionError(parseError(error, navigation)));
+      dispatch(
+        asyncActionError(parseError(error, navigation), {
+          cancelButtonTest: 'Retry',
+          onClose: () => {
+            dispatch(asyncActionError(null));
+            dispatch(loadCards(navigation, networkConnection));
+          },
+        }),
+      );
     }
   };
 }
@@ -62,8 +70,14 @@ export function addCard(cardId, allCards, navigation) {
       dispatch({type: ADD_CARD, payload: newCard});
       dispatch(asyncActionFinish());
     } catch (error) {
-      console.log(error);
-      dispatch(asyncActionError(parseError(error, navigation)));
+      dispatch(
+        asyncActionError(parseError(error, navigation), {
+          cancelButtonTest: 'Ok',
+          onClose: () => {
+            dispatch(asyncActionError(null));
+          },
+        }),
+      );
     }
   };
 }
@@ -83,7 +97,14 @@ export function deleteCard(card, allCards, navigation) {
       dispatch(asyncActionFinish());
     } catch (error) {
       console.log(error);
-      dispatch(asyncActionError(parseError(error, navigation)));
+      dispatch(
+        asyncActionError(parseError(error, navigation), {
+          cancelButtonTest: 'Ok',
+          onClose: () => {
+            dispatch(asyncActionError(null));
+          },
+        }),
+      );
     }
   };
 }
