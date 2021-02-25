@@ -11,16 +11,13 @@ import {
 import {DrawerActions, useNavigation} from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
+import {filterCards} from '../../../../../shared/api/redux/cardsActions';
+import {useDispatch, useSelector} from 'react-redux';
 
-const HeaderSearch = ({
-  data,
-  handleFilter,
-  overlayOpened,
-  openSearchBar,
-  onChangeHeader,
-}) => {
+const HeaderSearch = ({overlayOpened, openSearchBar, onChangeHeader}) => {
   const navigation = useNavigation();
-
+  const dispatch = useDispatch();
+  const {cards} = useSelector((state) => state.cards);
   const [searchBarActivated, setSearchBarActivated] = useState(false);
   useEffect(() => {
     setSearchBarActivated(openSearchBar);
@@ -59,18 +56,14 @@ const HeaderSearch = ({
             <View style={Styles.searchBarView}>
               <TouchableOpacity
                 onPress={() => {
-                  handleFilter(data);
+                  dispatch(filterCards(cards));
                   onChangeHeader(false);
                   setSearchBarActivated(false);
                 }}
                 style={Styles.backButtonContainer}>
                 <LeftArrowIcon />
               </TouchableOpacity>
-              <SearchBar
-                data={data}
-                onFilter={handleFilter}
-                overlayOpened={overlayOpened}
-              />
+              <SearchBar overlayOpened={overlayOpened} />
             </View>
           )}
         </LinearGradient>

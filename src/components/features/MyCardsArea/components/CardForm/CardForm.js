@@ -14,10 +14,12 @@ import {
   LIGoToProfile,
 } from '../../../../../assets/icons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const CardForm = ({data}) => {
+const CardForm = () => {
+  const {currentCard} = useSelector((state) => state.cards);
   const openLink = (link) => {
     Linking.canOpenURL(link)
       .then((supported) => {
@@ -40,162 +42,169 @@ const CardForm = ({data}) => {
     openLink(requestNumber);
   };
   return (
-    <View
-      style={{
-        height: windowHeight <= 600 ? '30%' : '45%',
-      }}>
-      <ScrollView
+    currentCard && (
+      <View
         style={{
-          paddingHorizontal: 30,
-          height: 1000,
+          height: windowHeight <= 600 ? '30%' : '45%',
         }}>
-        <View style={Styles.fieldContainer(!!data.name)}>
-          <Text style={Styles.categoryText}>NAME</Text>
-          <View style={Styles.headerContainer}>
-            <Text style={Styles.informationText}>{data.name}</Text>
-          </View>
-        </View>
-        <View style={Styles.fieldContainer(!!data.companyName)}>
-          <Text style={Styles.categoryText}>COMPANY NAME</Text>
-          <View style={Styles.headerContainer}>
-            <Text style={Styles.informationText}>{data.companyName}</Text>
-          </View>
-        </View>
-        <View style={Styles.fieldContainer(!!data.role)}>
-          <Text style={Styles.categoryText}>COMPANY POSITION</Text>
-          <View style={Styles.headerContainer}>
-            <Text style={Styles.informationText}>{data.role}</Text>
-          </View>
-        </View>
-        <View style={Styles.fieldContainer(!!data.phoneData)}>
-          <Text style={Styles.categoryText}>PHONE NUMBER(PRINCIPAL)</Text>
-          <View style={Styles.headerContainer}>
-            <View style={{width: '50%'}}>
-              <TouchableOpacity>
-                <Text
-                  onPress={() =>
-                    openPhoneNumber(
-                      data.phoneData.callingCode,
-                      data.phoneData.phoneNumber,
-                    )
-                  }
-                  style={Styles.informationText}>
-                  {!!data.phoneData &&
-                    '+' +
-                      data.phoneData.callingCode +
-                      ' ' +
-                      data.phoneData.phoneNumber}
-                </Text>
-              </TouchableOpacity>
+        <ScrollView
+          style={{
+            paddingHorizontal: 30,
+            height: 1000,
+          }}>
+          <View style={Styles.fieldContainer(!!currentCard.name)}>
+            <Text style={Styles.categoryText}>NAME</Text>
+            <View style={Styles.headerContainer}>
+              <Text style={Styles.informationText}>{currentCard.name}</Text>
             </View>
           </View>
-        </View>
-        <View style={Styles.fieldContainer(!!data.alternativePhoneData)}>
-          <Text style={Styles.categoryText}>PHONE NUMBER(ALTERNATIVE)</Text>
-          <View style={Styles.headerContainer}>
-            <View style={{width: '50%'}}>
-              <TouchableOpacity>
-                <Text
-                  onPress={() =>
-                    openPhoneNumber(
-                      data.alternativePhoneData.callingCode,
-                      data.alternativePhoneData.phoneNumber,
-                    )
-                  }
-                  style={Styles.informationText}>
-                  {!!data.alternativePhoneData &&
-                    '+' +
-                      data.alternativePhoneData.callingCode +
-                      ' ' +
-                      data.alternativePhoneData.phoneNumber}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-        <View style={Styles.fieldContainer(!!data.email)}>
-          <Text style={Styles.categoryText}>EMAIL</Text>
-          <View style={Styles.headerContainer}>
-            <TouchableOpacity>
-              <Text
-                onPress={() => {
-                  openLink('mailto:' + data.email);
-                }}
-                style={Styles.informationText}>
-                {data.email}
+          <View style={Styles.fieldContainer(!!currentCard.companyName)}>
+            <Text style={Styles.categoryText}>COMPANY NAME</Text>
+            <View style={Styles.headerContainer}>
+              <Text style={Styles.informationText}>
+                {currentCard.companyName}
               </Text>
-            </TouchableOpacity>
+            </View>
           </View>
-        </View>
-        <View style={Styles.fieldContainer(!!data.address)}>
-          <Text style={Styles.categoryText}>ADDRESS</Text>
-          <View style={Styles.headerContainer}>
-            <Text style={Styles.informationText}>{data.address}</Text>
+          <View style={Styles.fieldContainer(!!currentCard.role)}>
+            <Text style={Styles.categoryText}>COMPANY POSITION</Text>
+            <View style={Styles.headerContainer}>
+              <Text style={Styles.informationText}>{currentCard.role}</Text>
+            </View>
           </View>
-        </View>
-        <View style={Styles.fieldContainer(!!data.observations)}>
-          <Text style={Styles.categoryText}>OBSERVATIONS</Text>
-          <View style={Styles.headerContainer}>
-            <Text style={Styles.informationText}>{data.observations}</Text>
-          </View>
-        </View>
-        {(!!data.facebookLink ||
-          !!data.instagramLink ||
-          !!data.linkedInLink) && (
-          <View>
-            <Text style={Styles.categoryText}>SOCIAL NETWORKS</Text>
-            <View style={Styles.linksContainer}>
-              <View style={{height: '10%'}}></View>
-              {!!data.facebookLink && (
-                <TouchableOpacity
-                  style={Styles.iconsTouchableContainer}
-                  onPress={() => {
-                    Linking.openURL(data.facebookLink);
-                  }}>
-                  <View style={Styles.iconsContainer}>
-                    <FBGoToProfile
-                      viewBox={windowWidth <= 350 ? '10 -5 250 55' : ''}
-                    />
-                  </View>
+          <View style={Styles.fieldContainer(!!currentCard.phoneData)}>
+            <Text style={Styles.categoryText}>PHONE NUMBER(PRINCIPAL)</Text>
+            <View style={Styles.headerContainer}>
+              <View style={{width: '50%'}}>
+                <TouchableOpacity>
+                  <Text
+                    onPress={() =>
+                      openPhoneNumber(
+                        currentCard.phoneData.callingCode,
+                        currentCard.phoneData.phoneNumber,
+                      )
+                    }
+                    style={Styles.informationText}>
+                    {!!currentCard.phoneData &&
+                      '+' +
+                        currentCard.phoneData.callingCode +
+                        ' ' +
+                        currentCard.phoneData.phoneNumber}
+                  </Text>
                 </TouchableOpacity>
-              )}
-
-              {!!data.instagramLink && (
-                <>
-                  <View style={{height: '8%'}}></View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={Styles.fieldContainer(!!currentCard.alternativePhoneData)}>
+            <Text style={Styles.categoryText}>PHONE NUMBER(ALTERNATIVE)</Text>
+            <View style={Styles.headerContainer}>
+              <View style={{width: '50%'}}>
+                <TouchableOpacity>
+                  <Text
+                    onPress={() =>
+                      openPhoneNumber(
+                        currentCard.alternativePhoneData.callingCode,
+                        currentCard.alternativePhoneData.phoneNumber,
+                      )
+                    }
+                    style={Styles.informationText}>
+                    {!!currentCard.alternativePhoneData &&
+                      '+' +
+                        currentCard.alternativePhoneData.callingCode +
+                        ' ' +
+                        currentCard.alternativePhoneData.phoneNumber}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+          <View style={Styles.fieldContainer(!!currentCard.email)}>
+            <Text style={Styles.categoryText}>EMAIL</Text>
+            <View style={Styles.headerContainer}>
+              <TouchableOpacity>
+                <Text
+                  onPress={() => {
+                    openLink('mailto:' + currentCard.email);
+                  }}
+                  style={Styles.informationText}>
+                  {currentCard.email}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={Styles.fieldContainer(!!currentCard.address)}>
+            <Text style={Styles.categoryText}>ADDRESS</Text>
+            <View style={Styles.headerContainer}>
+              <Text style={Styles.informationText}>{currentCard.address}</Text>
+            </View>
+          </View>
+          <View style={Styles.fieldContainer(!!currentCard.observations)}>
+            <Text style={Styles.categoryText}>OBSERVATIONS</Text>
+            <View style={Styles.headerContainer}>
+              <Text style={Styles.informationText}>
+                {currentCard.observations}
+              </Text>
+            </View>
+          </View>
+          {(!!currentCard.facebookLink ||
+            !!currentCard.instagramLink ||
+            !!currentCard.linkedInLink) && (
+            <View>
+              <Text style={Styles.categoryText}>SOCIAL NETWORKS</Text>
+              <View style={Styles.linksContainer}>
+                <View style={{height: '10%'}}></View>
+                {!!currentCard.facebookLink && (
                   <TouchableOpacity
                     style={Styles.iconsTouchableContainer}
                     onPress={() => {
-                      Linking.openURL(data.instagramLink);
+                      Linking.openURL(currentCard.facebookLink);
                     }}>
                     <View style={Styles.iconsContainer}>
-                      <IGGoToProfile
+                      <FBGoToProfile
                         viewBox={windowWidth <= 350 ? '10 -5 250 55' : ''}
                       />
                     </View>
                   </TouchableOpacity>
-                </>
-              )}
-              <View style={{height: '8%'}}></View>
-              {!!data.linkedInLink && (
-                <TouchableOpacity
-                  style={Styles.iconsTouchableContainer}
-                  onPress={() => {
-                    Linking.openURL(data.linkedInLink);
-                  }}>
-                  <View style={Styles.iconsContainer}>
-                    <LIGoToProfile
-                      viewBox={windowWidth <= 350 ? '10 -5 250 55' : ''}
-                    />
-                  </View>
-                </TouchableOpacity>
-              )}
-              <View style={{height: '8%'}}></View>
+                )}
+
+                {!!currentCard.instagramLink && (
+                  <>
+                    <View style={{height: '8%'}}></View>
+                    <TouchableOpacity
+                      style={Styles.iconsTouchableContainer}
+                      onPress={() => {
+                        Linking.openURL(currentCard.instagramLink);
+                      }}>
+                      <View style={Styles.iconsContainer}>
+                        <IGGoToProfile
+                          viewBox={windowWidth <= 350 ? '10 -5 250 55' : ''}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  </>
+                )}
+                <View style={{height: '8%'}}></View>
+                {!!currentCard.linkedInLink && (
+                  <TouchableOpacity
+                    style={Styles.iconsTouchableContainer}
+                    onPress={() => {
+                      Linking.openURL(currentCard.linkedInLink);
+                    }}>
+                    <View style={Styles.iconsContainer}>
+                      <LIGoToProfile
+                        viewBox={windowWidth <= 350 ? '10 -5 250 55' : ''}
+                      />
+                    </View>
+                  </TouchableOpacity>
+                )}
+                <View style={{height: '8%'}}></View>
+              </View>
             </View>
-          </View>
-        )}
-      </ScrollView>
-    </View>
+          )}
+        </ScrollView>
+      </View>
+    )
   );
 };
 

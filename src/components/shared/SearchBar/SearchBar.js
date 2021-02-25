@@ -1,7 +1,9 @@
 import React from 'react';
 import {useState} from 'react';
 import {View, TextInput} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {SearchBarIcon} from '../../../assets/icons';
+import {filterCards} from '../../../shared/api/redux/cardsActions';
 import Picker from '../Picker/Picker';
 import Styles from './SearchBarStyles';
 
@@ -16,8 +18,10 @@ const categories = [
   {stringName: 'Position', objectName: 'role'},
   {stringName: 'Company', objectName: 'companyName'},
 ];
-const SearchBar = ({data, onFilter, overlayOpened}) => {
+const SearchBar = ({overlayOpened}) => {
   const placeholder = 'Search Cards';
+  const {cards} = useSelector((state) => state.cards);
+  const dispatch = useDispatch();
   const [selectedCategory, setSelectedCategory] = useState({
     stringName: 'Name',
     objectName: 'name',
@@ -41,7 +45,11 @@ const SearchBar = ({data, onFilter, overlayOpened}) => {
             placeholder={placeholder}
             style={Styles.textInput}
             onChangeText={(query) =>
-              onFilter(filterData(selectedCategory.objectName, query, data))
+              dispatch(
+                filterCards(
+                  filterData(selectedCategory.objectName, query, cards),
+                ),
+              )
             }
           />
         </View>

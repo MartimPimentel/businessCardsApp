@@ -13,8 +13,6 @@ import FlipComponent from 'react-native-flip-component';
 import DeleteCard from './components/DeleteCard/DeleteCard';
 import FloatingAddButton from '../../shared/FloatingAddButton/FloatingAddButton';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
-import {parseError, storeItems} from '../../../shared/functions/functions';
-import {deleteSharedCard} from '../../../shared/api/deleteSharedCard';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
 import LinearGradient from 'react-native-linear-gradient';
@@ -35,7 +33,6 @@ const MyCardsArea = () => {
   const netInfo = useNetInfo();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-  const [cardIndex, setCardIndex] = useState(0);
   const [isFlipped, setFlipped] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [openScanner, setOpenScanner] = useState(false);
@@ -43,19 +40,14 @@ const MyCardsArea = () => {
   const [actionsOpened, setActionsOpened] = useState(false);
 
   const {loading, error} = useSelector((state) => state.async);
-  const {cards} = useSelector((state) => state.cards);
-
-  const handleIndexChange = (i) => {
-    setCardIndex(i);
-  };
+  const {cards, currentCard} = useSelector((state) => state.cards);
 
   const handleDeleteDecison = (response) => {
     setFlipped(false);
     if (netInfo.isConnected) {
       if (response == 'yes') {
         setSearchBarOpened(false);
-        setCardIndex(-1);
-        dispatch(deleteCard(cardIndex, cards, navigation));
+        dispatch(deleteCard(currentCard, cards, navigation));
       }
     } else {
       dispatch(
@@ -82,12 +74,6 @@ const MyCardsArea = () => {
   const onHandleAddCardLink = () => {};
 
   useEffect(() => {
-    if (isFocused) {
-      setCardIndex(-1);
-    }
-  }, [isFocused]);
-
-  useEffect(() => {
     dispatch(asyncActionStart());
     if (netInfo.isConnected != null) {
       dispatch(loadCards(navigation, netInfo.isConnected));
@@ -105,10 +91,6 @@ const MyCardsArea = () => {
         <HeaderSearch
           openSearchBar={searchBarOpened}
           onChangeHeader={(value) => setSearchBarOpened(value)}
-          data={cards}
-          handleFilter={(filtered) => {
-            //filtered != [] ? setFilteredData(filtered) : setFilteredData(cards);
-          }}
           overlayOpened={(value) => {
             setOverlay(true);
           }}
@@ -134,11 +116,7 @@ const MyCardsArea = () => {
                 isFlipped={isFlipped}
                 frontView={
                   <View>
-                    <Swipper
-                      index={cardIndex}
-                      data={cards}
-                      onChangeIndex={handleIndexChange}
-                    />
+                    <Swipper />
                   </View>
                 }
                 backView={
@@ -160,12 +138,12 @@ const MyCardsArea = () => {
                 <TouchableOpacity
                   disabled={!(!isFlipped && cards?.length > 0)}
                   onPress={() => {
-                    Share.share({message: cards[cardIndex].userId});
+                    Share.share({message: currentCard.userId});
                   }}>
                   <ShareGivenCardIcon />
                 </TouchableOpacity>
               </View>
-              <CardForm data={cards[cardIndex == -1 ? 0 : cardIndex]} />
+              <CardForm />
             </View>
           ) : (
             <View style={Styles.noInfoContainer}>

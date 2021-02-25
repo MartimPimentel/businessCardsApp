@@ -1,24 +1,28 @@
 import React, {useEffect, useRef} from 'react';
 import {Dimensions, View} from 'react-native';
 import SwiperFlatList from 'react-native-swiper-flatlist';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {changeShownCard} from '../../../../../shared/api/redux/cardsActions';
 import Card from '../../../../shared/Card/Card';
+import {useIsFocused} from '@react-navigation/native';
+
 const windowHeight = Dimensions.get('window').height;
 
 export const {width} = Dimensions.get('window');
-const Swipper = ({data, onChangeIndex, index}) => {
+const Swipper = () => {
   const swipperRef = useRef();
-  const {cards} = useSelector((state) => state.cards);
+  const isFocused = useIsFocused();
+  const dispatch = useDispatch();
+  const {filteredCards} = useSelector((state) => state.cards);
   useEffect(() => {
     swipperRef.current.goToFirstIndex();
-    onChangeIndex(0);
-  }, [cards]);
+  }, [filteredCards]);
   useEffect(() => {
-    if (index == -1) {
+    if (isFocused) {
       swipperRef.current.goToFirstIndex();
-      onChangeIndex(0);
+      dispatch(changeShownCard(filteredCards[0]));
     }
-  }, [index]);
+  }, [isFocused]);
   return (
     <View style={{height: windowHeight <= 600 ? 210 : 250}}>
       <SwiperFlatList
@@ -27,13 +31,15 @@ const Swipper = ({data, onChangeIndex, index}) => {
         paginationDefaultColor="grey"
         paginationActiveColor="#8AB1F2"
         paginationStyleItem={{height: 12, width: 12, marginRight: 0}}
-        data={cards}
+        data={filteredCards}
         renderItem={({item}) => (
           <View style={{width}}>
             <Card key={item.key} data={item} />
           </View>
         )}
-        onChangeIndex={({index}) => onChangeIndex(index)}
+        onChangeIndex={({index}) =>
+          dispatch(changeShownCard(filteredCards[index]))
+        }
       />
     </View>
   );

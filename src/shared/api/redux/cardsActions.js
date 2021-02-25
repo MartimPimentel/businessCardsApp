@@ -1,4 +1,10 @@
-import {ADD_CARD, DELETE_CARD, FECTH_CARDS} from './cardsConstants';
+import {
+  ADD_CARD,
+  DELETE_CARD,
+  FECTH_CARDS,
+  FILTER_CARDS,
+  CURRENT_CARD,
+} from './cardsConstants';
 import {
   asyncActionError,
   asyncActionFinish,
@@ -13,6 +19,14 @@ import {
   parseError,
   storeItems,
 } from '../../functions/functions';
+
+export function filterCards(data) {
+  return {type: FILTER_CARDS, payload: data};
+}
+
+export function changeShownCard(card) {
+  return {type: CURRENT_CARD, payload: card};
+}
 
 export function loadCards(navigation, networkConnection) {
   return async function (dispatch) {
@@ -54,11 +68,11 @@ export function addCard(cardId, allCards, navigation) {
   };
 }
 
-export function deleteCard(cardIdx, allCards, navigation) {
+export function deleteCard(card, allCards, navigation) {
   return async function (dispatch) {
     dispatch(asyncActionStart());
     try {
-      const userId = allCards[cardIdx].userId;
+      const userId = card.userId;
       await deleteSharedCard(userId);
       let filteredCards = [...allCards];
       filteredCards = filteredCards.filter((card) => {
