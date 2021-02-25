@@ -5,6 +5,7 @@ import {
   asyncActionStart,
 } from '../../async/asyncReducer';
 import {sharedCards} from '../sharedCards';
+import {addSharedCard} from '../addSharedCard';
 import {
   getFromStore,
   parseData,
@@ -15,7 +16,7 @@ import {
 export function loadCards(navigation) {
   return async function (dispatch) {
     const netInfo = false;
-    dispatch(asyncActionStart());
+    //dispatch(asyncActionStart());
     try {
       let cards;
       if (netInfo.isConnected) {
@@ -25,7 +26,6 @@ export function loadCards(navigation) {
         cards = await getFromStore('sharedCards');
         cards = JSON.parse(cards);
       }
-
       if (netInfo.isConnected) storeItems('sharedCards', JSON.stringify(cards));
       dispatch({type: FECTH_CARDS, payload: cards});
       dispatch(asyncActionFinish());
@@ -36,8 +36,22 @@ export function loadCards(navigation) {
   };
 }
 
-export function addCard(event) {
-  return {type: ADD_CARD, payload: event};
+export function addCard(cardId, allCards, navigation) {
+  return async function (dispatch) {
+    dispatch(asyncActionStart());
+    try {
+      let newCard = await addSharedCard(cardId);
+      newCard = parseData([newCard.data])[0];
+      let sharedCards = [...allCards];
+      sharedCards.push(newCard);
+      storeItems('sharedCards', JSON.stringify(sharedCards));
+      dispatch({type: ADD_CARD, payload: newCard});
+      dispatch(asyncActionFinish());
+    } catch (error) {
+      console.log(error);
+      dispatch(asyncActionError(parseError(error, navigation)));
+    }
+  };
 }
 
 export function deleteCard(eventId) {
