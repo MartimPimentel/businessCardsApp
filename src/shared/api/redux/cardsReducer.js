@@ -12,7 +12,7 @@ export default function cardsReducer(state = initialState, {type, payload}) {
     case DELETE_CARD:
       return {
         ...state,
-        cards: [...state.cards.filter((card) => card.userId !== payload)],
+        cards: payload,
       };
     case FECTH_CARDS:
       return {...state, cards: payload};

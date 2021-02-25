@@ -6,6 +6,7 @@ import {
 } from '../../async/asyncReducer';
 import {sharedCards} from '../sharedCards';
 import {addSharedCard} from '../addSharedCard';
+import {deleteSharedCard} from '../deleteSharedCard';
 import {
   getFromStore,
   parseData,
@@ -13,20 +14,19 @@ import {
   storeItems,
 } from '../../functions/functions';
 
-export function loadCards(navigation) {
+export function loadCards(navigation, networkConnection) {
   return async function (dispatch) {
-    const netInfo = false;
     //dispatch(asyncActionStart());
     try {
       let cards;
-      if (netInfo.isConnected) {
+      if (networkConnection) {
         cards = await sharedCards();
         cards = parseData(cards.data);
       } else {
         cards = await getFromStore('sharedCards');
         cards = JSON.parse(cards);
       }
-      if (netInfo.isConnected) storeItems('sharedCards', JSON.stringify(cards));
+      if (networkConnection) storeItems('sharedCards', JSON.stringify(cards));
       dispatch({type: FECTH_CARDS, payload: cards});
       dispatch(asyncActionFinish());
     } catch (error) {
@@ -54,6 +54,22 @@ export function addCard(cardId, allCards, navigation) {
   };
 }
 
-export function deleteCard(eventId) {
-  return {type: DELETE_CARD, payload: eventId};
+export function deleteCard(cardIdx, allCards, navigation) {
+  return async function (dispatch) {
+    dispatch(asyncActionStart());
+    try {
+      const userId = allCards[cardIdx].userId;
+      await deleteSharedCard(userId);
+      let filteredCards = [...allCards];
+      filteredCards = filteredCards.filter((card) => {
+        return card.userId != userId;
+      });
+      storeItems('sharedCards', JSON.stringify(filteredCards));
+      dispatch({type: DELETE_CARD, payload: filteredCards});
+      dispatch(asyncActionFinish());
+    } catch (error) {
+      console.log(error);
+      dispatch(asyncActionError(parseError(error, navigation)));
+    }
+  };
 }

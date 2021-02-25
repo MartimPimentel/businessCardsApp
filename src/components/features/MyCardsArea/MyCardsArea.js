@@ -24,7 +24,11 @@ import {
   asyncActionError,
   asyncActionStart,
 } from '../../../shared/async/asyncReducer';
-import {addCard, loadCards} from '../../../shared/api/redux/cardsActions';
+import {
+  addCard,
+  deleteCard,
+  loadCards,
+} from '../../../shared/api/redux/cardsActions';
 
 const MyCardsArea = () => {
   const dispatch = useDispatch();
@@ -51,17 +55,7 @@ const MyCardsArea = () => {
       if (response == 'yes') {
         setSearchBarOpened(false);
         setCardIndex(-1);
-        //let newData = [...allData];
-        //const sharedUserId = filteredData[cardIndex].userId;
-        newData = newData.filter((card) => {
-          return card.userId != sharedUserId;
-        });
-        //setFilteredData(newData);
-        //setAllData(newData);
-        storeItems('sharedCards', JSON.stringify(newData));
-        deleteSharedCard(sharedUserId).catch((err) => {
-          parseError(err, navigation);
-        });
+        dispatch(deleteCard(cardIndex, cards, navigation));
       }
     } else {
       dispatch(
@@ -96,7 +90,7 @@ const MyCardsArea = () => {
   useEffect(() => {
     dispatch(asyncActionStart());
     if (netInfo.isConnected != null) {
-      dispatch(loadCards(navigation));
+      dispatch(loadCards(navigation, netInfo.isConnected));
     }
   }, [netInfo.isConnected]);
 
