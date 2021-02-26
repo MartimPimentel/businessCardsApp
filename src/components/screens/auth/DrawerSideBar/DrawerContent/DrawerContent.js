@@ -60,27 +60,32 @@ const DrawerContent = (props) => {
         <Text style={Styles.userNameStyles}>{username}</Text>
       </View>
       <View style={Styles.menusContainer}>
-        <TouchableOpacity
-          style={Styles.myCardsStyle(isMyCardsSelected)}
-          onPress={() => {
-            setIsMyCardSelected(true);
-            props.navigation.navigate('MyCards');
-          }}>
+        <View style={{flexDirection: 'row'}}>
           <View style={Styles.seletecTag(isMyCardsSelected)} />
-          <MyCardsIcon height={30} width={30} />
-          <Text style={Styles.textStyle}>My Cards</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={Styles.myCardsStyle(isMyCardsSelected)}
+            onPress={() => {
+              setIsMyCardSelected(true);
+              props.navigation.navigate('MyCards');
+            }}>
+            <MyCardsIcon height={30} width={30} />
+            <Text style={Styles.textStyle}>My Cards</Text>
+          </TouchableOpacity>
+        </View>
+
         <View style={Styles.separatorStyle} />
-        <TouchableOpacity
-          style={Styles.personalAreaStyle(!isMyCardsSelected)}
-          onPress={() => {
-            setIsMyCardSelected(false);
-            props.navigation.navigate('PersonalArea');
-          }}>
+        <View style={{flexDirection: 'row'}}>
           <View style={Styles.seletecTag(!isMyCardsSelected)} />
-          <PersonalAreaIcon height={30} width={30} />
-          <Text style={Styles.textStyle}>Personal Area</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={Styles.personalAreaStyle(!isMyCardsSelected)}
+            onPress={() => {
+              setIsMyCardSelected(false);
+              props.navigation.navigate('PersonalArea');
+            }}>
+            <PersonalAreaIcon height={30} width={30} />
+            <Text style={Styles.textStyle}>Personal Area</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={Styles.logOutContainer}>
         <TouchableOpacity

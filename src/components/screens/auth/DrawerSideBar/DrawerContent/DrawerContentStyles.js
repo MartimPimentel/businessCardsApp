@@ -10,18 +10,24 @@ export default Styles = StyleSheet.create({
   myCardsStyle: (isSelected) => {
     return {
       flexDirection: 'row',
-      width: '116%',
+      width: '100%',
       left: 20,
     };
   },
   personalAreaStyle: (isSelected) => {
     return {
       flexDirection: 'row',
-      width: '130%',
+      width: '100%',
       left: 20,
     };
   },
-  textStyle: {color: 'white', left: 20, fontSize: 20, width: '60%'},
+  textStyle: {
+    color: 'white',
+    left: 10,
+    fontSize: 20,
+    width: '60%',
+    width: '70%',
+  },
   seletecTag: (isSelected) => {
     return {
       backgroundColor: isSelected ? 'white' : 'transparent',
@@ -29,9 +35,9 @@ export default Styles = StyleSheet.create({
       top: 0,
       borderTopRightRadius: 10,
       borderBottomRightRadius: 10,
-      width: '5%',
+      width: '13%',
       height: '100%',
-      marginRight: 35,
+      marginRight: '4%',
     };
   },
   personalAreaSelected: (isSelected) => {
@@ -88,15 +94,16 @@ export default Styles = StyleSheet.create({
   logOutContainer: {
     position: 'absolute',
     bottom: '10%',
+    width: '50%',
+    left: '23%',
   },
   logOutButton: {
     flexDirection: 'row',
-    left: 75,
   },
   logOutSeparator: {
     height: 10,
-    width: '90%',
-    left: 70,
+    width: '120%',
+    left: 15,
     borderBottomWidth: 0.5,
     borderBottomColor: 'white',
   },
