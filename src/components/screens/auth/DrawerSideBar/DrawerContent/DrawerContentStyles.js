@@ -37,7 +37,7 @@ export default Styles = StyleSheet.create({
       borderBottomRightRadius: 10,
       width: '13%',
       height: '100%',
-      marginRight: '4%',
+      marginRight: 10,
     };
   },
   personalAreaSelected: (isSelected) => {
