@@ -29,6 +29,9 @@ export default Styles = StyleSheet.create({
     alignItems: 'center',
   },
   fieldContainer: (fieldExists) => {
-    return {marginBottom: 15, display: fieldExists ? 'flex' : 'none'};
+    return {
+      marginBottom: 15,
+      display: fieldExists ? 'flex' : 'none',
+    };
   },
 });

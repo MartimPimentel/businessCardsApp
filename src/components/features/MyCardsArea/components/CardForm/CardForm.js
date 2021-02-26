@@ -1,19 +1,12 @@
 import React from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  Dimensions,
-  Linking,
-  Platform,
-} from 'react-native';
+import {View, Text, Dimensions, Linking, Platform} from 'react-native';
 import Styles from './CardFormStyles';
 import {
   FBGoToProfile,
   IGGoToProfile,
   LIGoToProfile,
 } from '../../../../../assets/icons';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {TouchableOpacity, ScrollView} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -48,9 +41,11 @@ const CardForm = () => {
           height: windowHeight <= 600 ? '30%' : '40%',
         }}>
         <ScrollView
+          shouldActivateOnStart
           style={{
             paddingHorizontal: 30,
-          }}>
+          }}
+          keyboardShouldPersistTaps="always">
           <View style={Styles.fieldContainer(!!currentCard.name)}>
             <Text style={Styles.categoryText}>NAME</Text>
             <View style={Styles.headerContainer}>
