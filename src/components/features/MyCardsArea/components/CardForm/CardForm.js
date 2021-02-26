@@ -74,7 +74,7 @@ const CardForm = () => {
           <View style={Styles.fieldContainer(!!currentCard.phoneData)}>
             <Text style={Styles.categoryText}>PHONE NUMBER(PRINCIPAL)</Text>
             <View style={Styles.headerContainer}>
-              <View style={{width: '50%'}}>
+              <View style={{width: '55%'}}>
                 <TouchableOpacity>
                   <Text
                     onPress={() =>

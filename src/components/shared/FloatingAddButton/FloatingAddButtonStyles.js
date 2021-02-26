@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {vw, vh} from 'react-native-viewport-units';
 
 export default Styles = StyleSheet.create({
   wrapperContainer: {
@@ -7,6 +8,14 @@ export default Styles = StyleSheet.create({
     bottom: 50,
     alignItems: 'center',
   },
-  choiceButtonSize: {width: 50, height: 50, borderRadius: 50 / 2},
-  actionButtonSize: {width: 60, height: 60, borderRadius: 60 / 2},
+  choiceButtonSize: {
+    width: 25 * (vh / vw),
+    height: 25 * (vh / vw),
+    borderRadius: (25 * (vh / vw)) / 2,
+  },
+  actionButtonSize: {
+    width: 32 * (vh / vw),
+    height: 32 * (vh / vw),
+    borderRadius: (32 * (vh / vw)) / 2,
+  },
 });

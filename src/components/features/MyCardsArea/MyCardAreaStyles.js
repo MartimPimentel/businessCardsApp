@@ -1,8 +1,11 @@
 import {StyleSheet} from 'react-native';
+import {vw, vh} from 'react-native-viewport-units';
+
 export default Styles = StyleSheet.create({
   outsideContainer: {
     height: '100%',
     alignSelf: 'center',
+    alignItems: 'center',
   },
   titleStyles: {
     fontSize: 20,
@@ -47,5 +50,14 @@ export default Styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 30,
     borderColor: '#D5D5D5',
+    marginRight: '5%',
+    height: 7 * vh,
+    width: 40 * vw,
+  },
+  shareButtonStyles: {
+    height: 7 * vh,
+    width: 40 * vw,
+    paddingHorizontal: 10,
+    borderRadius: 30,
   },
 });

@@ -127,14 +127,26 @@ const MyCardsArea = () => {
                   onPress={() => {
                     setFlipped(!isFlipped);
                   }}>
-                  <RemoveCardIcon />
+                  <RemoveCardIcon
+                    width="100%"
+                    height="100%"
+                    preserveAspectRatio="meet"
+                  />
                 </TouchableOpacity>
                 <TouchableOpacity
                   disabled={!(!isFlipped && cards?.length > 0)}
                   onPress={() => {
                     Share.share({message: currentCard.userId});
                   }}>
-                  <ShareGivenCardIcon />
+                  <LinearGradient
+                    style={Styles.shareButtonStyles}
+                    colors={['#A9E2FD', '#8AB1F2']}>
+                    <ShareGivenCardIcon
+                      width="100%"
+                      height="100%"
+                      preserveAspectRatio="meet"
+                    />
+                  </LinearGradient>
                 </TouchableOpacity>
               </View>
               <CardForm />

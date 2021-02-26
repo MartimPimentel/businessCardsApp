@@ -50,7 +50,7 @@ export function loadCards(navigation, networkConnection) {
           cancelButtonTest: 'Retry',
           onClose: () => {
             dispatch(asyncActionError(null));
-            dispatch(loadCards(navigation, networkConnection));
+            //dispatch(loadCards(navigation, networkConnection));
           },
         }),
       );
@@ -61,6 +61,7 @@ export function loadCards(navigation, networkConnection) {
 export function addCard(cardId, allCards, navigation) {
   return async function (dispatch) {
     dispatch(asyncActionStart());
+
     try {
       let newCard = await addSharedCard(cardId);
       newCard = parseData([newCard.data])[0];

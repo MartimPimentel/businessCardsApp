@@ -24,7 +24,10 @@ const Swipper = () => {
     }
   }, [isFocused]);
   return (
-    <View style={{height: windowHeight <= 600 ? 210 : 250}}>
+    <View
+      style={{
+        height: windowHeight <= 600 ? 210 : 250,
+      }}>
       <SwiperFlatList
         showPagination
         ref={swipperRef}
