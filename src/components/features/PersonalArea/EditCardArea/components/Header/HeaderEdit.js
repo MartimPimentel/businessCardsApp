@@ -10,7 +10,7 @@ import {useNavigation} from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 
-const HeaderEdit = ({onClickToSaveData}) => {
+const HeaderEdit = ({onClickToSaveData, onPressBack}) => {
   const navigation = useNavigation();
   return (
     <View style={Styles.header}>
@@ -19,9 +19,7 @@ const HeaderEdit = ({onClickToSaveData}) => {
           style={Styles.background}
           colors={['#A9E2FD', '#8AB1F2']}>
           <View style={Styles.icons}>
-            <TouchableOpacity
-              style={Styles.leftIcon}
-              onPress={() => navigation.navigate('PersonalArea')}>
+            <TouchableOpacity style={Styles.leftIcon} onPress={onPressBack}>
               <LeftArrowIcon height="50%" width="50%" />
             </TouchableOpacity>
             <CardsIcon />

@@ -9,6 +9,13 @@ export default Styles = StyleSheet.create({
     fontFamily: 'NunitoSans-Regular',
     paddingBottom: 5,
   },
+  titleStyles: {
+    textAlign: 'center',
+    fontSize: 20,
+    color: '#393939',
+    fontFamily: 'Nunito-Regular',
+    marginBottom: 10,
+  },
   titleEntries: {
     color: '#8DB6F3',
     fontSize: 16,

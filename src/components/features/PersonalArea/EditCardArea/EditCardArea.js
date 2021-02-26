@@ -100,6 +100,7 @@ const EditCardArea = () => {
         onClickToSaveData={() => {
           setPressedSave(pressedSave != undefined ? !pressedSave : true);
         }}
+        onPressBack={() => navigation.navigate('PersonalArea')}
       />
 
       <ScrollView showsVerticalScrollIndicator={false} style={{marginTop: 10}}>
