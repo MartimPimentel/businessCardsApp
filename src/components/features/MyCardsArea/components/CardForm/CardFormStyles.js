@@ -32,6 +32,7 @@ export default Styles = StyleSheet.create({
     return {
       marginBottom: 15,
       display: fieldExists ? 'flex' : 'none',
+      width: '100%',
     };
   },
 });

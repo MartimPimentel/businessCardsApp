@@ -39,6 +39,7 @@ const CardForm = () => {
       <View
         style={{
           height: windowHeight <= 600 ? '30%' : '40%',
+          width: '100%',
         }}>
         <ScrollView
           shouldActivateOnStart

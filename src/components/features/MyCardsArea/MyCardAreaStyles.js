@@ -4,6 +4,7 @@ import {vw, vh} from 'react-native-viewport-units';
 export default Styles = StyleSheet.create({
   outsideContainer: {
     height: '100%',
+    width: '100%',
     alignSelf: 'center',
     alignItems: 'center',
   },
