@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Text, Keyboard} from 'react-native';
 import {
   ScrollView,
@@ -7,71 +7,11 @@ import {
 } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Styles from './RegisterViewStyles';
-import {useNavigation} from '@react-navigation/native';
 import RegisterForm from './components/Form/RegisterForm';
 import {CommonActions} from '@react-navigation/native';
-import {createUser} from '../../../../shared/api/createUser';
-import {useNetInfo} from '@react-native-community/netinfo';
-import {
-  asyncActionError,
-  asyncActionFinish,
-  asyncActionStart,
-} from '../../../../shared/async/asyncReducer';
-import {useDispatch} from 'react-redux';
-
+import {useRegisterHandler} from '../../../../shared/api/useRegisterHandler';
 const RegisterView = (props) => {
-  const netInfo = useNetInfo();
-  const navigation = useNavigation();
-  const dispatch = useDispatch();
-
-  const handleRegister = (data) => {
-    //console.log(data);
-    dispatch(asyncActionStart());
-    if (netInfo.isConnected) {
-      createUser(data)
-        .then((res) => {
-          console.log(res.data);
-          dispatch(asyncActionFinish());
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 1,
-              routes: [{name: 'Login'}],
-            }),
-          );
-        })
-        .catch((error) => {
-          const errors = JSON.parse(error.request.response);
-          dispatch(
-            asyncActionError(
-              errors,
-              !errors?.error.match('Signup-001')
-                ? {
-                    cancelButtonTest: 'Ok',
-                    onClose: () => {
-                      dispatch(asyncActionError(null));
-                    },
-                  }
-                : null,
-            ),
-          );
-        });
-    } else {
-      dispatch(
-        asyncActionError(
-          {
-            message:
-              'You are currently offline. Go online to be able to login.',
-          },
-          {
-            cancelButtonTest: 'Ok',
-            onClose: () => {
-              dispatch(asyncActionError(null));
-            },
-          },
-        ),
-      );
-    }
-  };
+  const handleRegister = useRegisterHandler();
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}

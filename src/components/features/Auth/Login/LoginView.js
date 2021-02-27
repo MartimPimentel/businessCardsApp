@@ -11,71 +11,13 @@ import Styles from './LoginViewStyles';
 import LoginForm from './components/Form/LoginForm';
 import {vw, vh} from 'react-native-viewport-units';
 import {CommonActions} from '@react-navigation/native';
-import {login} from '../../../../shared/api/login';
-import {useNetInfo} from '@react-native-community/netinfo';
-import {storeItems} from '../../../../shared/functions/functions';
-import {
-  asyncActionError,
-  asyncActionFinish,
-  asyncActionStart,
-} from '../../../../shared/async/asyncReducer';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {useLoginHandler} from '../../../../shared/api/useLoginHandler';
 
 const LoginView = () => {
-  const netInfo = useNetInfo();
   const navigation = useNavigation();
-  const dispatch = useDispatch();
   const modal = useSelector((state) => state.modals);
-  const handleLogin = (data) => {
-    dispatch(asyncActionStart());
-    if (netInfo.isConnected) {
-      login(data)
-        .then((res) => {
-          console.log(res.data);
-          storeItems('token', res.data.token);
-          dispatch(asyncActionFinish());
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 1,
-              routes: [{name: 'Auth'}],
-            }),
-          );
-        })
-        .catch((error) => {
-          const errors = JSON.parse(error.request.response);
-          console.log(errors);
-          dispatch(
-            asyncActionError(
-              errors,
-              !errors?.error.match('Credentials')
-                ? {
-                    cancelButtonTest: 'Ok',
-                    onClose: () => {
-                      dispatch(asyncActionError(null));
-                    },
-                  }
-                : null,
-            ),
-          );
-        });
-    } else {
-      dispatch(
-        asyncActionError(
-          {
-            message:
-              'You are currently offline. Go online to be able to login.',
-          },
-          {
-            cancelButtonTest: 'Ok',
-            onClose: () => {
-              dispatch(asyncActionError(null));
-            },
-          },
-        ),
-      );
-    }
-  };
-
+  const handleLogin = useLoginHandler();
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
