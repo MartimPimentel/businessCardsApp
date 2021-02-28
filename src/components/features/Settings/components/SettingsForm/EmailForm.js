@@ -9,34 +9,39 @@ import {
 } from 'react-native-gesture-handler';
 import HeaderEdit from '../../../PersonalArea/EditCardArea/components/Header/HeaderEdit';
 import {useNavigation} from '@react-navigation/native';
-import {formSchema} from './functions/formsFunctions';
+import {emailFormSchema} from './functions/formsFunctions';
 import {yupResolver} from '@hookform/resolvers';
 
 const EmailForm = () => {
   const [isEditable, setIsEditable] = useState(false);
 
-  const onSubmit = (data) => console.log(data);
   const navigation = useNavigation();
-  const emailSchema = formSchema();
+  const emailSchema = emailFormSchema();
   const {handleSubmit, errors, control, reset, clearErrors, setValue} = useForm(
     {
       resolver: yupResolver(emailSchema),
-      mode: 'onChange',
+      mode: 'onSubmit',
     },
   );
+
+  const onSubmit = () => {
+    //TO DO
+    // Make api call
+  };
 
   useEffect(() => {
     setTimeout(() => {
       setIsEditable(true);
     }, 100);
   }, []);
+  console.log(error);
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
       style={{height: '100%', width: '100%'}}>
       <HeaderEdit
         onClickToSaveData={() => {
-          setPressedSave(pressedSave != undefined ? !pressedSave : true);
+          handleSubmit(onSubmit);
         }}
         onPressBack={() => navigation.navigate('Settings')}
       />

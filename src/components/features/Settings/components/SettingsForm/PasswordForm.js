@@ -9,11 +9,20 @@ import {
 } from 'react-native-gesture-handler';
 import HeaderEdit from '../../../PersonalArea/EditCardArea/components/Header/HeaderEdit';
 import {useNavigation} from '@react-navigation/native';
+import {passwordFormSchema} from './functions/formsFunctions';
+import {yupResolver} from '@hookform/resolvers';
 
 const PasswordForm = () => {
-  const {control, handleSubmit, errors} = useForm();
   const onSubmit = (data) => console.log(data);
   const navigation = useNavigation();
+
+  const passwordSchema = passwordFormSchema();
+  const {handleSubmit, errors, control, reset, clearErrors, setValue} = useForm(
+    {
+      resolver: yupResolver(passwordSchema),
+      mode: 'onChange',
+    },
+  );
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
@@ -40,13 +49,18 @@ const PasswordForm = () => {
                   onBlur={onBlur}
                   onChangeText={(value) => onChange(value)}
                   value={value}
+                  secureTextEntry
                 />
               )}
               name="currentPassword"
               rules={{required: true}}
               defaultValue=""
             />
-            {errors.firstName && <Text>This is required.</Text>}
+            {errors.currentPassword && (
+              <Text style={{color: 'red'}}>
+                {errors.currentPassword.message}
+              </Text>
+            )}
           </View>
           <View style={{marginBottom: 15}}>
             <View>
@@ -60,11 +74,15 @@ const PasswordForm = () => {
                   onBlur={onBlur}
                   onChangeText={(value) => onChange(value)}
                   value={value}
+                  secureTextEntry
                 />
               )}
               name="newPassword"
               defaultValue=""
             />
+            {errors.newPassword && (
+              <Text style={{color: 'red'}}>{errors.newPassword.message}</Text>
+            )}
           </View>
           <View style={{marginBottom: 15}}>
             <View>
@@ -78,11 +96,17 @@ const PasswordForm = () => {
                   onBlur={onBlur}
                   onChangeText={(value) => onChange(value)}
                   value={value}
+                  secureTextEntry
                 />
               )}
               name="confirmNewPassword"
               defaultValue=""
             />
+            {errors.confirmNewPassword && (
+              <Text style={{color: 'red'}}>
+                {errors.confirmNewPassword.message}
+              </Text>
+            )}
           </View>
         </View>
       </ScrollView>
