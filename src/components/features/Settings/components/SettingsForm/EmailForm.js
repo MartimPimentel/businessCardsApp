@@ -1,30 +1,23 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, TextInput, Button, Alert, Keyboard} from 'react-native';
-import {useForm, Controller} from 'react-hook-form';
+import {Text, View, TextInput, Keyboard} from 'react-native';
 import Styles from './FormStyles';
-import {
-  TouchableWithoutFeedback,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import HeaderEdit from '../../../PersonalArea/EditCardArea/components/Header/HeaderEdit';
-import {useNavigation} from '@react-navigation/native';
 import {emailFormSchema} from './functions/formsFunctions';
+import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers';
 
 const EmailForm = () => {
   const [isEditable, setIsEditable] = useState(false);
 
-  const navigation = useNavigation();
   const emailSchema = emailFormSchema();
-  const {handleSubmit, errors, control, reset, clearErrors, setValue} = useForm(
-    {
-      resolver: yupResolver(emailSchema),
-      mode: 'onSubmit',
-    },
-  );
+  const {handleSubmit, errors, control} = useForm({
+    resolver: yupResolver(emailSchema),
+    mode: 'onSubmit',
+    defaultValues: {email: ''},
+  });
 
-  const onSubmit = () => {
+  const onSubmit = (data) => {
     //TO DO
     // Make api call
   };
@@ -34,47 +27,33 @@ const EmailForm = () => {
       setIsEditable(true);
     }, 100);
   }, []);
-  console.log(error);
+
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
       style={{height: '100%', width: '100%'}}>
-      <HeaderEdit
-        onClickToSaveData={() => {
-          handleSubmit(onSubmit);
-        }}
-        onPressBack={() => navigation.navigate('Settings')}
-      />
-
-      <ScrollView showsVerticalScrollIndicator={false} style={{marginTop: 10}}>
-        <Text style={Styles.titleStyles}>Change Email</Text>
-        <View style={Styles.outsideContainer}>
-          <View style={{marginBottom: 15}}>
-            <View>
-              <Text style={Styles.titleEntries}>Email</Text>
-            </View>
-            <Controller
-              control={control}
-              render={({onChange, onBlur, value}) => (
-                <TextInput
-                  editable={isEditable}
-                  style={Styles.input}
-                  onBlur={onBlur}
-                  onChangeText={(value) => onChange(value)}
-                  value={value}
-                  keyboardType="email-address"
-                />
-              )}
-              name="email"
-              rules={{required: true}}
-              defaultValue=""
+      <HeaderEdit onClickToSaveData={handleSubmit(onSubmit)} />
+      <Text style={Styles.titleStyles}>Change Email</Text>
+      <View style={Styles.outsideContainer}>
+        <Text style={Styles.titleEntries}>Email</Text>
+        <Controller
+          control={control}
+          name="email"
+          render={({onChange, onBlur, value}) => (
+            <TextInput
+              editable={isEditable}
+              style={Styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              keyboardType="email-address"
             />
-            {errors.email && (
-              <Text style={{color: 'red'}}>{errors.email.message}</Text>
-            )}
-          </View>
-        </View>
-      </ScrollView>
+          )}
+        />
+        {errors.email && (
+          <Text style={{color: 'red'}}>{errors.email.message}</Text>
+        )}
+      </View>
     </TouchableWithoutFeedback>
   );
 };

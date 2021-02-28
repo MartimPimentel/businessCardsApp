@@ -1,4 +1,4 @@
-import {Dimensions, Platform, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 export default Styles = StyleSheet.create({
   input: {
     borderColor: 'gainsboro',
@@ -14,12 +14,15 @@ export default Styles = StyleSheet.create({
     fontSize: 20,
     color: '#393939',
     fontFamily: 'Nunito-Regular',
-    marginBottom: 10,
+    top: '5%',
   },
   titleEntries: {
     color: '#8DB6F3',
     fontSize: 16,
     fontFamily: 'NunitoSans-Bold',
   },
-  outsideContainer: {paddingHorizontal: 40, paddingTop: 10},
+  outsideContainer: {
+    paddingHorizontal: 40,
+    marginTop: '30%',
+  },
 });
