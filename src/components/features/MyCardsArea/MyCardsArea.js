@@ -149,7 +149,7 @@ const MyCardsArea = () => {
                   </LinearGradient>
                 </TouchableOpacity>
               </View>
-              <CardForm />
+              <CardForm onClickForm={() => setActionsOpened(false)} />
             </View>
           ) : (
             !loading &&
