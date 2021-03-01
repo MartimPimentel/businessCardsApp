@@ -45,4 +45,7 @@ export {default as LinkIcon} from './LinkIcon.svg';
 export {default as PlusIcon} from './PlusIcon.svg';
 export {default as CloseIcon} from './CloseIcon.svg';
 export {default as ShareGivenCardIcon} from './ShareGivenCardIcon.svg';
+export {default as Gear} from './Gear.svg';
+export {default as DeleteAccount} from './DeleteAccount.svg';
+export {default as OptionsArrow} from './OptionsArrow.svg';
 export const UnknownUser = require('./UnknownUser.jpg');

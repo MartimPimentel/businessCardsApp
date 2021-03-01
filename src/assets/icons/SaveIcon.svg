@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="38" height="60" viewBox="0 0 38 60"><g transform="translate(-303 -53)"><g transform="translate(-10 -4)"><g transform="translate(4.283 -0.717)"><circle cx="19" cy="19" r="19" transform="translate(308.717 57.717)" fill="#fff"/><path d="M7.471,20.659.322,13.51a1.1,1.1,0,0,1,0-1.555L1.878,10.4a1.1,1.1,0,0,1,1.555,0l4.816,4.816L18.564,4.9a1.1,1.1,0,0,1,1.555,0l1.555,1.555a1.1,1.1,0,0,1,0,1.555L9.027,20.659A1.1,1.1,0,0,1,7.471,20.659Z" transform="translate(316.88 63.938)" fill="#8db6f3"/></g><text transform="translate(332 111)" fill="#fff" font-size="16" font-family="NunitoSans-Regular, Nunito Sans"><tspan x="-17.456" y="0">Save</tspan></text></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="38" height="60" viewBox="0 0 38 60">
+    <g transform="translate(-303 -53)">
+        <g transform="translate(-10 -4)">
+            <g transform="translate(4.283 -0.717)">
+                <circle cx="19" cy="19" r="19" transform="translate(308.717 57.717)" fill="#fff"/>
+                <path d="M7.471,20.659.322,13.51a1.1,1.1,0,0,1,0-1.555L1.878,10.4a1.1,1.1,0,0,1,1.555,0l4.816,4.816L18.564,4.9a1.1,1.1,0,0,1,1.555,0l1.555,1.555a1.1,1.1,0,0,1,0,1.555L9.027,20.659A1.1,1.1,0,0,1,7.471,20.659Z" transform="translate(316.88 63.938)" fill="#8db6f3"/>
+            </g>
+            <text transform="translate(332 111)" fill="#fff" font-size="16" font-family="NunitoSans-Regular, Nunito Sans">
+                <tspan x="-17.456" y="0">Save</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

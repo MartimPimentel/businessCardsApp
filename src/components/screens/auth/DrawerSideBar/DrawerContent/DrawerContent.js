@@ -6,6 +6,7 @@ import {
   PersonalAreaIcon,
   UnknownUser,
   LogOutIcon,
+  Gear,
 } from '../../../../../assets/icons';
 import Styles from './DrawerContentStyles';
 import LinearGradient from 'react-native-linear-gradient';
@@ -16,7 +17,7 @@ import {deleteToken} from '../../../../../shared/functions/functions';
 
 const DrawerContent = (props) => {
   const isDrawerOpen = useIsDrawerOpen();
-  const [isMyCardsSelected, setIsMyCardSelected] = useState(true);
+  const [selectedTag, setSelectedTag] = useState(1);
   const [username, setUsername] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
   const getData = async () => {
@@ -61,11 +62,11 @@ const DrawerContent = (props) => {
       </View>
       <View style={Styles.menusContainer}>
         <View style={{flexDirection: 'row'}}>
-          <View style={Styles.seletecTag(isMyCardsSelected)} />
+          <View style={Styles.seletecTag(selectedTag == 1)} />
           <TouchableOpacity
-            style={Styles.myCardsStyle(isMyCardsSelected)}
+            style={Styles.myCardsStyle}
             onPress={() => {
-              setIsMyCardSelected(true);
+              setSelectedTag(1);
               props.navigation.navigate('MyCards');
             }}>
             <MyCardsIcon height={30} width={30} />
@@ -75,17 +76,31 @@ const DrawerContent = (props) => {
 
         <View style={Styles.separatorStyle} />
         <View style={{flexDirection: 'row'}}>
-          <View style={Styles.seletecTag(!isMyCardsSelected)} />
+          <View style={Styles.seletecTag(selectedTag == 2)} />
           <TouchableOpacity
-            style={Styles.personalAreaStyle(!isMyCardsSelected)}
+            style={Styles.personalAreaStyle}
             onPress={() => {
-              setIsMyCardSelected(false);
+              setSelectedTag(2);
               props.navigation.navigate('PersonalArea');
             }}>
             <PersonalAreaIcon height={30} width={30} />
             <Text style={Styles.textStyle}>Personal Area</Text>
           </TouchableOpacity>
         </View>
+        <View style={Styles.separatorStyle} />
+        <View style={{flexDirection: 'row'}}>
+          <View style={Styles.seletecTag(selectedTag == 3)} />
+          <TouchableOpacity
+            style={Styles.personalAreaStyle}
+            onPress={() => {
+              setSelectedTag(3);
+              props.navigation.navigate('Settings');
+            }}>
+            <Gear height={30} width={30} />
+            <Text style={Styles.textStyle}>Settings</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={Styles.separatorStyle} />
       </View>
       <View style={Styles.logOutContainer}>
         <TouchableOpacity

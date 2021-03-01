@@ -7,11 +7,13 @@ import {
 import HeaderEdit from './components/Header/HeaderEdit';
 import CardForm from './components/CardForm/CardForm';
 import Styles from './EditCardAreaStyles';
-import AsyncStorage from '@react-native-community/async-storage';
 import {useNavigation, useRoute, useIsFocused} from '@react-navigation/native';
 import Spinner from '../../../shared/Spinner/Spinner';
-import {nullCard} from '../../../../shared/consts';
 import ErrorModal from '../../../shared/Modal/ErrorModal';
+import SInfo from 'react-native-sensitive-info';
+import {createCard} from '../../../../shared/api/createCard';
+import {deleteCard} from '../../../../shared/api/deleteCard';
+import {editCard} from '../../../../shared/api/editCard';
 
 const EditCardArea = () => {
   const navigation = useNavigation();
@@ -20,36 +22,74 @@ const EditCardArea = () => {
   const [pressedSave, setPressedSave] = useState(undefined);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteModalResponse, setDeleteModalResponse] = useState(false);
-  const storeData = async (value) => {
-    try {
-      const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem('@PERSONAL_DATA', jsonValue);
-    } catch (e) {
-      // saving error
-    }
-  };
-  const clearData = async () => {
-    try {
-      await AsyncStorage.clear();
-    } catch (e) {
-      // clear error
-    }
 
+  const [loading, setLoading] = useState(true);
+  const [dbError, setError] = useState(null);
+
+  const storeData = async (value) => {
+    const jsonValue = JSON.stringify(value);
+    await SInfo.setItem('personalCard', jsonValue, {
+      sharedPreferencesName: 'bussinessCards',
+      keychainService: 'bussinessCards',
+    });
+  };
+
+  const clearData = async () => {
+    await SInfo.deleteItem('personalCard', {
+      sharedPreferencesName: 'bussinessCards',
+      keychainService: 'bussinessCards',
+    });
     console.log('Done.');
   };
 
   const saveCardData = (data) => {
-    console.log('Saved data:', data);
     storeData(data);
-
-    navigation.navigate('PersonalArea');
+    setLoading(true);
+    setError(null);
+    if (route.params == undefined) {
+      createCard(data)
+        .then((res) => {
+          navigation.navigate('PersonalArea');
+        })
+        .catch((error) => {
+          console.log(error.request.response);
+          const errors = JSON.parse(error.request.response);
+          console.log(errors);
+          setError(errors);
+        });
+    } else {
+      storeData(data);
+      editCard(data)
+        .then((res) => {
+          navigation.navigate('PersonalArea');
+        })
+        .catch((error) => {
+          console.log(error.request);
+          const errors = JSON.parse(error.request.response);
+          console.log(errors);
+          setError(errors);
+        });
+    }
   };
 
   const handleDeleteCard = () => {
     setDeleteModalResponse(true);
     clearData();
-    route.params = nullCard;
-    navigation.navigate('PersonalArea');
+    route.params = undefined;
+
+    setLoading(true);
+    setError(null);
+    deleteCard()
+      .then((res) => {
+        console.log('RES:', res.status);
+        navigation.navigate('PersonalArea');
+      })
+      .catch((error) => {
+        //console.log(error.request.response);
+        const errors = JSON.parse(error.request.response);
+        console.log(errors);
+        setError(errors);
+      });
   };
   return isFocused ? (
     <TouchableWithoutFeedback
@@ -59,12 +99,12 @@ const EditCardArea = () => {
         onClickToSaveData={() => {
           setPressedSave(pressedSave != undefined ? !pressedSave : true);
         }}
+        onPressBack={() => navigation.navigate('PersonalArea')}
       />
 
       <ScrollView showsVerticalScrollIndicator={false} style={{marginTop: 10}}>
         <View style={Styles.outsideContainer}>
           <Text style={Styles.titleStyles}>Edit My Card</Text>
-
           <CardForm
             deleteResponse={deleteModalResponse}
             onClickToSave={pressedSave}

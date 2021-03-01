@@ -7,19 +7,15 @@ export default Styles = StyleSheet.create({
     left: 0,
     height: '30%',
   },
-  myCardsStyle: (isSelected) => {
-    return {
-      flexDirection: 'row',
-      width: '100%',
-      left: 20,
-    };
+  myCardsStyle: {
+    flexDirection: 'row',
+    width: '100%',
+    left: 20,
   },
-  personalAreaStyle: (isSelected) => {
-    return {
-      flexDirection: 'row',
-      width: '100%',
-      left: 20,
-    };
+  personalAreaStyle: {
+    flexDirection: 'row',
+    width: '100%',
+    left: 20,
   },
   textStyle: {
     color: 'white',
