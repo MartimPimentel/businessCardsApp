@@ -6,12 +6,11 @@ import {
   SaveIcon,
   CardsIcon,
 } from '../../../../../../assets/icons';
-import {useNavigation} from '@react-navigation/native';
+
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 
 const HeaderEdit = ({onClickToSaveData, onPressBack}) => {
-  const navigation = useNavigation();
   return (
     <View style={Styles.header}>
       <SafeAreaView style={Styles.safeAreaView}>
