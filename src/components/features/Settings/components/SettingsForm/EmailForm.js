@@ -6,10 +6,11 @@ import HeaderEdit from '../../../PersonalArea/EditCardArea/components/Header/Hea
 import {emailFormSchema} from './functions/formsFunctions';
 import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers';
+import {useNavigation} from '@react-navigation/native';
 
 const EmailForm = () => {
+  const navigation = useNavigation();
   const [isEditable, setIsEditable] = useState(false);
-
   const emailSchema = emailFormSchema();
   const {handleSubmit, errors, control} = useForm({
     resolver: yupResolver(emailSchema),
@@ -32,7 +33,10 @@ const EmailForm = () => {
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
       style={{height: '100%', width: '100%'}}>
-      <HeaderEdit onClickToSaveData={handleSubmit(onSubmit)} />
+      <HeaderEdit
+        onClickToSaveData={handleSubmit(onSubmit)}
+        onPressBack={() => navigation.navigate('Settings')}
+      />
       <Text style={Styles.titleStyles}>Change Email</Text>
       <View style={Styles.outsideContainer}>
         <Text style={Styles.titleEntries}>Email</Text>

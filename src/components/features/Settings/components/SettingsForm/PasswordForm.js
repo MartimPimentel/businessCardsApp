@@ -6,8 +6,10 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import HeaderEdit from '../../../PersonalArea/EditCardArea/components/Header/HeaderEdit';
 import {passwordFormSchema} from './functions/formsFunctions';
 import {yupResolver} from '@hookform/resolvers';
+import {useNavigation} from '@react-navigation/native';
 
 const PasswordForm = () => {
+  const navigation = useNavigation();
   const passwordSchema = passwordFormSchema();
   const {handleSubmit, errors, control} = useForm({
     resolver: yupResolver(passwordSchema),
@@ -26,7 +28,10 @@ const PasswordForm = () => {
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
       style={{height: '100%', width: '100%'}}>
-      <HeaderEdit onClickToSaveData={handleSubmit(onSubmit)} />
+      <HeaderEdit
+        onClickToSaveData={handleSubmit(onSubmit)}
+        onPressBack={() => navigation.navigate('Settings')}
+      />
 
       <Text style={Styles.titleStyles}>Change Password</Text>
       <View style={Styles.outsideContainer}>
