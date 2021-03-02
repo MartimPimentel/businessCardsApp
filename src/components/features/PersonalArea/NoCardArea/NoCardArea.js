@@ -4,14 +4,11 @@ import Styles from './NoCardAreaStyles';
 import Header from './components/Header/NoCardsHeader';
 import {NoCardIcon, AddCardIcon} from '../../../../assets/icons';
 import {ScrollView} from 'react-native-gesture-handler';
-import {useNavigation} from '@react-navigation/native';
 
-const NoCardArea = () => {
-  const navigation = useNavigation();
-
+const NoCardArea = ({navigation}) => {
   return (
     <>
-      <Header />
+      <Header navigation={navigation} />
       <ScrollView
         alwaysBounceHorizontal={false}
         alwaysBounceVertical={false}
@@ -30,7 +27,7 @@ const NoCardArea = () => {
         <TouchableOpacity
           style={Styles.icon}
           onPress={() => {
-            navigation.navigate('EditCardArea', undefined);
+            navigation.push('EditCardArea', {cardData: undefined});
           }}>
           <AddCardIcon />
         </TouchableOpacity>

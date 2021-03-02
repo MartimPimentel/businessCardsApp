@@ -1,18 +1,11 @@
 import React from 'react';
 import {SafeAreaView, View} from 'react-native';
 import Styles from './NoCardsHeaderStyles';
-import {
-  EditIcon,
-  MenuIcon,
-  CardsIcon,
-  AddIcon,
-} from '../../../../../../assets/icons';
-import {DrawerActions, useNavigation} from '@react-navigation/native';
+import {MenuIcon, CardsIcon, AddIcon} from '../../../../../../assets/icons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 
-const NoCardsHeader = () => {
-  const navigation = useNavigation();
+const NoCardsHeader = ({navigation}) => {
   return (
     <View style={Styles.header}>
       <SafeAreaView style={Styles.safeAreaView}>
@@ -22,13 +15,15 @@ const NoCardsHeader = () => {
           <View style={Styles.icons}>
             <TouchableOpacity
               style={Styles.leftIcon}
-              onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
+              onPress={() => navigation.openDrawer()}>
               <MenuIcon />
             </TouchableOpacity>
             <CardsIcon />
             <TouchableOpacity
               style={Styles.rightIcon}
-              onPress={() => navigation.navigate('EditCardArea')}>
+              onPress={() =>
+                navigation.push('EditCardArea', {cardData: undefined})
+              }>
               <AddIcon height="50%" width="50%" />
             </TouchableOpacity>
           </View>

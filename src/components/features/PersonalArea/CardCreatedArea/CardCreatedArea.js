@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
 import Styles from './CardCreatedAreaStyles';
 import PersonalAreaHeader from './components/Header/PersonalAreaHeader';
@@ -8,17 +8,22 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import QRCodeModal from '../../../shared/Modal/QRCodeModal';
 import QRCode from 'react-native-qrcode-svg';
 
-const CardCreatedArea = ({data}) => {
+const CardCreatedArea = ({route, navigation}) => {
   const [qrcodeVisible, setQrcodeVisible] = useState(false);
+
   return (
     <View style={{height: '100%'}}>
-      <PersonalAreaHeader data={data} disabled={qrcodeVisible} />
+      <PersonalAreaHeader
+        navigation={navigation}
+        data={route.params.cardData}
+        disabled={qrcodeVisible}
+      />
       <View style={{marginTop: 20}}>
         <View style={Styles.textBox}>
           <Text style={Styles.titleTexts}>Personal Area</Text>
         </View>
         <View style={Styles.card}>
-          <Card data={data} />
+          <Card data={route.params.cardData} />
         </View>
       </View>
 

@@ -10,7 +10,6 @@ import {useDispatch} from 'react-redux';
 import {getFromStore, parseError, storeItems} from '../functions/functions';
 
 export function useCardUpdaters() {
-  const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const dispatchOffline = () => {
@@ -29,7 +28,7 @@ export function useCardUpdaters() {
       ),
     );
   };
-  const createCard = async function (cardData) {
+  const createCard = async function (cardData, navigation) {
     const netInfo = await NetInfo.fetch();
     if (netInfo.isConnected) {
       dispatch(asyncActionStart());
@@ -41,7 +40,7 @@ export function useCardUpdaters() {
         });
         await storeItems('personalCard', JSON.stringify(cardData));
         dispatch(asyncActionFinish());
-        navigation.navigate('PersonalArea', cardData);
+        navigation.push('CardCreatedArea', {cardData: cardData});
       } catch (error) {
         console.log(error);
         dispatch(
@@ -58,7 +57,7 @@ export function useCardUpdaters() {
     }
   };
 
-  const editCard = async function (cardData) {
+  const editCard = async function (cardData, navigation) {
     const netInfo = await NetInfo.fetch();
     if (netInfo.isConnected) {
       dispatch(asyncActionStart());
@@ -71,7 +70,7 @@ export function useCardUpdaters() {
         });
         await storeItems('personalCard', JSON.stringify(cardData));
         dispatch(asyncActionFinish());
-        navigation.navigate('PersonalArea', cardData);
+        navigation.push('CardCreatedArea', {cardData: cardData});
       } catch (error) {
         console.log(error.request.response);
         dispatch(
@@ -87,7 +86,7 @@ export function useCardUpdaters() {
       dispatchOffline();
     }
   };
-  const deleteCard = async function () {
+  const deleteCard = async function (navigation) {
     const netInfo = await NetInfo.fetch();
     if (netInfo.isConnected) {
       dispatch(asyncActionStart());
@@ -96,7 +95,7 @@ export function useCardUpdaters() {
           return await api.post('/delete_card', {}, {headers: {Token: token}});
         });
         dispatch(asyncActionFinish());
-        navigation.navigate('PersonalArea', undefined);
+        navigation.push('NoCardArea', undefined);
       } catch (error) {
         console.log(error);
         dispatch(
