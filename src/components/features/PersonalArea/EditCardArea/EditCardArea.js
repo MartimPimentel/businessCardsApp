@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, Text, Keyboard} from 'react-native';
 import {
   TouchableWithoutFeedback,
@@ -8,31 +8,21 @@ import HeaderEdit from './components/Header/HeaderEdit';
 import CardForm from './components/CardForm/CardForm';
 import Styles from './EditCardAreaStyles';
 import {useNavigation, useRoute, useIsFocused} from '@react-navigation/native';
-import Spinner from '../../../shared/Spinner/Spinner';
-import ErrorModal from '../../../shared/Modal/ErrorModal';
 import SInfo from 'react-native-sensitive-info';
-import {createCard} from '../../../../shared/api/createCard';
-import {deleteCard} from '../../../../shared/api/deleteCard';
-import {editCard} from '../../../../shared/api/editCard';
+import {useDispatch} from 'react-redux';
+import {storeItems} from '../../../../shared/functions/functions';
+import {useCardUpdaters} from '../../../../shared/api/useCardUpdaters';
+import {openModal} from '../../../shared/Modal/modalReducer';
 
 const EditCardArea = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const scrollViewRef = useRef();
+  const {createCard, editCard, deleteCard} = useCardUpdaters();
   const route = useRoute();
   const isFocused = useIsFocused();
   const [pressedSave, setPressedSave] = useState(undefined);
-  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [deleteModalResponse, setDeleteModalResponse] = useState(false);
-
-  const [loading, setLoading] = useState(true);
-  const [dbError, setError] = useState(null);
-
-  const storeData = async (value) => {
-    const jsonValue = JSON.stringify(value);
-    await SInfo.setItem('personalCard', jsonValue, {
-      sharedPreferencesName: 'bussinessCards',
-      keychainService: 'bussinessCards',
-    });
-  };
+  const [deleteModalResponse, setDeleteModalResponse] = useState(undefined);
 
   const clearData = async () => {
     await SInfo.deleteItem('personalCard', {
@@ -43,55 +33,39 @@ const EditCardArea = () => {
   };
 
   const saveCardData = (data) => {
-    storeData(data);
-    setLoading(true);
-    setError(null);
+    storeItems('personalCard', JSON.stringify(data));
+
     if (route.params == undefined) {
-      createCard(data)
-        .then((res) => {
-          navigation.navigate('PersonalArea');
-        })
-        .catch((error) => {
-          console.log(error.request.response);
-          const errors = JSON.parse(error.request.response);
-          console.log(errors);
-          setError(errors);
-        });
+      createCard(data);
     } else {
-      storeData(data);
-      editCard(data)
-        .then((res) => {
-          navigation.navigate('PersonalArea');
-        })
-        .catch((error) => {
-          console.log(error.request);
-          const errors = JSON.parse(error.request.response);
-          console.log(errors);
-          setError(errors);
-        });
+      editCard(data);
     }
   };
-
   const handleDeleteCard = () => {
-    setDeleteModalResponse(true);
-    clearData();
-    route.params = undefined;
-
-    setLoading(true);
-    setError(null);
-    deleteCard()
-      .then((res) => {
-        console.log('RES:', res.status);
-        navigation.navigate('PersonalArea');
-      })
-      .catch((error) => {
-        //console.log(error.request.response);
-        const errors = JSON.parse(error.request.response);
-        console.log(errors);
-        setError(errors);
-      });
+    dispatch(
+      openModal({
+        modalType: 'DeleteCardModal',
+        modalProps: {
+          headerText: 'Are you sure?',
+          bodyText: `Deleting your card will delete it from all people that you share it with.\n Instead update your card.`,
+          actionButtonText: 'Delete',
+          cancelButtonText: 'Cancel',
+          onAction: () => {
+            clearData();
+            route.params = undefined;
+            deleteCard();
+            setDeleteModalResponse(!deleteModalResponse);
+          },
+        },
+      }),
+    );
   };
-  return isFocused ? (
+  useEffect(() => {
+    if (!isFocused)
+      scrollViewRef.current.scrollTo({x: 0, y: 0, animated: false});
+  }, [isFocused]);
+
+  return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
       style={{height: '100%', width: '100%'}}>
@@ -102,7 +76,10 @@ const EditCardArea = () => {
         onPressBack={() => navigation.navigate('PersonalArea')}
       />
 
-      <ScrollView showsVerticalScrollIndicator={false} style={{marginTop: 10}}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{marginTop: 10}}
+        ref={scrollViewRef}>
         <View style={Styles.outsideContainer}>
           <Text style={Styles.titleStyles}>Edit My Card</Text>
           <CardForm
@@ -110,37 +87,12 @@ const EditCardArea = () => {
             onClickToSave={pressedSave}
             redirectSubmittedData={saveCardData}
             data={route.params}
-            onClickToDelete={() => setDeleteModalOpen(true)}
+            onClickToDelete={handleDeleteCard}
             deleteErrors={isFocused}
           />
         </View>
       </ScrollView>
-      <ErrorModal
-        actionButtonText="Delete"
-        cancelButtonTest="Cancel"
-        isVisible={isDeleteModalOpen}
-        onClose={() => {
-          setDeleteModalOpen(false);
-          setDeleteModalResponse(false);
-        }}
-        onAction={() => {
-          setDeleteModalOpen(false);
-          handleDeleteCard();
-        }}
-        header={
-          <Text style={{fontFamily: 'Nunito-Regular', fontSize: 20}}>
-            Are you sure?
-          </Text>
-        }
-        body={
-          <Text style={{fontSize: 15, textAlign: 'center', letterSpacing: 1}}>
-            Deleting this card will make all your connections lose your card.
-          </Text>
-        }
-      />
     </TouchableWithoutFeedback>
-  ) : (
-    <Spinner />
   );
 };
 export default EditCardArea;
