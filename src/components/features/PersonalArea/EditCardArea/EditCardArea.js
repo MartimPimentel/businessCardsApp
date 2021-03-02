@@ -33,14 +33,13 @@ const EditCardArea = () => {
   };
 
   const saveCardData = (data) => {
-    storeItems('personalCard', JSON.stringify(data));
-
     if (route.params == undefined) {
       createCard(data);
     } else {
       editCard(data);
     }
   };
+
   const handleDeleteCard = () => {
     dispatch(
       openModal({
@@ -52,7 +51,6 @@ const EditCardArea = () => {
           cancelButtonText: 'Cancel',
           onAction: () => {
             clearData();
-            route.params = undefined;
             deleteCard();
             setDeleteModalResponse(!deleteModalResponse);
           },
@@ -64,6 +62,9 @@ const EditCardArea = () => {
     if (!isFocused)
       scrollViewRef.current.scrollTo({x: 0, y: 0, animated: false});
   }, [isFocused]);
+  useEffect(() => {
+    console.log(route.params);
+  }, [route.params]);
 
   return (
     <TouchableWithoutFeedback
@@ -73,7 +74,10 @@ const EditCardArea = () => {
         onClickToSaveData={() => {
           setPressedSave(pressedSave != undefined ? !pressedSave : true);
         }}
-        onPressBack={() => navigation.navigate('PersonalArea')}
+        onPressBack={() => {
+          navigation.navigate('PersonalArea');
+          setDeleteModalResponse(!deleteModalResponse);
+        }}
       />
 
       <ScrollView
