@@ -63,7 +63,8 @@ const CardForm = ({
     clearErrors();
   }, [deleteErrors]);
   useEffect(() => {
-    if (deleteResponse) reset(nullCard);
+    console.log(deleteResponse);
+    if (deleteResponse != undefined) reset(nullCard);
   }, [deleteResponse]);
   //bug in android email text fields makes app RN apps crash.Known workaround:
   useEffect(() => {
@@ -102,6 +103,7 @@ const CardForm = ({
           defaultValue={data.name}
           render={({onChange, onBlur, value}) => (
             <TextInput
+              editable={isEditable}
               style={Styles.textInputStyles}
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
@@ -221,6 +223,7 @@ const CardForm = ({
           defaultValue={data.address}
           render={({onChange, onBlur, value}) => (
             <TextInput
+              editable={isEditable}
               style={Styles.textInputStyles}
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
@@ -240,6 +243,7 @@ const CardForm = ({
           name="companyName"
           render={({onChange, onBlur, value}) => (
             <TextInput
+              editable={isEditable}
               style={Styles.textInputStyles}
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
@@ -259,6 +263,7 @@ const CardForm = ({
           defaultValue={data.role}
           render={({onChange, onBlur, value}) => (
             <TextInput
+              editable={isEditable}
               style={Styles.textInputStyles}
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
@@ -298,6 +303,7 @@ const CardForm = ({
           defaultValue={data.observations}
           render={({onChange, onBlur, value}) => (
             <TextInput
+              editable={isEditable}
               style={[
                 Styles.textInputStyles,
                 {
@@ -331,6 +337,7 @@ const CardForm = ({
             defaultValue={data.linkedInLink}
             render={({onChange, onBlur, value}) => (
               <TextInput
+                editable={isEditable}
                 style={Styles.textInputStyles}
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
@@ -348,6 +355,7 @@ const CardForm = ({
             defaultValue={data.facebookLink}
             render={({onChange, onBlur, value}) => (
               <TextInput
+                editable={isEditable}
                 style={Styles.textInputStyles}
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
@@ -365,6 +373,7 @@ const CardForm = ({
             defaultValue={data.instagramLink}
             render={({onChange, onBlur, value}) => (
               <TextInput
+                editable={isEditable}
                 style={Styles.textInputStyles}
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
