@@ -7,9 +7,11 @@ import {emailFormSchema} from './functions/formsFunctions';
 import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers';
 import {useNavigation} from '@react-navigation/native';
+import {useEmailChange} from '../../../../../shared/api/changeEmail';
 
 const EmailForm = () => {
   const navigation = useNavigation();
+  const changeEmail = useEmailChange();
   const [isEditable, setIsEditable] = useState(false);
   const emailSchema = emailFormSchema();
   const {handleSubmit, errors, control} = useForm({
@@ -19,8 +21,7 @@ const EmailForm = () => {
   });
 
   const onSubmit = (data) => {
-    //TO DO
-    // Make api call
+    changeEmail(data);
   };
 
   useEffect(() => {
