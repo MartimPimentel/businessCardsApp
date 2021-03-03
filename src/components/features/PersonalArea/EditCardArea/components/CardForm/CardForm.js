@@ -73,7 +73,6 @@ const CardForm = ({
       setIsEditable(true);
     }, 100);
   }, []);
-
   return (
     <View style={Styles.outsideContainer}>
       <View style={Styles.separatorPhotos}>
@@ -88,7 +87,7 @@ const CardForm = ({
                 onChange={(image) => {
                   onChange(image);
                 }}
-                data={data.profilePhoto}
+                data={value}
                 croppingCircular
               />
             )}
@@ -289,7 +288,7 @@ const CardForm = ({
                 onChange={(image) => {
                   onChange(image);
                 }}
-                data={data.companyLogo}
+                data={value}
               />
             )}
           />
