@@ -73,3 +73,15 @@ export const parseError = (error, navigation) => {
   }
   return {...errors, message: errorMessage};
 };
+
+export const deleteAllData = async () => {
+  deleteToken();
+  await SInfo.deleteItem('personalCard', {
+    sharedPreferencesName: 'bussinessCards',
+    keychainService: 'bussinessCards',
+  });
+  await SInfo.deleteItem('sharedCards', {
+    sharedPreferencesName: 'bussinessCards',
+    keychainService: 'bussinessCards',
+  });
+};

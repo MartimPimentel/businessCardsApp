@@ -6,21 +6,23 @@ import HeaderEdit from '../../../PersonalArea/EditCardArea/components/Header/Hea
 import {emailFormSchema} from './functions/formsFunctions';
 import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {useEmailChange} from '../../../../../shared/api/changeEmail';
 
 const EmailForm = () => {
   const navigation = useNavigation();
+  const changeEmail = useEmailChange();
   const [isEditable, setIsEditable] = useState(false);
+  const isFocused = useIsFocused();
   const emailSchema = emailFormSchema();
-  const {handleSubmit, errors, control} = useForm({
+  const {handleSubmit, errors, control, reset} = useForm({
     resolver: yupResolver(emailSchema),
     mode: 'onSubmit',
     defaultValues: {email: ''},
   });
 
   const onSubmit = (data) => {
-    //TO DO
-    // Make api call
+    changeEmail(data);
   };
 
   useEffect(() => {
@@ -29,6 +31,9 @@ const EmailForm = () => {
     }, 100);
   }, []);
 
+  useEffect(() => {
+    if (!isFocused) reset();
+  }, [isFocused]);
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
