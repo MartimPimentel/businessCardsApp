@@ -25,7 +25,6 @@ const DrawerNavigator = () => {
       drawerContent={(props) => <DrawerContent {...props} />}>
       <Drawer.Screen name="MyCards" component={MyCardsArea} />
       <Drawer.Screen name="PersonalArea" component={PersonalArea} />
-      <Drawer.Screen name="EditCardArea" component={EditCardArea} />
       <Drawer.Screen name="Settings" component={SettingsArea} />
       <Drawer.Screen name="EmailForm" component={EmailForm} />
       <Drawer.Screen name="PasswordForm" component={PasswordForm} />

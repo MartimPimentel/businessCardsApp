@@ -2,13 +2,10 @@ import React from 'react';
 import {SafeAreaView, View} from 'react-native';
 import Styles from './PersonalAreaHeaderStyles';
 import {EditIcon, MenuIcon, CardsIcon} from '../../../../../../assets/icons';
-import {DrawerActions, useNavigation} from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 
-const PersonalAreaHeader = ({data, disabled}) => {
-  const navigation = useNavigation();
-
+const PersonalAreaHeader = ({data, disabled, navigation}) => {
   return (
     <View style={Styles.header}>
       <SafeAreaView style={Styles.safeAreaView}>
@@ -19,14 +16,14 @@ const PersonalAreaHeader = ({data, disabled}) => {
             <TouchableOpacity
               disabled={disabled}
               style={Styles.leftIcon}
-              onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
+              onPress={() => navigation.openDrawer()}>
               <MenuIcon />
             </TouchableOpacity>
             <CardsIcon />
             <TouchableOpacity
               disabled={disabled}
               style={Styles.rightIcon}
-              onPress={() => navigation.navigate('EditCardArea', data)}>
+              onPress={() => navigation.push('EditCardArea', {cardData: data})}>
               <EditIcon />
             </TouchableOpacity>
           </View>

@@ -7,19 +7,17 @@ import {
 import HeaderEdit from './components/Header/HeaderEdit';
 import CardForm from './components/CardForm/CardForm';
 import Styles from './EditCardAreaStyles';
-import {useNavigation, useRoute, useIsFocused} from '@react-navigation/native';
+import {useNavigation, useIsFocused} from '@react-navigation/native';
 import SInfo from 'react-native-sensitive-info';
 import {useDispatch} from 'react-redux';
-import {storeItems} from '../../../../shared/functions/functions';
 import {useCardUpdaters} from '../../../../shared/api/useCardUpdaters';
 import {openModal} from '../../../shared/Modal/modalReducer';
 
-const EditCardArea = () => {
-  const navigation = useNavigation();
+const EditCardArea = ({route, navigation}) => {
+  //const navigation = useNavigation();
   const dispatch = useDispatch();
   const scrollViewRef = useRef();
   const {createCard, editCard, deleteCard} = useCardUpdaters();
-  const route = useRoute();
   const isFocused = useIsFocused();
   const [pressedSave, setPressedSave] = useState(undefined);
   const [deleteModalResponse, setDeleteModalResponse] = useState(undefined);
@@ -33,14 +31,14 @@ const EditCardArea = () => {
   };
 
   const saveCardData = (data) => {
-    storeItems('personalCard', JSON.stringify(data));
-
-    if (route.params == undefined) {
-      createCard(data);
+    console.log('-->', route.params.cardData);
+    if (route.params.cardData == undefined) {
+      createCard(data, navigation);
     } else {
-      editCard(data);
+      editCard(data, navigation);
     }
   };
+
   const handleDeleteCard = () => {
     dispatch(
       openModal({
@@ -52,8 +50,7 @@ const EditCardArea = () => {
           cancelButtonText: 'Cancel',
           onAction: () => {
             clearData();
-            route.params = undefined;
-            deleteCard();
+            deleteCard(navigation);
             setDeleteModalResponse(!deleteModalResponse);
           },
         },
@@ -64,6 +61,9 @@ const EditCardArea = () => {
     if (!isFocused)
       scrollViewRef.current.scrollTo({x: 0, y: 0, animated: false});
   }, [isFocused]);
+  useEffect(() => {
+    console.log(route.params.cardData);
+  }, [route.params.cardData]);
 
   return (
     <TouchableWithoutFeedback
@@ -73,7 +73,10 @@ const EditCardArea = () => {
         onClickToSaveData={() => {
           setPressedSave(pressedSave != undefined ? !pressedSave : true);
         }}
-        onPressBack={() => navigation.navigate('PersonalArea')}
+        onPressBack={() => {
+          navigation.goBack();
+          setDeleteModalResponse(!deleteModalResponse);
+        }}
       />
 
       <ScrollView
@@ -86,7 +89,7 @@ const EditCardArea = () => {
             deleteResponse={deleteModalResponse}
             onClickToSave={pressedSave}
             redirectSubmittedData={saveCardData}
-            data={route.params}
+            data={route.params.cardData}
             onClickToDelete={handleDeleteCard}
             deleteErrors={isFocused}
           />
