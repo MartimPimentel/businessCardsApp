@@ -5,14 +5,42 @@ import PersonalAreaHeader from './components/Header/PersonalAreaHeader';
 import Card from '../../../shared/Card/Card';
 import {QRCodeIcon, NFCIcon} from '../../../../assets/icons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import QRCodeModal from '../../../shared/Modal/QRCodeModal';
 import QRCode from 'react-native-qrcode-svg';
+import {useDispatch} from 'react-redux';
+import {openModal} from '../../../shared/Modal/modalReducer';
+import {getFromStore} from '../../../../shared/functions/functions';
+import base64url from 'base64url';
 
 const CardCreatedArea = ({data}) => {
   const [qrcodeVisible, setQrcodeVisible] = useState(false);
+  const dispatch = useDispatch();
+
+  const getUserID = () => {
+    getFromStore('token').then((res) => {
+      if (res != null) {
+        const splitted = res.split('.')[1];
+        //Expires one day before exp date
+        return JSON.parse(base64url.decode(splitted)).userId;
+      } else {
+        //TO DO handle this
+      }
+    });
+  };
+
+  const handleQrCode = () => {
+    dispatch(
+      openModal({
+        modalType: 'QRCodeModal',
+        modalProps: {
+          body: <QRCode size={200} value={getUserID()} />,
+          cancelButtonTest: 'Close',
+        },
+      }),
+    );
+  };
   return (
     <View style={{height: '100%'}}>
-      <PersonalAreaHeader data={data} disabled={qrcodeVisible} />
+      <PersonalAreaHeader data={data} />
       <View style={{marginTop: 20}}>
         <View style={Styles.textBox}>
           <Text style={Styles.titleTexts}>Personal Area</Text>
@@ -22,19 +50,12 @@ const CardCreatedArea = ({data}) => {
         </View>
       </View>
 
-      <QRCodeModal
-        isVisible={qrcodeVisible}
-        cancelButtonTest="Close"
-        onClose={() => setQrcodeVisible(false)}
-        body={<QRCode size={200} value={'SERVER INFO'} />}
-      />
-
       <View style={Styles.divider}>
         <View style={Styles.outsideContainer}>
           <View style={Styles.footerBackground}></View>
           <View style={Styles.buttonsContainer}>
             <View style={{width: '25%', height: '90%'}}>
-              <TouchableOpacity disabled={qrcodeVisible}>
+              <TouchableOpacity>
                 <NFCIcon
                   width="100%"
                   height="100%"
@@ -43,11 +64,7 @@ const CardCreatedArea = ({data}) => {
               </TouchableOpacity>
             </View>
             <View style={{width: '25%', height: '90%'}}>
-              <TouchableOpacity
-                disabled={qrcodeVisible}
-                onPress={() => {
-                  setQrcodeVisible(true);
-                }}>
+              <TouchableOpacity onPress={handleQrCode}>
                 <QRCodeIcon
                   width="100%"
                   height="100%"

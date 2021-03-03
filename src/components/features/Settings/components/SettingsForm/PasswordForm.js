@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Text, View, TextInput, Keyboard} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import Styles from './FormStyles';
@@ -6,12 +6,15 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import HeaderEdit from '../../../PersonalArea/EditCardArea/components/Header/HeaderEdit';
 import {passwordFormSchema} from './functions/formsFunctions';
 import {yupResolver} from '@hookform/resolvers';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {usePasswordChange} from '../../../../../shared/api/changePassword';
 
 const PasswordForm = () => {
   const navigation = useNavigation();
   const passwordSchema = passwordFormSchema();
-  const {handleSubmit, errors, control} = useForm({
+  const changePassword = usePasswordChange();
+  const isFocused = useIsFocused();
+  const {handleSubmit, errors, control, reset} = useForm({
     resolver: yupResolver(passwordSchema),
     mode: 'onChange',
     defaultValues: {
@@ -21,9 +24,15 @@ const PasswordForm = () => {
     },
   });
   const onSubmit = (data) => {
-    //TO DO
-    //api call
+    changePassword({
+      currentPassword: data.currentPassword,
+      newPassword: data.newPassword,
+    });
   };
+
+  useEffect(() => {
+    if (!isFocused) reset();
+  }, [isFocused]);
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
