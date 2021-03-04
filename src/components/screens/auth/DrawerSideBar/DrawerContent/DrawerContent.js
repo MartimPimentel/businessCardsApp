@@ -26,9 +26,8 @@ const DrawerContent = (props) => {
   const getData = async () => {
     try {
       const jsonValue = await getFromStore('personalCard');
-      console.log(jsonValue);
       const {name, profilePhoto} =
-        jsonValue != null ? JSON.parse(jsonValue) : '';
+        jsonValue != null ? JSON.parse(jsonValue)[0] : '';
       setUsername(name);
       setProfilePhoto(profilePhoto);
     } catch (e) {
