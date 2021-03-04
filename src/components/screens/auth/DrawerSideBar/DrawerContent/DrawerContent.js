@@ -13,7 +13,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useIsDrawerOpen} from '@react-navigation/drawer';
 import {CommonActions} from '@react-navigation/native';
-import {deleteToken} from '../../../../../shared/functions/functions';
+import {
+  deleteToken,
+  getFromStore,
+} from '../../../../../shared/functions/functions';
 
 const DrawerContent = (props) => {
   const isDrawerOpen = useIsDrawerOpen();
@@ -22,7 +25,8 @@ const DrawerContent = (props) => {
   const [profilePhoto, setProfilePhoto] = useState(null);
   const getData = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem('@PERSONAL_DATA');
+      const jsonValue = await getFromStore('personalCard');
+      console.log(jsonValue);
       const {name, profilePhoto} =
         jsonValue != null ? JSON.parse(jsonValue) : '';
       setUsername(name);
