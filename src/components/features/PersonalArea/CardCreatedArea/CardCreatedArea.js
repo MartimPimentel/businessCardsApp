@@ -12,7 +12,6 @@ import {getFromStore} from '../../../../shared/functions/functions';
 import base64url from 'base64url';
 
 const CardCreatedArea = ({route, navigation}) => {
-  const [qrcodeVisible, setQrcodeVisible] = useState(false);
   const dispatch = useDispatch();
 
   const getUserID = () => {
@@ -40,7 +39,10 @@ const CardCreatedArea = ({route, navigation}) => {
   };
   return (
     <View style={{height: '100%'}}>
-      <PersonalAreaHeader data={data} />
+      <PersonalAreaHeader
+        navigation={navigation}
+        data={route.params.cardData}
+      />
       <View style={{marginTop: 20}}>
         <View style={Styles.textBox}>
           <Text style={Styles.titleTexts}>Personal Area</Text>

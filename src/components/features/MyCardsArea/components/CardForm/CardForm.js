@@ -50,6 +50,7 @@ const CardForm = ({onClickForm}) => {
         }}>
         <ScrollView
           shouldActivateOnStart
+          showsVerticalScrollIndicator={false}
           style={{
             marginHorizontal: 30,
           }}
