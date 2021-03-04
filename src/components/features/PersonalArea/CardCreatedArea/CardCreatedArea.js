@@ -10,33 +10,67 @@ import {useDispatch} from 'react-redux';
 import {openModal} from '../../../shared/Modal/modalReducer';
 import {getFromStore} from '../../../../shared/functions/functions';
 import base64url from 'base64url';
+import {
+  asyncActionError,
+  asyncActionFinish,
+  asyncActionStart,
+} from '../../../../shared/async/asyncReducer';
+import {NavigationActions, StackActions} from 'react-navigation';
+import {CommonActions} from '@react-navigation/native';
 
 const CardCreatedArea = ({route, navigation}) => {
   const dispatch = useDispatch();
+  const [userId, setUserId] = useState(null);
 
   const getUserID = () => {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{name: 'NotAuth'}],
+      }),
+    );
+    return;
+    dispatch(asyncActionStart());
+
     getFromStore('token').then((res) => {
       if (res != null) {
         const splitted = res.split('.')[1];
         //Expires one day before exp date
-        return JSON.parse(base64url.decode(splitted)).userId;
+        setUserId(JSON.parse(base64url.decode(splitted)).userId);
+        dispatch(asyncActionFinish());
       } else {
-        //TO DO handle this
+        dispatch(
+          asyncActionError(
+            {
+              message: 'Ups something went wrong',
+            },
+            {
+              cancelButtonTest: 'Ok',
+              onClose: () => {
+                dispatch(asyncActionError(null));
+              },
+            },
+          ),
+        );
       }
     });
   };
-
+  console.log(navigation);
   const handleQrCode = () => {
     dispatch(
       openModal({
         modalType: 'QRCodeModal',
         modalProps: {
-          body: <QRCode size={200} value={getUserID()} />,
+          body: <QRCode size={200} value={'ok'} />,
           cancelButtonTest: 'Close',
         },
       }),
     );
   };
+  useEffect(() => {
+    getUserID();
+  }, []);
+
   return (
     <View style={{height: '100%'}}>
       <PersonalAreaHeader
