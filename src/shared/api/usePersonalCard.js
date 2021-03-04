@@ -1,6 +1,6 @@
 import api from './api';
 import NetInfo from '@react-native-community/netinfo';
-import {getFromStore, storeItems} from '../functions/functions';
+import {getFromStore, parseData, storeItems} from '../functions/functions';
 import {
   asyncActionError,
   asyncActionFinish,
@@ -28,7 +28,7 @@ export function usePersonalCard({error: initErrorVal}) {
             },
           );
         });
-        const cardData = res.data;
+        const cardData = parseData(res.data);
 
         storeItems('personalCard', JSON.stringify(cardData));
         dispatch(asyncActionFinish());
