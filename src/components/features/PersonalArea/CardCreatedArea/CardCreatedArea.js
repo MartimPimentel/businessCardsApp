@@ -15,21 +15,12 @@ import {
   asyncActionFinish,
   asyncActionStart,
 } from '../../../../shared/async/asyncReducer';
-import {NavigationActions, StackActions} from 'react-navigation';
-import {CommonActions} from '@react-navigation/native';
 
 const CardCreatedArea = ({route, navigation}) => {
   const dispatch = useDispatch();
   const [userId, setUserId] = useState(null);
 
   const getUserID = () => {
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [{name: 'NotAuth'}],
-      }),
-    );
-    return;
     dispatch(asyncActionStart());
 
     getFromStore('token').then((res) => {
@@ -42,12 +33,16 @@ const CardCreatedArea = ({route, navigation}) => {
         dispatch(
           asyncActionError(
             {
-              message: 'Ups something went wrong',
+              message: 'Ups something went wrong. Please login again',
             },
             {
               cancelButtonTest: 'Ok',
               onClose: () => {
                 dispatch(asyncActionError(null));
+                navigation.reset({
+                  index: 0,
+                  routes: [{name: 'NotAuth'}],
+                });
               },
             },
           ),
@@ -55,13 +50,12 @@ const CardCreatedArea = ({route, navigation}) => {
       }
     });
   };
-  console.log(navigation);
   const handleQrCode = () => {
     dispatch(
       openModal({
         modalType: 'QRCodeModal',
         modalProps: {
-          body: <QRCode size={200} value={'ok'} />,
+          body: <QRCode size={200} value={userId} />,
           cancelButtonTest: 'Close',
         },
       }),
