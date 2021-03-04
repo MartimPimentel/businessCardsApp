@@ -2,53 +2,43 @@ import api from './api';
 import {useNavigation} from '@react-navigation/native';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {getFromStore, parseError} from '../functions/functions';
-import {
-  asyncActionError,
-  asyncActionFinish,
-  asyncActionStart,
-} from '../async/asyncReducer';
-import {useDispatch} from 'react-redux';
+import {useContext} from 'react';
+import {AsyncContext} from '../providers/asyncProvider';
 
 export function useEmailChange() {
   const netInfo = useNetInfo();
   const navigation = useNavigation();
-  const dispatch = useDispatch();
+  const {setLoading, setError} = useContext(AsyncContext);
   return async function (body) {
-    dispatch(asyncActionStart());
+    setLoading(true);
     if (netInfo.isConnected) {
       try {
-        const res = await getFromStore('token').then(async (token) => {
+        await getFromStore('token').then(async (token) => {
           return await api.post('/change_email', body, {
             headers: {Token: token},
           });
         });
-        dispatch(asyncActionFinish());
+        setLoading(false);
         navigation.navigate('Settings');
-        dispatch(asyncActionFinish());
       } catch (error) {
-        dispatch(
-          asyncActionError(parseError(error, navigation), {
-            cancelButtonTest: 'Retry',
-            onClose: () => {
-              dispatch(asyncActionError(null));
-            },
-          }),
-        );
+        setError(parseError(error, navigation), {
+          cancelButtonTest: 'Retry',
+          onClose: () => {
+            setError(null);
+          },
+        });
       }
     } else {
-      dispatch(
-        asyncActionError(
-          {
-            message:
-              'You are currently offline. Go online to be able to login.',
+      setError(
+        {
+          message: 'You are currently offline. Go online to be able to login.',
+        },
+        {
+          cancelButtonTest: 'Ok',
+          onClose: () => {
+            setError(null);
           },
-          {
-            cancelButtonTest: 'Ok',
-            onClose: () => {
-              dispatch(asyncActionError(null));
-            },
-          },
-        ),
+        },
       );
     }
   };

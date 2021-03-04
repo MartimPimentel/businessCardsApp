@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
 import Styles from './CardCreatedAreaStyles';
 import PersonalAreaHeader from './components/Header/PersonalAreaHeader';
@@ -10,42 +10,36 @@ import {useDispatch} from 'react-redux';
 import {openModal} from '../../../shared/Modal/modalReducer';
 import {getFromStore} from '../../../../shared/functions/functions';
 import base64url from 'base64url';
-import {
-  asyncActionError,
-  asyncActionFinish,
-  asyncActionStart,
-} from '../../../../shared/async/asyncReducer';
+import {AsyncContext} from '../../../../shared/providers/asyncProvider';
 
 const CardCreatedArea = ({route, navigation}) => {
   const dispatch = useDispatch();
   const [userId, setUserId] = useState(null);
+  const {setLoading, setError} = useContext(AsyncContext);
 
   const getUserID = () => {
-    dispatch(asyncActionStart());
-
+    setLoading(true);
     getFromStore('token').then((res) => {
       if (res != null) {
         const splitted = res.split('.')[1];
         //Expires one day before exp date
         setUserId(JSON.parse(base64url.decode(splitted)).userId);
-        dispatch(asyncActionFinish());
+        setLoading(false);
       } else {
-        dispatch(
-          asyncActionError(
-            {
-              message: 'Ups something went wrong. Please login again',
+        setError(
+          {
+            message: 'Ups something went wrong. Please login again',
+          },
+          {
+            cancelButtonTest: 'Ok',
+            onClose: () => {
+              setError(null);
+              navigation.reset({
+                index: 0,
+                routes: [{name: 'NotAuth'}],
+              });
             },
-            {
-              cancelButtonTest: 'Ok',
-              onClose: () => {
-                dispatch(asyncActionError(null));
-                navigation.reset({
-                  index: 0,
-                  routes: [{name: 'NotAuth'}],
-                });
-              },
-            },
-          ),
+          },
         );
       }
     });

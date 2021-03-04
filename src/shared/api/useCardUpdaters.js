@@ -1,37 +1,29 @@
 import api from './api';
-import {useNavigation} from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
-import {
-  asyncActionError,
-  asyncActionFinish,
-  asyncActionStart,
-} from '../async/asyncReducer';
-import {useDispatch} from 'react-redux';
 import {getFromStore, parseError, storeItems} from '../functions/functions';
+import {useContext} from 'react';
+import {AsyncContext} from '../providers/asyncProvider';
 
 export function useCardUpdaters() {
-  const dispatch = useDispatch();
-
+  const {setLoading, setError} = useContext(AsyncContext);
   const dispatchOffline = () => {
-    dispatch(
-      asyncActionError(
-        {
-          message:
-            'You are currently offline. Go online to be able do add new cards.',
+    setError(
+      {
+        message:
+          'You are currently offline. Go online to be able do add new cards.',
+      },
+      {
+        cancelButtonTest: 'Ok',
+        onClose: () => {
+          setError(null);
         },
-        {
-          cancelButtonTest: 'Ok',
-          onClose: () => {
-            dispatch(asyncActionError(null));
-          },
-        },
-      ),
+      },
     );
   };
   const createCard = async function (cardData, navigation) {
     const netInfo = await NetInfo.fetch();
     if (netInfo.isConnected) {
-      dispatch(asyncActionStart());
+      setLoading(true);
       try {
         await getFromStore('token').then(async (token) => {
           return await api.post('/create_card', cardData, {
@@ -39,18 +31,16 @@ export function useCardUpdaters() {
           });
         });
         await storeItems('personalCard', JSON.stringify(cardData));
-        dispatch(asyncActionFinish());
+        setLoading(false);
         navigation.push('CardCreatedArea', {cardData: cardData});
       } catch (error) {
         console.log(error);
-        dispatch(
-          asyncActionError(parseError(error, navigation), {
-            cancelButtonTest: 'Ok',
-            onClose: () => {
-              dispatch(asyncActionError(null));
-            },
-          }),
-        );
+        setError(parseError(error, navigation), {
+          cancelButtonTest: 'Ok',
+          onClose: () => {
+            setError(null);
+          },
+        });
       }
     } else {
       dispatchOffline();
@@ -60,7 +50,7 @@ export function useCardUpdaters() {
   const editCard = async function (cardData, navigation) {
     const netInfo = await NetInfo.fetch();
     if (netInfo.isConnected) {
-      dispatch(asyncActionStart());
+      setLoading(true);
       try {
         await getFromStore('token').then(async (token) => {
           console.log('api', token, cardData);
@@ -69,18 +59,16 @@ export function useCardUpdaters() {
           });
         });
         await storeItems('personalCard', JSON.stringify(cardData));
-        dispatch(asyncActionFinish());
+        setLoading(false);
         navigation.push('CardCreatedArea', {cardData: cardData});
       } catch (error) {
         console.log(error.request.response);
-        dispatch(
-          asyncActionError(parseError(error, navigation), {
-            cancelButtonTest: 'Ok',
-            onClose: () => {
-              dispatch(asyncActionError(null));
-            },
-          }),
-        );
+        setError(parseError(error, navigation), {
+          cancelButtonTest: 'Ok',
+          onClose: () => {
+            setError(null);
+          },
+        });
       }
     } else {
       dispatchOffline();
@@ -89,23 +77,21 @@ export function useCardUpdaters() {
   const deleteCard = async function (navigation) {
     const netInfo = await NetInfo.fetch();
     if (netInfo.isConnected) {
-      dispatch(asyncActionStart());
+      setLoading(true);
       try {
         await getFromStore('token').then(async (token) => {
           return await api.post('/delete_card', {}, {headers: {Token: token}});
         });
-        dispatch(asyncActionFinish());
+        setLoading(false);
         navigation.push('NoCardArea', undefined);
       } catch (error) {
         console.log(error);
-        dispatch(
-          asyncActionError(parseError(error, navigation), {
-            cancelButtonTest: 'Ok',
-            onClose: () => {
-              dispatch(asyncActionError(null));
-            },
-          }),
-        );
+        setError(parseError(error, navigation), {
+          cancelButtonTest: 'Ok',
+          onClose: () => {
+            setError(null);
+          },
+        });
       }
     } else {
       dispatchOffline();

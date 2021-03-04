@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {View, Text, Share} from 'react-native';
 import Swipper from './components/Swipper/Swipper';
 import Styles from './MyCardAreaStyles';
@@ -19,15 +19,12 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {useSelector, useDispatch} from 'react-redux';
 import {
-  asyncActionError,
-  asyncActionStart,
-} from '../../../shared/async/asyncReducer';
-import {
   addCard,
   deleteCard,
   loadCards,
 } from '../../../shared/api/redux/cardsActions';
 import {openModal} from '../../shared/Modal/modalReducer';
+import {AsyncContext} from '../../../shared/providers/asyncProvider';
 
 const MyCardsArea = () => {
   const dispatch = useDispatch();
@@ -40,7 +37,7 @@ const MyCardsArea = () => {
   const [searchBarOpened, setSearchBarOpened] = useState(false);
   const [actionsOpened, setActionsOpened] = useState(false);
 
-  const {loading, error} = useSelector((state) => state.async);
+  const {loading, error, setError, setLoading} = useContext(AsyncContext);
   const {cards, currentCard} = useSelector((state) => state.cards);
 
   const handleDeleteDecison = (response) => {
@@ -48,35 +45,37 @@ const MyCardsArea = () => {
     if (netInfo.isConnected) {
       if (response == 'yes') {
         setSearchBarOpened(false);
-        dispatch(deleteCard(currentCard, cards, navigation));
+        dispatch(
+          deleteCard(currentCard, cards, navigation, setLoading, setError),
+        );
       }
     } else {
-      dispatch(
-        asyncActionError(
-          {
-            message:
-              'You are currently offline. Go online do be able do delete a card.',
+      setError(
+        {
+          message:
+            'You are currently offline. Go online do be able do delete a card.',
+        },
+        {
+          cancelButtonTest: 'Ok',
+          onClose: () => {
+            setError(null);
           },
-          {
-            cancelButtonTest: 'Ok',
-            onClose: () => {
-              dispatch(asyncActionError(null));
-            },
-          },
-        ),
+        },
       );
     }
   };
   const onHandleAddCard = ({data}) => {
     setOpenScanner(false);
     setSearchBarOpened(false);
-    dispatch(addCard(data, cards, navigation));
+    dispatch(addCard(data, cards, navigation, setLoading, setError));
   };
 
   useEffect(() => {
-    dispatch(asyncActionStart());
+    setLoading(true);
     if (netInfo.isConnected != null) {
-      dispatch(loadCards(navigation, netInfo.isConnected));
+      dispatch(
+        loadCards(navigation, netInfo.isConnected, setLoading, setError),
+      );
     }
   }, [netInfo.isConnected]);
 
@@ -181,19 +180,17 @@ const MyCardsArea = () => {
                 }),
               );
             } else {
-              dispatch(
-                asyncActionError(
-                  {
-                    message:
-                      'You are currently offline. Go online to be able do add new cards.',
+              setError(
+                {
+                  message:
+                    'You are currently offline. Go online to be able do add new cards.',
+                },
+                {
+                  cancelButtonTest: 'Ok',
+                  onClose: () => {
+                    setError(null);
                   },
-                  {
-                    cancelButtonTest: 'Ok',
-                    onClose: () => {
-                      dispatch(asyncActionError(null));
-                    },
-                  },
-                ),
+                },
               );
             }
           }}
@@ -201,19 +198,17 @@ const MyCardsArea = () => {
             if (netInfo.isConnected) {
               setOpenScanner(true);
             } else {
-              dispatch(
-                asyncActionError(
-                  {
-                    message:
-                      'You are currently offline. Go online to be able do add new cards.',
+              setError(
+                {
+                  message:
+                    'You are currently offline. Go online to be able do add new cards.',
+                },
+                {
+                  cancelButtonTest: 'Ok',
+                  onClose: () => {
+                    setError(null);
                   },
-                  {
-                    cancelButtonTest: 'Ok',
-                    onClose: () => {
-                      dispatch(asyncActionError(null));
-                    },
-                  },
-                ),
+                },
               );
             }
           }}

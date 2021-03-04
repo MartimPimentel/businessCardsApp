@@ -1,26 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import CardCreatedArea from '../../../features/PersonalArea/CardCreatedArea/CardCreatedArea';
 import NoCardArea from '../../../features/PersonalArea/NoCardArea/NoCardArea';
-import {useIsFocused} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import EditCardArea from '../../../features/PersonalArea/EditCardArea/EditCardArea';
 import {usePersonalCard} from '../../../../shared/api/usePersonalCard';
-import {useSelector} from 'react-redux';
+import {AsyncContext} from '../../../../shared/providers/asyncProvider';
 
 const Stack = createStackNavigator();
 const PersonalArea = () => {
-  const isFocused = useIsFocused();
-  const {card, error: apiError, getPersonalCard} = usePersonalCard({
-    error: true,
-  });
-  const {error: asyncError} = useSelector((state) => state.async);
+  const {card, getPersonalCard} = usePersonalCard();
+  const {error, setError, setLoading} = useContext(AsyncContext);
   useEffect(() => {
-    if (isFocused && !asyncError && apiError) {
-      getPersonalCard();
-    }
-  }, [isFocused, card]);
+    setLoading(true);
+    setError({initError: 'error'});
+    getPersonalCard();
+  }, []);
   return (
-    !apiError && (
+    !error && (
       <Stack.Navigator
         headerMode="none"
         initialRouteName={card?.length == 1 ? 'CardCreatedArea' : 'NoCardArea'}>

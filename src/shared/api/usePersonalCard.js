@@ -1,22 +1,15 @@
 import api from './api';
 import NetInfo from '@react-native-community/netinfo';
 import {getFromStore, parseData, storeItems} from '../functions/functions';
-import {
-  asyncActionError,
-  asyncActionFinish,
-  asyncActionStart,
-} from '../async/asyncReducer';
-import {useDispatch} from 'react-redux';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
+import {AsyncContext} from '../providers/asyncProvider';
 
-export function usePersonalCard({error: initErrorVal}) {
-  const dispatch = useDispatch();
+export function usePersonalCard() {
   const [card, setCard] = useState(undefined);
-  const [error, setError] = useState(initErrorVal);
+  const {setLoading, setError} = useContext(AsyncContext);
   const getPersonalCard = async function () {
     const netInfo = await NetInfo.fetch();
-
-    dispatch(asyncActionStart());
+    setLoading(true);
     if (netInfo.isConnected) {
       try {
         const res = await getFromStore('token').then(async (token) => {
@@ -31,24 +24,22 @@ export function usePersonalCard({error: initErrorVal}) {
         const cardData = parseData(res.data);
 
         storeItems('personalCard', JSON.stringify(cardData));
-        dispatch(asyncActionFinish());
         setCard(cardData);
+        setLoading(false);
         setError(false);
       } catch (error) {
         const errors = JSON.parse(error.request.response);
         console.log(errors);
-        dispatch(
-          asyncActionError(
-            errors,
-            !errors?.error.match('Credentials')
-              ? {
-                  cancelButtonTest: 'Retry',
-                  onClose: () => {
-                    dispatch(asyncActionError(null));
-                  },
-                }
-              : null,
-          ),
+        setError(
+          errors,
+          !errors?.error.match('Credentials')
+            ? {
+                cancelButtonTest: 'Retry',
+                onClose: () => {
+                  setError(null);
+                },
+              }
+            : null,
         );
         setError(true);
       }
@@ -56,9 +47,9 @@ export function usePersonalCard({error: initErrorVal}) {
       let cardData = await getFromStore('personalCard');
       if (card) cardData = JSON.parse(card);
       else cardData = undefined;
-      dispatch(asyncActionFinish());
       setCard(cardData);
+      setLoading(false);
     }
   };
-  return {card: card, error: error, getPersonalCard: getPersonalCard};
+  return {card: card, getPersonalCard: getPersonalCard};
 }
