@@ -24,7 +24,7 @@ import {
   loadCards,
 } from '../../../shared/api/redux/cardsActions';
 import {openModal} from '../../shared/Modal/modalReducer';
-import {AsyncContext} from '../../../shared/providers/asyncProvider';
+import {AsyncContext} from '../../../shared/providers/AsyncProvider';
 
 const MyCardsArea = () => {
   const dispatch = useDispatch();

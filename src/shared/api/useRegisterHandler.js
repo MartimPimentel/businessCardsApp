@@ -3,7 +3,7 @@ import {useNavigation} from '@react-navigation/native';
 import {CommonActions} from '@react-navigation/native';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {useContext} from 'react';
-import {AsyncContext} from '../providers/asyncProvider';
+import {AsyncContext} from '../providers/AsyncProvider';
 
 export function useRegisterHandler() {
   const netInfo = useNetInfo();

@@ -35,8 +35,8 @@ export function loadCards(navigation, networkConnection, setLoading, setError) {
         cards = JSON.parse(cards);
       }
       if (networkConnection) storeItems('sharedCards', JSON.stringify(cards));
-      dispatch({type: FECTH_CARDS, payload: cards});
       setLoading(false);
+      dispatch({type: FECTH_CARDS, payload: cards});
     } catch (error) {
       console.log(error);
       setError(parseError(error, navigation), {

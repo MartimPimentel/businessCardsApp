@@ -2,7 +2,7 @@ import api from './api';
 import NetInfo from '@react-native-community/netinfo';
 import {getFromStore, parseError, storeItems} from '../functions/functions';
 import {useContext} from 'react';
-import {AsyncContext} from '../providers/asyncProvider';
+import {AsyncContext} from '../providers/AsyncProvider';
 
 export function useCardUpdaters() {
   const {setLoading, setError} = useContext(AsyncContext);

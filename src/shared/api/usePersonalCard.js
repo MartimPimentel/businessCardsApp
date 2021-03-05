@@ -2,7 +2,7 @@ import api from './api';
 import NetInfo from '@react-native-community/netinfo';
 import {getFromStore, parseData, storeItems} from '../functions/functions';
 import {useContext, useState} from 'react';
-import {AsyncContext} from '../providers/asyncProvider';
+import {AsyncContext} from '../providers/AsyncProvider';
 
 export function usePersonalCard() {
   const [card, setCard] = useState(undefined);

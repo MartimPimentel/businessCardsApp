@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {View, Text} from 'react-native';
 import Styles from '../../LoginViewStyles';
 import {useForm, Controller} from 'react-hook-form';
@@ -12,8 +12,8 @@ import {
   EmailIcon,
 } from '../../../../../../assets/icons';
 import {vw, vh} from 'react-native-viewport-units';
-import {useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
+import {AsyncContext} from '../../../../../../shared/providers/AsyncProvider';
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -24,7 +24,7 @@ const loginSchema = yup.object().shape({
 });
 
 const LoginForm = ({onClickToLogin, disabled}) => {
-  const {error} = useSelector((state) => state.async);
+  const {error} = useContext(AsyncContext);
   const isFocused = useIsFocused();
   const {handleSubmit, errors, control, reset, setError, formState} = useForm({
     resolver: yupResolver(loginSchema),

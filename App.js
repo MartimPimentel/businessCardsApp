@@ -11,7 +11,7 @@ import {Provider} from 'react-redux';
 import {configureStore} from './src/shared/store/configureStore';
 import ModalManager from './src/components/shared/Modal/ModalManager';
 import SpinnerManager from './src/components/shared/Spinner/SpinnerManager';
-import {AsyncProvider} from './src/shared/providers/asyncProvider';
+import {AsyncProvider} from './src/shared/providers/AsyncProvider';
 
 const store = configureStore();
 const base64url = require('base64url');

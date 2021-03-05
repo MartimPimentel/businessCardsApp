@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {AsyncContext} from '../../../shared/providers/asyncProvider';
+import {AsyncContext} from '../../../shared/providers/AsyncProvider';
 import Spinner from './Spinner';
 
 export default function ModalManager() {

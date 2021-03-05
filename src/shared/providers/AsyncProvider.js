@@ -9,9 +9,9 @@ const AsyncProvider = (props) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  function asyncActionStart(error, modalProps) {
+  function asyncActionStartFinish(value) {
     setError(null);
-    setLoading(true);
+    setLoading(value);
   }
   function asyncActionError(error, modalProps) {
     setLoading(false);
@@ -29,7 +29,7 @@ const AsyncProvider = (props) => {
       value={{
         loading,
         error,
-        setLoading: asyncActionStart,
+        setLoading: asyncActionStartFinish,
         setError: asyncActionError,
       }}>
       {props.children}

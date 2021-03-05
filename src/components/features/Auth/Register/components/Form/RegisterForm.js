@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useContext} from 'react';
 import {View, Text} from 'react-native';
 import Styles from '../../RegisterViewStyles';
 import {useForm, Controller} from 'react-hook-form';
@@ -13,8 +13,8 @@ import {
   ConfirmAuthLock,
 } from '../../../../../../assets/icons';
 import {vw, vh} from 'react-native-viewport-units';
-import {useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
+import {AsyncContext} from '../../../../../../shared/providers/AsyncProvider';
 
 let passwordRef = null;
 const registerSchema = yup.object().shape({
@@ -33,7 +33,7 @@ const registerSchema = yup.object().shape({
 
 const RegisterForm = ({onClickToRegister}) => {
   const isFocused = useIsFocused();
-  const {error} = useSelector((state) => state.async);
+  const {error} = useContext(AsyncContext);
   const {handleSubmit, errors, control, reset, setError, formState} = useForm({
     resolver: yupResolver(registerSchema),
     mode: 'onSubmit',

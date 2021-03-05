@@ -10,7 +10,7 @@ import {useDispatch} from 'react-redux';
 import {openModal} from '../../../shared/Modal/modalReducer';
 import {getFromStore} from '../../../../shared/functions/functions';
 import base64url from 'base64url';
-import {AsyncContext} from '../../../../shared/providers/asyncProvider';
+import {AsyncContext} from '../../../../shared/providers/AsyncProvider';
 
 const CardCreatedArea = ({route, navigation}) => {
   const dispatch = useDispatch();
