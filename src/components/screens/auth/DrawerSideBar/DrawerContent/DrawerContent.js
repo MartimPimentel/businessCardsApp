@@ -10,11 +10,10 @@ import {
 } from '../../../../../assets/icons';
 import Styles from './DrawerContentStyles';
 import LinearGradient from 'react-native-linear-gradient';
-import AsyncStorage from '@react-native-community/async-storage';
 import {useIsDrawerOpen} from '@react-navigation/drawer';
 import {CommonActions} from '@react-navigation/native';
 import {
-  deleteToken,
+  deleteAllData,
   getFromStore,
 } from '../../../../../shared/functions/functions';
 
@@ -109,7 +108,7 @@ const DrawerContent = (props) => {
         <TouchableOpacity
           style={Styles.logOutButton}
           onPress={() => {
-            deleteToken()
+            deleteAllData()
               .then(() => {
                 props.navigation.dispatch(
                   CommonActions.reset({

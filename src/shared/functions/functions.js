@@ -26,13 +26,6 @@ export const storeItems = async (item, data) => {
   }
 };
 
-export const deleteToken = async () => {
-  return await SInfo.deleteItem('token', {
-    sharedPreferencesName: 'bussinessCards',
-    keychainService: 'bussinessCards',
-  });
-};
-
 export const parseData = (data) => {
   const keys = [
     'phoneData',
@@ -57,7 +50,7 @@ export const parseError = (error, navigation) => {
   let errorMessage = errors.message;
   if (!!errors.error.match('Token')) {
     errorMessage = 'Your authentication has expired. Please login again.';
-    deleteToken()
+    deleteAllData()
       .then(() => {
         navigation.dispatch(
           CommonActions.reset({
@@ -75,7 +68,10 @@ export const parseError = (error, navigation) => {
 };
 
 export const deleteAllData = async () => {
-  deleteToken();
+  await SInfo.deleteItem('token', {
+    sharedPreferencesName: 'bussinessCards',
+    keychainService: 'bussinessCards',
+  });
   await SInfo.deleteItem('personalCard', {
     sharedPreferencesName: 'bussinessCards',
     keychainService: 'bussinessCards',
