@@ -22,8 +22,7 @@ export function usePersonalCard() {
           );
         });
         const cardData = parseData(res.data);
-
-        storeItems('personalCard', JSON.stringify(cardData));
+        storeItems('personalCard', JSON.stringify(cardData.length == 1?cardData[0]:cardData));
         setCard(cardData);
         setLoading(false);
         setError(false);
